@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class RandomUnitGen : MonoBehaviour
@@ -12,7 +13,7 @@ public class RandomUnitGen : MonoBehaviour
     private void Start()
     {
         // Check if you have enough empty spaces and object types
-        if (emptySpaces.Length < 6 || objectTypes.Length < 6)
+        if (emptySpaces.Length < 36 || objectTypes.Length < 4)
         {
             Debug.LogError("Not enough empty spaces or object types.");
             return;
@@ -22,21 +23,73 @@ public class RandomUnitGen : MonoBehaviour
         PlaceRandomUnits();
     }
 
+    private void Update()
+    {
+        if (Input.GetKey(KeyCode.Space))
+        {
+            Debug.Log("Regenerate");
+            PlaceRandomUnits();
+        }
+
+
+
+    }
+
+    //void PlaceRandomUnits()
+    //{
+    //    for (int i = 0; i < 4; i++) // For each type of object
+    //    {
+    //        for (int j = 0; j < 9; j++) // Place 6 units of that type
+    //        {
+    //            Transform emptySpace = GetRandomEmptySpace();
+
+    //            if (emptySpace != null)
+    //            {
+    //                // Instantiate a random object type at the empty space position
+    //                int randomIndex = Random.Range(0, objectTypes.Length);
+    //                GameObject randomObject = Instantiate(objectTypes[randomIndex], emptySpace.position, Quaternion.identity);
+    //                usedSpaces.Add(emptySpace);
+    //            }
+    //        }
+    //    }
+    //}
+
     void PlaceRandomUnits()
     {
-        for (int i = 0; i < 6; i++) // For each type of object
+        // Place at least one unit of each type
+        for (int i = 0; i < objectTypes.Length; i++)
         {
-            for (int j = 0; j < 6; j++) // Place 6 units of that type
-            {
-                Transform emptySpace = GetRandomEmptySpace();
+            Transform emptySpace = GetRandomEmptySpace();
 
-                if (emptySpace != null)
-                {
-                    // Instantiate a random object type at the empty space position
-                    int randomIndex = Random.Range(0, objectTypes.Length);
-                    GameObject randomObject = Instantiate(objectTypes[randomIndex], emptySpace.position, Quaternion.identity);
-                    usedSpaces.Add(emptySpace);
-                }
+            if (emptySpace != null)
+            {
+                // Instantiate a unit of the current type at the empty space position
+                GameObject randomObject = Instantiate(objectTypes[i], emptySpace.position, Quaternion.identity);
+                usedSpaces.Add(emptySpace);
+            }
+            else
+            {
+                Debug.LogWarning("Not enough empty spaces for all units.");
+                return;
+            }
+        }
+
+        // Randomly place the remaining units
+        for (int j = 0; j < 36 - objectTypes.Length; j++)
+        {
+            Transform emptySpace = GetRandomEmptySpace();
+
+            if (emptySpace != null)
+            {
+                // Instantiate a random object type at the empty space position
+                int randomIndex = Random.Range(0, objectTypes.Length);
+                GameObject randomObject = Instantiate(objectTypes[randomIndex], emptySpace.position, Quaternion.identity);
+                usedSpaces.Add(emptySpace);
+            }
+            else
+            {
+                Debug.LogWarning("Not enough empty spaces for all units.");
+                return;
             }
         }
     }
@@ -57,4 +110,6 @@ public class RandomUnitGen : MonoBehaviour
 
         return emptySpace;
     }
+
+
 }
