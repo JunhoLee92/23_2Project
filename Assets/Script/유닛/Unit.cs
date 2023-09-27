@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class Unit : MonoBehaviour
 {
-    public int unitType; // 유닛의 종류 (0, 1, 2, 3)
-    public int gridIndex; // 유닛의 그리드 인덱스
+    public int unitType; // Type of unit (0, 1, 2, 3)
+    public int gridIndex; // Grid index of unit
+    public int unitLevel = 0; // Unit's level (initialize to level 0)
 
     private GameManager gameManager;
 

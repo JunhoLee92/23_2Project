@@ -770,11 +770,43 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cfe6ced2ae6984d4fba3a8b72e8e230c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  unitPrefabs:
-  - {fileID: 2810937099206993808, guid: 35b8e9ca9999aff47bb9c1510830e67a, type: 3}
-  - {fileID: 6696982989512433780, guid: fb251cb085c3ac3449dc8bf4ff4577d0, type: 3}
-  - {fileID: 6927735548618191631, guid: fa608a69079b3774197717a4acec6747, type: 3}
-  - {fileID: 8486120657682532521, guid: 2ae9e8379f0b5ea468315c86185d9c19, type: 3}
+  unitEvolutionData:
+  - unitName: Kali
+    maxLevel: 5
+    unitPrefabs:
+    - {fileID: 2810937099206993808, guid: 35b8e9ca9999aff47bb9c1510830e67a, type: 3}
+    - {fileID: 2810937099206993808, guid: b1ee63ec79ac09640a955d620481119c, type: 3}
+    - {fileID: 2810937099206993808, guid: ac51d571a7cbf16459ea535b869f728a, type: 3}
+    - {fileID: 2810937099206993808, guid: 12c1ae97fd5d6944a828d9443013ea37, type: 3}
+    - {fileID: 2810937099206993808, guid: dc55f9c152fabeb4ab7b50928e1aeb15, type: 3}
+    - {fileID: 2810937099206993808, guid: cd4829892f5ec8a4585a10af91880554, type: 3}
+  - unitName: Yuki
+    maxLevel: 5
+    unitPrefabs:
+    - {fileID: 6696982989512433780, guid: fb251cb085c3ac3449dc8bf4ff4577d0, type: 3}
+    - {fileID: 6696982989512433780, guid: 2bda4fa2ff13e2147b5e3983bd48d770, type: 3}
+    - {fileID: 6696982989512433780, guid: e46af2b33aa00e94dbb8a7257b51dfda, type: 3}
+    - {fileID: 6696982989512433780, guid: 748df63e70b9532468484251396a1ae0, type: 3}
+    - {fileID: 6696982989512433780, guid: 4e05fce11e2329042826f29045c34a39, type: 3}
+    - {fileID: 6696982989512433780, guid: 5f8851407dcedd842ba814f1d741e31d, type: 3}
+  - unitName: Lily
+    maxLevel: 5
+    unitPrefabs:
+    - {fileID: 6927735548618191631, guid: fa608a69079b3774197717a4acec6747, type: 3}
+    - {fileID: 6927735548618191631, guid: d39c554837874f34bb0aa8ab31cdc2d2, type: 3}
+    - {fileID: 6927735548618191631, guid: bc824d316be8a6649aa018fbb13becae, type: 3}
+    - {fileID: 6927735548618191631, guid: 00083b9c25f630f44b9e95ab2efda1c9, type: 3}
+    - {fileID: 6927735548618191631, guid: 5c9a3e64fc7bcac41a0cd0718664e71d, type: 3}
+    - {fileID: 6927735548618191631, guid: 4e8c22dc255639045ad8186357f890a9, type: 3}
+  - unitName: Air
+    maxLevel: 5
+    unitPrefabs:
+    - {fileID: 8486120657682532521, guid: 2ae9e8379f0b5ea468315c86185d9c19, type: 3}
+    - {fileID: 8486120657682532521, guid: 14613398236e5ac4ab57eed1473e95ed, type: 3}
+    - {fileID: 8486120657682532521, guid: 9bd9fc7ad8c33854a9dda78012445779, type: 3}
+    - {fileID: 8486120657682532521, guid: 3ba33e410a0e71445994b411ea43cfd8, type: 3}
+    - {fileID: 8486120657682532521, guid: 9800b72b5d2d0754f87215bcb99d8ca4, type: 3}
+    - {fileID: 8486120657682532521, guid: 752c8f594b1c16e44ab2f3230a16adf4, type: 3}
   spawnPositions:
   - {fileID: 805503761}
   - {fileID: 1159120586}
