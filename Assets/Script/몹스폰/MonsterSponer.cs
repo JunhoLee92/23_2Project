@@ -10,17 +10,31 @@ public class MonsterSponer : MonoBehaviour
     public int monstersPerSpawn = 3;
 
     private float nextSpawnTime;
-    private bool spawnStarted = false; // 이 플래그는 스페이스 버튼을 누를 때 true로 설정됩니다.
+   public bool spawnStarted = false; // 이 플래그는 스페이스 버튼을 누를 때 true로 설정됩니다.
+    private GameManager gameManager;
 
+    private void Start()
+    {
+        gameManager = FindObjectOfType<GameManager>();
+    }
     void Update()
     {
-        // 스페이스 버튼을 누르면 spawnStarted를 true로 설정
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            spawnStarted = true;
-        }
+        //// 스페이스 버튼을 누르면 spawnStarted를 true로 설정
+        //if (Input.GetKeyDown(KeyCode.Space))
+        //{
+        //    spawnStarted = true;
+        //}
 
-        // spawnStarted가 true이면 몬스터 생성 시작
+        //// spawnStarted가 true이면 몬스터 생성 시작
+        //if (spawnStarted && Time.time >= nextSpawnTime)
+        //{
+        //    for (int i = 0; i < monstersPerSpawn; i++)
+        //    {
+        //        SpawnMonster();
+        //    }
+        //    nextSpawnTime = Time.time + spawnInterval;
+        //}
+
         if (spawnStarted && Time.time >= nextSpawnTime)
         {
             for (int i = 0; i < monstersPerSpawn; i++)
@@ -28,6 +42,8 @@ public class MonsterSponer : MonoBehaviour
                 SpawnMonster();
             }
             nextSpawnTime = Time.time + spawnInterval;
+
+            gameManager.OnMonsterSpawned();
         }
     }
 
