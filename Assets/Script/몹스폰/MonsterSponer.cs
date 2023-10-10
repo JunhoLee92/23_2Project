@@ -5,9 +5,10 @@ using UnityEngine;
 public class MonsterSponer : MonoBehaviour
 {
     public GameObject monsterPrefab;
-    public float spawnRadius = 10f;
-    public float spawnInterval = 2f;
-    public int monstersPerSpawn = 3;
+    public float spawnRadius = 10f; //스폰되는 각도
+    public float spawnInterval; //스폰되는 간격
+    public int monstersPerSpawn; //스폰당 몇마리씩 생성되는지 
+  
 
     private float nextSpawnTime;
    public bool spawnStarted = false; // 이 플래그는 스페이스 버튼을 누를 때 true로 설정됩니다.
@@ -43,8 +44,9 @@ public class MonsterSponer : MonoBehaviour
             }
             nextSpawnTime = Time.time + spawnInterval;
 
-            gameManager.OnMonsterSpawned();
+
         }
+
     }
 
     void SpawnMonster()
@@ -52,5 +54,6 @@ public class MonsterSponer : MonoBehaviour
         float angle = Random.Range(0, 180) * Mathf.Deg2Rad;
         Vector2 spawnPosition = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)) * spawnRadius;
         Instantiate(monsterPrefab, spawnPosition, Quaternion.identity);
+        gameManager.OnMonsterSpawned();
     }
-}
+} 
