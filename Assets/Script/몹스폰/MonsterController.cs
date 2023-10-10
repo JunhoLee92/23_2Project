@@ -21,4 +21,10 @@ public class MonsterController : MonoBehaviour
         Vector2 direction = (Vector2.zero - (Vector2)transform.position).normalized;
         transform.position += (Vector3)direction * speed * Time.deltaTime;
     }
+
+    public void DecreaseSpeed(float reductionAmount)
+    {
+        speed -= reductionAmount;
+        if (speed < 1f) speed = 1f; // 속도가 특정 임계값 아래로 내려가지 않도록 합니다.
+    }
 }
