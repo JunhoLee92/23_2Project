@@ -12,7 +12,8 @@ GameObject:
   - component: {fileID: 2810937099206993809}
   - component: {fileID: -1089349193205852068}
   - component: {fileID: 5644456148441170081}
-  m_Layer: 6
+  - component: {fileID: -4615827921966723067}
+  m_Layer: 0
   m_Name: Kali-0 1
   m_TagString: Unit
   m_Icon: {fileID: 0}
@@ -27,8 +28,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2810937099206993808}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -7.833388, y: -6.3723927, z: -0.30014843}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: -7.536, y: -4.78, z: -0.30014843}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -75,12 +76,12 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: 7482667652216324306, guid: 75f5f34dc1b5347e0b8351032682f224, type: 3}
-  m_Color: {r: 0.9433962, g: 0.057849795, b: 0.057849795, a: 1}
+  m_Sprite: {fileID: 21300000, guid: 13325ebd45c490746bb68e96d85e881f, type: 3}
+  m_Color: {r: 0.9811321, g: 0.9487362, b: 0.9487362, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 2.6, y: 3.2}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -99,18 +100,18 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0.21133333}
+  m_Offset: {x: 0.0037345886, y: -0.29274654}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.28866667}
-    oldSize: {x: 1, y: 1}
-    newSize: {x: 1, y: 1}
+    pivot: {x: 0.4954151, y: 0.25982505}
+    oldSize: {x: 2.6, y: 3.2}
+    newSize: {x: 2.6, y: 3.2}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 2.2471313, y: 2.6205235}
   m_EdgeRadius: 0
 --- !u!114 &5644456148441170081
 MonoBehaviour:
@@ -124,6 +125,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 007bd04bd747ece4982e78fccf36caae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  unitType: 1
+  unitType: 0
   gridIndex: 0
   unitLevel: 1
+  attackPower: 10
+--- !u!114 &-4615827921966723067
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2810937099206993808}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5eee5cc8c7d48fe489b7de7ce75dc997, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attackDamage: 21
+  attackRange: 1
+  attackSpeed: 2.2
+  attackEffectPrefab: {fileID: 8889406255766441950, guid: e76620ae44b09ad4a8afe5d6970bf3a5, type: 3}
+  effectDuration: 0.5
