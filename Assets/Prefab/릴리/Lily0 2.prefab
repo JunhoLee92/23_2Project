@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6927735548618191628}
   - component: {fileID: 3246102690186862482}
   - component: {fileID: -4826954639398759640}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Lily0 2
   m_TagString: Unit
   m_Icon: {fileID: 0}
@@ -124,6 +124,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 007bd04bd747ece4982e78fccf36caae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  unitType: 3
+  unitType: 2
   gridIndex: 0
   unitLevel: 2
+  attackPower: 10
