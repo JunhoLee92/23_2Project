@@ -150,6 +150,7 @@ MonoBehaviour:
   monsterType: 1
   Hp: 0
   speed: 0
+  slowEffectPrefab: {fileID: 529208772664306363, guid: 46cd643c3a598da46a51c6dffae144a4, type: 3}
 --- !u!114 &1909625903886527668
 MonoBehaviour:
   m_ObjectHideFlags: 0

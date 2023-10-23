@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 6696982989512433771}
   - component: {fileID: 6151261419286419381}
   - component: {fileID: 4671655164561061416}
+  - component: {fileID: -4407634389377713482}
   m_Layer: 0
   m_Name: Yuki0 2
   m_TagString: Unit
@@ -128,3 +129,18 @@ MonoBehaviour:
   gridIndex: 0
   unitLevel: 2
   attackPower: 10
+--- !u!114 &-4407634389377713482
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6696982989512433780}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0550989d697258a43ac6ab22b2f2f21b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attackDamage: 12
+  attackSpeed: 1.4
+  projectilePrefab: {fileID: 8667335480841600669, guid: 428b1cc9c9f82844281798ea42cf4e96, type: 3}

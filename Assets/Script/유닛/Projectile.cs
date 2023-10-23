@@ -34,7 +34,7 @@ public class Projectile : MonoBehaviour
     {
         MonsterController monsterScript = target.GetComponent<MonsterController>();
         monsterScript.TakeDamage(damage);
-        monsterScript.Slow(slowAmount, slowDuration);  // Apply the slow effect
+        
         Destroy(gameObject);  // Destroy the projectile after hitting the target
     }
 }

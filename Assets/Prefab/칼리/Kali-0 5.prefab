@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 2810937099206993809}
   - component: {fileID: -1089349193205852068}
   - component: {fileID: 5644456148441170081}
+  - component: {fileID: -1423267269004175987}
   m_Layer: 0
   m_Name: Kali-0 5
   m_TagString: Unit
@@ -128,3 +129,20 @@ MonoBehaviour:
   gridIndex: 0
   unitLevel: 5
   attackPower: 10
+--- !u!114 &-1423267269004175987
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2810937099206993808}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5eee5cc8c7d48fe489b7de7ce75dc997, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attackDamage: 21
+  attackRange: 1
+  attackSpeed: 2.2
+  attackEffectPrefab: {fileID: 8889406255766441950, guid: e76620ae44b09ad4a8afe5d6970bf3a5, type: 3}
+  effectDuration: 0.5

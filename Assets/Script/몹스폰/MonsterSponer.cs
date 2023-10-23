@@ -48,16 +48,53 @@ public class MonsterSponer : MonoBehaviour
 
     }
 
-   
 
-    
+
+
+
+    //void SpawnMonster(MonsterSpawnInfo spawnInfo)  ////반원형태로 스폰
+    //{
+    //    float angle = Random.Range(0, 180) * Mathf.Deg2Rad;
+    //    Vector2 spawnPosition = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)) * spawnRadius;
+
+    //    // Using the correct monster prefab from the list
+    //    GameObject spawnedMonster = Instantiate(monsterPrefabs[(int)spawnInfo.monsterType], spawnPosition, Quaternion.identity);
+
+    //    spawnedMonster.GetComponent<MonsterController>().Hp = spawnInfo.Hp;
+    //    spawnedMonster.GetComponent<MonsterController>().speed = spawnInfo.speed;
+    //    gameManager.OnMonsterSpawned();
+    //}
+
 
     void SpawnMonster(MonsterSpawnInfo spawnInfo)
     {
-        float angle = Random.Range(0, 180) * Mathf.Deg2Rad;
-        Vector2 spawnPosition = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)) * spawnRadius;
+        // Calculate the boundaries of the screen in world coordinates
+        float topBoundary = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width / 2, Screen.height, 0)).y;
+        float leftBoundary = Camera.main.ScreenToWorldPoint(new Vector3(0, Screen.height, 0)).x;
+        float rightBoundary = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, 0)).x;
+        float middleVertical = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width / 2, Screen.height / 2, 0)).y;
 
-        // Using the correct monster prefab from the list
+        Vector3 spawnPosition;
+
+        // Randomly choose a boundary (0: top, 1: left, 2: right)
+        int chosenBoundary = Random.Range(0, 3);
+
+        switch (chosenBoundary)
+        {
+            case 0: // Top boundary
+                spawnPosition = new Vector3(Random.Range(leftBoundary + 0.5f, rightBoundary - 0.5f), topBoundary - 0.5f, 0);
+                break;
+            case 1: // Left boundary (upper half)
+                spawnPosition = new Vector3(leftBoundary + 0.5f, Random.Range(middleVertical, topBoundary - 0.5f), 0);
+                break;
+            case 2: // Right boundary (upper half)
+                spawnPosition = new Vector3(rightBoundary - 0.5f, Random.Range(middleVertical, topBoundary - 0.5f), 0);
+                break;
+            default:
+                spawnPosition = Vector3.zero;
+                break;
+        }
+
         GameObject spawnedMonster = Instantiate(monsterPrefabs[(int)spawnInfo.monsterType], spawnPosition, Quaternion.identity);
 
         spawnedMonster.GetComponent<MonsterController>().Hp = spawnInfo.Hp;

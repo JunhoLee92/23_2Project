@@ -147,7 +147,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c562e952694d9243931ba3e7ba5abf6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  monsterType: 0
   Hp: 100
+  speed: 0
+  slowEffectPrefab: {fileID: 529208772664306363, guid: 46cd643c3a598da46a51c6dffae144a4, type: 3}
 --- !u!114 &5257411977410277725
 MonoBehaviour:
   m_ObjectHideFlags: 0

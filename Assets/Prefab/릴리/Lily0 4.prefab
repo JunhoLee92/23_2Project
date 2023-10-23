@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 6927735548618191628}
   - component: {fileID: 3246102690186862482}
   - component: {fileID: -4826954639398759640}
+  - component: {fileID: 4247907837003836793}
   m_Layer: 0
   m_Name: Lily0 4
   m_TagString: Unit
@@ -128,3 +129,18 @@ MonoBehaviour:
   gridIndex: 0
   unitLevel: 4
   attackPower: 10
+--- !u!114 &4247907837003836793
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6927735548618191631}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 14a6357fd96825e4a87798e31a425f6a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attackDamage: 17
+  attackSpeed: 1.8
+  projectilePrefab: {fileID: 261161116264584137, guid: 596cc9d79fa38694bb422927c8d2436c, type: 3}

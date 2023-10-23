@@ -135,37 +135,7 @@ public class GameManager : MonoBehaviour
         
     }
 
-    //public void OnMonsterSpawned()
-    //{
-    //    Debug.Log("OnMonsterSpawned called");
-
-    //    int totalMonstersForThisRound = 0;
-    //    foreach (MonsterSpawnInfo info in chapters[currentChapter].rounds[currentRound].spawnInfos)
-    //    {
-    //        totalMonstersForThisRound += info.count;
-    //    }
-
-    //    if (--totalMonstersForThisRound <= 0)
-    //    {
-    //        monsterSpawner.spawnStarted = false; // 스폰 중지
-
-    //        currentRound++; // 다음 라운드로
-
-    //        if (currentRound >= chapters[currentChapter].rounds.Length)  // Check if all rounds in the current chapter are completed
-    //        {
-    //            if (currentChapter < chapters.Length - 1)  // Ensure we're not exceeding the total number of chapters
-    //            {
-    //                currentChapter++;  // Move to the next chapter
-    //                currentRound = 0;  // Reset the round to the first round of the new chapter
-    //            }
-    //            else
-    //            {
-    //                // Handle the end of the last chapter, if necessary
-    //            }
-    //        }
-    //        SetupRound(); // 라운드 설정
-    //    }
-    //}
+  
 
     public void OnMonsterSpawned()
     {
