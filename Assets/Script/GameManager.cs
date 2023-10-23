@@ -78,6 +78,7 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
+        
         monsterSpawner = FindObjectOfType<MonsterSponer>();
 
         grid = new GameObject[spawnPositions.Length];
@@ -87,6 +88,8 @@ public class GameManager : MonoBehaviour
 
         SetupRound();
     }
+
+   
     public void IncreaseUnitAttackPowerByPercentage(string unitName, float percentage)
     {
         foreach (UnitEvolutionData unitData in unitEvolutionData)
