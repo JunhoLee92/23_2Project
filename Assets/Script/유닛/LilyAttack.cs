@@ -2,17 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class YukiAttack : MonoBehaviour
+public class LilyAttack : MonoBehaviour
 {
-    public float attackDamage = 12f;
-    public float attackSpeed = 1.4f;
-    public GameObject projectilePrefab;  // Reference to the projectile sprite prefab
-    /*public float attackRange = 50f; */      // Range within which Yuki starts attacking
-    private float attackInterval;
+    public float attackDamage = 17f;
+    public float attackSpeed = 1.8f; // 초당 공격 횟수
+    private float attackInterval; // 공격 간격 (초)
+    private float lastAttackTime; // 마지막 공격 시간
     private float nextAttackTime = 0f;
+    public GameObject projectilePrefab; // 발사체 프리팹
     private Unit unitScript;
+    private float poisonStack;
+    private float poisonDamagePercentage;
 
-    void Start()
+    private void Start()
     {
         attackInterval = 1f / attackSpeed;
 
@@ -27,21 +29,17 @@ public class YukiAttack : MonoBehaviour
         {
             Debug.Log("Unit script is attached. UnitType: " + unitScript.unitType);
         }
-
     }
 
-    void Update()
+    private void Update()
     {
-        // Find the closest monster within attack range
         GameObject target = FindClosestMonster();
 
         if (target && Time.time >= nextAttackTime)
         {
-            Shoot(target);
+            Attack(target);
             nextAttackTime = Time.time + attackInterval;
         }
-
-       
     }
 
     GameObject FindClosestMonster()
@@ -62,53 +60,38 @@ public class YukiAttack : MonoBehaviour
         }
         return closest;
     }
-
-    void Shoot(GameObject target)
+    private void Attack(GameObject target)
     {
-        GameObject projectile = Instantiate(projectilePrefab, transform.position, Quaternion.identity);
-        Projectile projectileScript = projectile.GetComponent<Projectile>();
+        GameObject Lilyprojectile = Instantiate(projectilePrefab, transform.position, Quaternion.identity);
+        LilyProjectile projectileScript = Lilyprojectile.GetComponent<LilyProjectile>();
         projectileScript.target = target;
         projectileScript.damage = attackDamage;
 
-        // Accessing the Unit script to get Yuki's current level
-        Unit unitScript = GetComponent<Unit>();
-
-        if (unitScript && unitScript.unitType == 1)  // Checking if it's Yuki
+        if (unitScript && unitScript.unitType == 2)  // Checking if it's Lily
         {
             Debug.Log("Unit Type: " + unitScript.unitType);
             Debug.Log("Unit Level: " + unitScript.unitLevel);
 
-            float freezeProbability = 0f;  // Initialize freeze probability
+
 
             if (unitScript.unitLevel == 1)
             {
-                freezeProbability = 0.15f;
+                poisonDamagePercentage = 0.15f;
 
             }
             else if (unitScript.unitLevel == 3)
             {
-                freezeProbability = 0.3f;
+                poisonDamagePercentage = 0.25f;
             }
 
-           
-
-            // Check if we should apply the freeze effect based on the probability
-            if (Random.Range(0f,1f) <= freezeProbability)
+            else if (unitScript.unitLevel == 5)
             {
-                
-               
-                MonsterController monsterScript = target.GetComponent<MonsterController>();
-                if (monsterScript)
-                {
-                    float freezeDuration = 1f;  // Default freeze duration
-                    if (unitScript.unitLevel == 5)
-                    {
-                        freezeDuration += 0.2f;
-                    }
-                    monsterScript.Slow(0.4f, freezeDuration);  // 1f slow amount means complete stop
-                }
-                Debug.Log("FrozenCheck");
+                poisonDamagePercentage = 0.30f;
+                poisonStack = 5;
             }
+            // 발사체 생성 및 발사
+           
+            // TODO: 발사체 방향 및 속도 설정
         }
     }
 }

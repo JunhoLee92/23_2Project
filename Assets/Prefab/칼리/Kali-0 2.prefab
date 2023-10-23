@@ -144,5 +144,5 @@ MonoBehaviour:
   attackDamage: 21
   attackRange: 1
   attackSpeed: 2.2
-  attackEffectPrefab: {fileID: 5342889563239923536, guid: d5415ac77ba58874ab7cfc7048e1663e, type: 3}
+  attackEffectPrefab: {fileID: 8889406255766441950, guid: e76620ae44b09ad4a8afe5d6970bf3a5, type: 3}
   effectDuration: 0.5
