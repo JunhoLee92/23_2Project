@@ -1,11 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+public enum MonsterType { Basic, Enhanced }
 
 public class MonsterController : MonoBehaviour
 {
-    private float speed = 2f;
-    public float Hp = 100f;  // Monster's health points
+    public MonsterType monsterType;
+    public float Hp;
+    public float speed;
     private float originalSpeed;
 
     private void Start()
