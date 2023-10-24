@@ -1,6 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 public enum MonsterType { Basic, Enhanced }
 
@@ -66,7 +64,7 @@ public class MonsterController : MonoBehaviour
     public void TakeDamage(float damage)
     {
         Hp -= damage;  // Subtract damage from HP
-
+        Debug.Log(Hp);
         // Check if the monster's HP is zero or below
         if (Hp <= 0f)
         {

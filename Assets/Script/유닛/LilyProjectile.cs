@@ -5,53 +5,6 @@ using UnityEngine;
 public class LilyProjectile : MonoBehaviour
 {
 
-    //public float speed = 5f;       // Speed of the projectile
-    //public GameObject target;     // Target monster
-    //public float damage = 17f;    // Damage dealt by the projectile
-    //public bool applyPoison; // 독 디버프 적용 여부
-    //public int poisonStacks = 1; // 독 중첩 횟수
-    //public float poisonDamagePercentage = 0.15f; // 독 데미지 퍼센트
-    //void Update()
-    //{
-    //    if (target == null)
-    //    {
-    //        Destroy(gameObject);  // Destroy the projectile if the target is null
-    //        return;
-    //    }
-
-    //    if (target != null)
-    //    {
-    //        Vector2 directionToTarget = (Vector2)target.transform.position - (Vector2)transform.position;
-    //        float distanceToTarget = directionToTarget.magnitude;
-
-    //        // 1. 위치 설정
-    //        transform.position = (Vector2)target.transform.position - 0.5f * directionToTarget.normalized * distanceToTarget;
-
-
-    //        // 2. 스케일 설정
-    //        transform.localScale = new Vector3(0.25f, distanceToTarget, 0.25f);
-
-    //        // 3. 회전 설정
-    //        float angle = Mathf.Atan2(directionToTarget.y, directionToTarget.x) * Mathf.Rad2Deg;
-    //        transform.rotation = Quaternion.Euler(0, 0, angle);
-    //    }
-    //    // Move the projectile towards the target
-
-
-    //    // Check for collision with the target
-    //    if (Vector2.Distance(transform.position, target.transform.position) <= 0.1f)
-    //    {
-    //        HitTarget();
-    //    }
-    //}
-
-    //void HitTarget()
-    //{
-    //    MonsterController monsterScript = target.GetComponent<MonsterController>();
-    //    monsterScript.TakeDamage(damage);
-
-    //    Destroy(gameObject);  // Destroy the projectile after hitting the target
-    //}
 
 
     public float damage = 17f;
@@ -59,36 +12,54 @@ public class LilyProjectile : MonoBehaviour
     public GameObject target;
     private Vector3 directionToTarget;
     private bool laserCreated = false;  // 레이저가 이미 생성되었는지 확인하는 변수
-
+    public Transform originatingUnitTransform;
+    float scalingSpeed = 10000.0f;
     private void Update()
     {
+        
+        //transform.localScale += new Vector3(0.25f, scalingSpeed, 0);
         if (target == null)
         {
             target = GameObject.FindGameObjectWithTag("Monster");
+            Destroy(this.gameObject);
         }
         else if (!laserCreated)  // 레이저가 아직 생성되지 않았으면
         {
             CreateLaser();
         }
+        if (target && originatingUnitTransform)
+        {
+            directionToTarget = (target.transform.position - originatingUnitTransform.position).normalized;
+            float distanceToTarget = Vector3.Distance(originatingUnitTransform.position, target.transform.position);
+
+            // 레이저 스케일 동적 조절
+            transform.localScale = new Vector3(0.25f, Mathf.Min(transform.localScale.y + scalingSpeed, distanceToTarget / 10), 0.25f);
+
+            // 레이저의 시작 위치 동적 조절
+            transform.position = originatingUnitTransform.position;
+        }
+
+        if (Vector2.Distance(transform.position, target.transform.position) <= 0.1f)
+        {
+            HitTarget();
+        }
     }
 
     void CreateLaser()
     {
-        directionToTarget = (target.transform.position - transform.position).normalized;
+        directionToTarget = (target.transform.position - transform.position);
         float distanceToTarget = Vector3.Distance(transform.position, target.transform.position);
 
-        // 길이 설정
-        transform.localScale = new Vector3(0.25f, distanceToTarget / 2, 0.25f);  // 길이를 반으로 나누어서 레이저가 유닛과 몬스터 사이에만 나타나게 합니다.
+        //레이저 스케일 조절
+        transform.localScale = new Vector3(0.25f, distanceToTarget / 10, 0.25f);
 
-        // 방향 설정
+        //레이저의 시작 위치를 변경하지 않도록 오프셋 조정
+        transform.position = transform.position + directionToTarget * (distanceToTarget / 2);
+
+        // 레이저 회전 설정
         transform.rotation = Quaternion.FromToRotation(Vector3.up, directionToTarget);
 
-        // 위치 재조정
-        transform.position = transform.position + directionToTarget * (distanceToTarget / 4);  // 레이저의 중심이 유닛과 몬스터 사이에 오도록 합니다.
-
-        laserCreated = true;  // 레이저 생성 표시
-
-        StartCoroutine(DestroyLaserAfterTime(laserDuration));  // 지속시간이 끝나면 레이저를 제거
+        HitTarget();
     }
 
     private IEnumerator DestroyLaserAfterTime(float duration)
@@ -105,5 +76,14 @@ public class LilyProjectile : MonoBehaviour
             monster.TakeDamage(damage);
             Destroy(gameObject);
         }
+    }
+
+    void HitTarget()
+    {
+        MonsterController monsterScript = target.GetComponent<MonsterController>();
+        monsterScript.TakeDamage(damage);
+        Debug.Log("hit");
+        /*Destroy(gameObject); */ // Destroy the projectile after hitting the target
+       
     }
 }

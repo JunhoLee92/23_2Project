@@ -64,6 +64,9 @@ public class LilyAttack : MonoBehaviour
     {
         GameObject Lilyprojectile = Instantiate(projectilePrefab, transform.position, Quaternion.identity);
         LilyProjectile projectileScript = Lilyprojectile.GetComponent<LilyProjectile>();
+
+        projectileScript.originatingUnitTransform = this.transform;  // 레이저에 생성 유닛의 Transform 값을 전달
+
         projectileScript.target = target;
         projectileScript.damage = attackDamage;
 
