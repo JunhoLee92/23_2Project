@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 4999672748012012676}
   - component: {fileID: -3824850898731667735}
   - component: {fileID: 2403524264739440342}
+  - component: {fileID: 483623048355671033}
   m_Layer: 0
   m_Name: LilyLazer
   m_TagString: Untagged
@@ -120,6 +121,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01e7ee7e93fbf094caa41329a39f4e55, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  poisonDamagePercentage: 0.05
+  damageInterval: 0.2
   damage: 17
   laserDuration: 0.5
   target: {fileID: 0}
@@ -150,3 +153,24 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 3.26, y: 10.56}
   m_EdgeRadius: 0
+--- !u!50 &483623048355671033
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7509413430293223689}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0

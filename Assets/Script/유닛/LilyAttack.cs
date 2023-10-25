@@ -7,12 +7,10 @@ public class LilyAttack : MonoBehaviour
     public float attackDamage = 17f;
     public float attackSpeed = 1.8f; // 초당 공격 횟수
     private float attackInterval; // 공격 간격 (초)
-    private float lastAttackTime; // 마지막 공격 시간
     private float nextAttackTime = 0f;
     public GameObject projectilePrefab; // 발사체 프리팹
     private Unit unitScript;
-    private float poisonStack;
-    private float poisonDamagePercentage;
+   
 
     private void Start()
     {
@@ -60,41 +58,35 @@ public class LilyAttack : MonoBehaviour
         }
         return closest;
     }
+   
+
     private void Attack(GameObject target)
     {
         GameObject Lilyprojectile = Instantiate(projectilePrefab, transform.position, Quaternion.identity);
         LilyProjectile projectileScript = Lilyprojectile.GetComponent<LilyProjectile>();
 
-        projectileScript.originatingUnitTransform = this.transform;  // 레이저에 생성 유닛의 Transform 값을 전달
+        projectileScript.originatingUnitTransform = this.transform;
 
         projectileScript.target = target;
         projectileScript.damage = attackDamage;
 
         if (unitScript && unitScript.unitType == 2)  // Checking if it's Lily
         {
-            Debug.Log("Unit Type: " + unitScript.unitType);
-            Debug.Log("Unit Level: " + unitScript.unitLevel);
-
-
-
             if (unitScript.unitLevel == 1)
             {
-                poisonDamagePercentage = 0.15f;
-
+                projectileScript.poisonDamagePercentage = 0.05f;
+                projectileScript.damageInterval = 0.2f;
             }
             else if (unitScript.unitLevel == 3)
             {
-                poisonDamagePercentage = 0.25f;
+                projectileScript.poisonDamagePercentage = 0.10f;
+                projectileScript.damageInterval = 0.2f;
             }
-
             else if (unitScript.unitLevel == 5)
             {
-                poisonDamagePercentage = 0.30f;
-                poisonStack = 5;
+                projectileScript.poisonDamagePercentage = 0.10f;
+                projectileScript.damageInterval = 0.15f;
             }
-            // 발사체 생성 및 발사
-           
-            // TODO: 발사체 방향 및 속도 설정
         }
     }
 }
