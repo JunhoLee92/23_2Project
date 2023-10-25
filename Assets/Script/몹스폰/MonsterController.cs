@@ -21,6 +21,11 @@ public class MonsterController : MonoBehaviour
 
         if (Vector2.Distance(transform.position, Vector2.zero) < 0.1f)
         {
+            BaseHealth baseHealth = FindObjectOfType<BaseHealth>();
+            if (baseHealth != null)
+            {
+                baseHealth.TakeDamage(10);  // 예: 본진에 10의 데미지를 입힘
+            }
             Destroy(gameObject);
         }
     }
