@@ -525,7 +525,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &226525731
 GameObject:
@@ -2965,7 +2965,7 @@ RectTransform:
   m_Children:
   - {fileID: 297830765}
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -4051,7 +4051,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2097449730
 GameObject:
@@ -4318,7 +4318,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2416215981608702596, guid: e30ceaa1faae3f74680cdf0a6428c394, type: 3}
       propertyPath: chapters.Array.data[0].rounds.Array.data[0].movesPerRound
-      value: 2
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 2416215981608702596, guid: e30ceaa1faae3f74680cdf0a6428c394, type: 3}
       propertyPath: chapters.Array.data[0].rounds.Array.data[0].spawnInterval
@@ -4482,7 +4482,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2416215981608702596, guid: e30ceaa1faae3f74680cdf0a6428c394, type: 3}
       propertyPath: chapters.Array.data[0].rounds.Array.data[0].spawnInfos.Array.data[1].Hp
-      value: 10
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 2416215981608702596, guid: e30ceaa1faae3f74680cdf0a6428c394, type: 3}
       propertyPath: chapters.Array.data[0].rounds.Array.data[1].spawnInfos.Array.data[0].Hp
@@ -4546,15 +4546,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2416215981608702596, guid: e30ceaa1faae3f74680cdf0a6428c394, type: 3}
       propertyPath: chapters.Array.data[0].rounds.Array.data[0].spawnInfos.Array.data[0].speed
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2416215981608702596, guid: e30ceaa1faae3f74680cdf0a6428c394, type: 3}
-      propertyPath: chapters.Array.data[0].rounds.Array.data[0].spawnInfos.Array.data[1].count
       value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 2416215981608702596, guid: e30ceaa1faae3f74680cdf0a6428c394, type: 3}
-      propertyPath: chapters.Array.data[0].rounds.Array.data[0].spawnInfos.Array.data[1].speed
+      propertyPath: chapters.Array.data[0].rounds.Array.data[0].spawnInfos.Array.data[1].count
       value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 2416215981608702596, guid: e30ceaa1faae3f74680cdf0a6428c394, type: 3}
+      propertyPath: chapters.Array.data[0].rounds.Array.data[0].spawnInfos.Array.data[1].speed
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2416215981608702596, guid: e30ceaa1faae3f74680cdf0a6428c394, type: 3}
       propertyPath: chapters.Array.data[0].rounds.Array.data[1].spawnInfos.Array.data[0].count
@@ -4694,7 +4694,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2416215981608702597, guid: e30ceaa1faae3f74680cdf0a6428c394, type: 3}
       propertyPath: m_RootOrder
-      value: 4
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2416215981608702597, guid: e30ceaa1faae3f74680cdf0a6428c394, type: 3}
       propertyPath: m_LocalPosition.x
@@ -4755,7 +4755,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2526660255437711142, guid: c2e6886372f8ab942b3345d16c07fe74, type: 3}
       propertyPath: m_RootOrder
-      value: 5
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 2526660255437711142, guid: c2e6886372f8ab942b3345d16c07fe74, type: 3}
       propertyPath: m_LocalPosition.x
@@ -4844,7 +4844,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7118081467946123831, guid: 85a999ae13d76cc43ba80a473afbfe6c, type: 3}
       propertyPath: m_RootOrder
-      value: 6
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 7118081467946123831, guid: 85a999ae13d76cc43ba80a473afbfe6c, type: 3}
       propertyPath: m_AnchorMax.x
