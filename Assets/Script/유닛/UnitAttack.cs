@@ -58,18 +58,17 @@ public class UnitAttack : MonoBehaviour
         }
 
         // Detect monsters within attack range using a simple overlap check
-        Collider2D[] hitMonsters = Physics2D.OverlapCircleAll(transform.position, attackRange);
+        Collider2D[] hitEntities = Physics2D.OverlapCircleAll(transform.position, attackRange);
 
-        foreach (var monster in hitMonsters)
+        foreach (var entity in hitEntities)
         {
-            // Assuming the monster has a tag "Monster"
-            if (monster.CompareTag("Monster"))
+            IDamageable damageableEntity = entity.GetComponent<IDamageable>();
+            if (damageableEntity != null)
             {
-                // Apply damage to the monster
-                monster.GetComponent<MonsterController>().TakeDamage(attackDamage);
+                // Apply damage to the entity (monster or boss)
+                damageableEntity.TakeDamage(attackDamage);
 
                 // Instantiate the attack effect sprite
-                
                 GameObject effectInstance = Instantiate(attackEffectPrefab, this.transform.position, Quaternion.identity);
                 effectInstance.transform.localScale = new Vector3(scalex, scaley, 1.0f);
                 // Destroy the effect sprite after the set duration

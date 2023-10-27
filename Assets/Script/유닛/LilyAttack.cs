@@ -62,9 +62,10 @@ public class LilyAttack : MonoBehaviour
 
     private void Attack(GameObject target)
     {
+        
         GameObject Lilyprojectile = Instantiate(projectilePrefab, transform.position, Quaternion.identity);
         LilyProjectile projectileScript = Lilyprojectile.GetComponent<LilyProjectile>();
-
+        
         projectileScript.originatingUnitTransform = this.transform;
 
         projectileScript.target = target;

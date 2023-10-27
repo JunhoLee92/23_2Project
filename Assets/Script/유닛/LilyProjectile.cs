@@ -15,7 +15,11 @@ public class LilyProjectile : MonoBehaviour
     private Vector3 directionToTarget;
     private bool laserCreated = false;  // 레이저가 이미 생성되었는지 확인하는 변수
     public Transform originatingUnitTransform;
-   
+    LilyAttack lilyAttack;
+    private void Start()
+    {
+        //lilyAttack = GetComponent<LilyAttack>();
+    }
     private void Update()
     {
 
@@ -24,8 +28,9 @@ public class LilyProjectile : MonoBehaviour
         {
             target = GameObject.FindGameObjectWithTag("Monster");
             Destroy(this.gameObject);
+
         }
-        else if (!laserCreated)  // 레이저가 아직 생성되지 않았으면
+        else   // 레이저가 아직 생성되지 않았으면
         {
             CreateLaser();
         }
@@ -49,6 +54,8 @@ public class LilyProjectile : MonoBehaviour
 
     void CreateLaser()
     {
+        
+
         directionToTarget = (target.transform.position - transform.position);
         float distanceToTarget = Vector3.Distance(transform.position, target.transform.position);
 
@@ -56,50 +63,63 @@ public class LilyProjectile : MonoBehaviour
         transform.localScale = new Vector3(0.25f, distanceToTarget / 10, 0.25f);
 
         //레이저의 시작 위치를 변경하지 않도록 오프셋 조정
-        transform.position = transform.position + directionToTarget * (distanceToTarget / 2);
+        //transform.position = transform.position + directionToTarget * (distanceToTarget / 2);
         transform.position = originatingUnitTransform.position;
 
         // 레이저 회전 설정
         transform.rotation = Quaternion.FromToRotation(Vector3.up, directionToTarget);
 
+        
+
         //HitTarget();
     }
 
-    private IEnumerator DestroyLaserAfterTime(float duration)
-    {
-        yield return new WaitForSeconds(duration);
-        Destroy(gameObject);
-    }
+    //private IEnumerator DestroyLaserAfterTime(float duration)
+    //{
+    //    yield return new WaitForSeconds(duration);
+    //    Destroy(gameObject);
+    //    laserCreated=false;
+    //}
 
     void OnTriggerEnter2D(Collider2D other)
     {
+        //Debug.Log("LilyProjectile collided with: " + other.gameObject.name);
+        //MonsterController monster = other.GetComponent<MonsterController>();
+        //if (monster != null && !isDealingDamage)
+        //{
+        //    StartCoroutine(DealDotDamage(monster));  // 도트 데미지 로직 시작
+        //}
+
         Debug.Log("LilyProjectile collided with: " + other.gameObject.name);
-        MonsterController monster = other.GetComponent<MonsterController>();
-        if (monster != null && !isDealingDamage)
+        IDamageable damageableEntity = other.GetComponent<IDamageable>();
+        if (damageableEntity != null && !isDealingDamage)
         {
-            StartCoroutine(DealDotDamage(monster));  // 도트 데미지 로직 시작
+            StartCoroutine(DealDotDamage(damageableEntity));  // DOT 데미지 처리 시작
         }
     }
 
-    void HitTarget()
-    {
-        MonsterController monsterScript = target.GetComponent<MonsterController>();
-        monsterScript.TakeDamage(damage);
-        Debug.Log("hit");
-        /*Destroy(gameObject); */ // Destroy the projectile after hitting the target
+    //void HitTarget()
+    //{
+    //    MonsterController monsterScript = target.GetComponent<MonsterController>();
+    //    monsterScript.TakeDamage(damage);
+    //    Debug.Log("hit");
+    //    /*Destroy(gameObject); */ // Destroy the projectile after hitting the target
 
-    }
+    //}
 
-    private IEnumerator DealDotDamage(MonsterController monster)
+    private IEnumerator DealDotDamage(IDamageable damageableEntity)
     {
+       
+
         isDealingDamage = true;
-        while (monster && monster.Hp > 0) // 몬스터가 존재하고 HP가 0 이상인 동안
+        while (damageableEntity != null) // 대상이 존재하고 체력이 0 이상인 경우
         {
             yield return new WaitForSeconds(damageInterval);
             float dotDamage = damage * poisonDamagePercentage;
-            monster.TakeDamage(dotDamage);
+            damageableEntity.TakeDamage(dotDamage);
         }
         isDealingDamage = false;
-        Destroy(gameObject); // 도트 데미지 적용이 끝나면 레이저 프로젝타일 파괴
+        //Destroy(gameObject);
+
     }
 }

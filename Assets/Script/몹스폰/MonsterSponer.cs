@@ -17,7 +17,7 @@ public class MonsterSponer : MonoBehaviour
     public bool spawnStarted = false;
     private GameManager gameManager;
     public int totalSpawnedCount = 0;
-    //private int totalMonstersToSpawnThisRound = 0;
+   
     private void Start()
     {
         gameManager = FindObjectOfType<GameManager>();
@@ -48,22 +48,6 @@ public class MonsterSponer : MonoBehaviour
 
     }
 
-
-
-
-
-    //void SpawnMonster(MonsterSpawnInfo spawnInfo)  ////반원형태로 스폰
-    //{
-    //    float angle = Random.Range(0, 180) * Mathf.Deg2Rad;
-    //    Vector2 spawnPosition = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)) * spawnRadius;
-
-    //    // Using the correct monster prefab from the list
-    //    GameObject spawnedMonster = Instantiate(monsterPrefabs[(int)spawnInfo.monsterType], spawnPosition, Quaternion.identity);
-
-    //    spawnedMonster.GetComponent<MonsterController>().Hp = spawnInfo.Hp;
-    //    spawnedMonster.GetComponent<MonsterController>().speed = spawnInfo.speed;
-    //    gameManager.OnMonsterSpawned();
-    //}
 
 
     void SpawnMonster(MonsterSpawnInfo spawnInfo)
