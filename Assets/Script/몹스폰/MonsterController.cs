@@ -1,15 +1,15 @@
 using System.Collections;
 using UnityEngine;
-public enum MonsterType { Basic, Enhanced }
+public enum MonsterType { Basic, Enhanced}
 
-public class MonsterController : MonoBehaviour
+public class MonsterController : MonoBehaviour, IDamageable
 {
     public MonsterType monsterType;
     public float Hp;
     public float speed;
     private float originalSpeed;
     public GameObject slowEffectPrefab;  // 슬로우 애니메이션 프리팹을 참조하는 변수
-    private GameObject currentSlowEffect;  
+    private GameObject currentSlowEffect;
 
     private void Start()
     {
@@ -44,10 +44,10 @@ public class MonsterController : MonoBehaviour
 
     IEnumerator ApplySlow(float slowAmount, float duration)
     {
-       
-        
+
+
         speed *= (1f - slowAmount);
-        
+
         currentSlowEffect = Instantiate(slowEffectPrefab, transform.position, Quaternion.identity, transform);
 
         Debug.Log("Frozen");
@@ -68,6 +68,9 @@ public class MonsterController : MonoBehaviour
 
     public void TakeDamage(float damage)
     {
+        if (this == null || gameObject == null)
+            return;
+
         Hp -= damage;  // Subtract damage from HP
         Debug.Log(Hp);
         // Check if the monster's HP is zero or below
@@ -79,9 +82,18 @@ public class MonsterController : MonoBehaviour
 
     void Die()
     {
+
         // Here you can add logic for what happens when the monster dies,
         // such as playing a death animation, adding score, etc.
-        Destroy(gameObject);  // For now, simply destroy the monster game object
-    }
+        if (this.gameObject != null)
+        {
+            Destroy(gameObject);  // For now, simply destroy the monster game object
 
+        }
+        else
+        {
+            return;
+        }
+
+    }
 }

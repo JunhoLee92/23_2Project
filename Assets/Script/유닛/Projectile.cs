@@ -32,9 +32,13 @@ public class Projectile : MonoBehaviour
 
     void HitTarget()
     {
-        MonsterController monsterScript = target.GetComponent<MonsterController>();
-        monsterScript.TakeDamage(damage);
-        
+        //MonsterController monsterScript = target.GetComponent<MonsterController>();
+        //monsterScript.TakeDamage(damage);
+        IDamageable damageableEntity = target.GetComponent<IDamageable>();
+        if (damageableEntity != null)
+        {
+            damageableEntity.TakeDamage(damage);
+        }
         Destroy(gameObject);  // Destroy the projectile after hitting the target
     }
 }

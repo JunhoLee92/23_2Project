@@ -21,23 +21,27 @@ public class GameManager : MonoBehaviour
     private GameObject[] grid;
     private GameObject selectedUnit;
     private bool isFirstClick = true;
-    public int movesPerRound ; // 예: 5회의 이동 횟수를 가진다고 가정
+    public int movesPerRound; // 예: 5회의 이동 횟수를 가진다고 가정
     private int currentMoves = 0;
     private MonsterSponer monsterSpawner;
     public Text movesText;
+    private BossSpawner bossSpawner;
+    private BossController bossController; //보스컨트롤러 
     [System.Serializable]
     public class RoundConfig
     {
         public int movesPerRound;
         public int monstersPerSpawn; //한번에 몇마리 생성할지
-        
+        public bool isBossRound;  // 이 라운드에 보스가 스폰되는지 여부
+        public GameObject bossPrefab;
+
         public float spawnInterval;
         public List<MonsterSpawnInfo> spawnInfos;
-        
+
     }
 
     [System.Serializable]
-    public class MonsterSpawnInfo
+    public class MonsterSpawnInfo  //몬스터 스폰 정보
     {
         public MonsterType monsterType;
         public int count;
@@ -89,9 +93,10 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-       
-        monsterSpawner = FindObjectOfType<MonsterSponer>();
 
+        monsterSpawner = FindObjectOfType<MonsterSponer>();
+        bossSpawner = FindObjectOfType<BossSpawner>();
+        bossController = FindObjectOfType<BossController>(); //보스컨트롤러
         grid = new GameObject[spawnPositions.Length];
         InitGrid();
 
@@ -100,21 +105,12 @@ public class GameManager : MonoBehaviour
         SetupRound();
     }
 
+
     public RoundConfig GetCurrentRoundConfig()
     {
         return chapters[currentChapter].rounds[currentRound];
     }
-    public void IncreaseUnitAttackPowerByPercentage(string unitName, float percentage)
-    {
-        foreach (UnitEvolutionData unitData in unitEvolutionData)
-        {
-            if (unitData.unitName == unitName)
-            {
-                unitData.baseAttackPower += unitData.baseAttackPower * (percentage / 100f);
-                break;
-            }
-        }
-    }
+
     void SetupRound()
     {
         Debug.Log("Setting up round: " + currentRound);
@@ -132,13 +128,19 @@ public class GameManager : MonoBehaviour
         {
             // 게임 종료 또는 다른 로직
         }
-        
-    }
 
-  
+    }
+    //void StartBossPhase()
+    //{
+    //    int bossPhase = 1;
+    //    bossSpawner.SpawnBoss(bossPhase);  // BossSpawner를 사용하여 보스 스폰
+    //}
+
 
     public void OnMonsterSpawned()
     {
+        RoundConfig currentRoundConfig = chapters[currentChapter].rounds[currentRound];
+
         Debug.Log("OnMonsterSpawned called");
 
         int totalMonstersForThisRound = 0;
@@ -146,6 +148,19 @@ public class GameManager : MonoBehaviour
         {
             totalMonstersForThisRound += info.count;
         }
+
+
+        // 현재 라운드가 10라운드이며 보스 라운드인 경우
+        //if (currentRound == 10 && currentRoundConfig.isBossRound)
+        //{
+        //    StartBossPhase();
+        //    // 보스가 살아있는지 확인
+        //    if (bossController.IsAlive)
+        //    {
+        //        // 보스가 살아있으면 다음 라운드 또는 챕터로 이동하지 않음
+        //        return;
+        //    }
+        //}
 
         if (monsterSpawner.totalSpawnedCount >= totalMonstersForThisRound)
         {
@@ -190,12 +205,12 @@ public class GameManager : MonoBehaviour
 
     public void OnUnitClicked(GameObject unit)
     {
+        RoundConfig currentRoundConfig = chapters[currentChapter].rounds[currentRound];
         if (isFirstClick)
         {
             selectedUnit = unit;
             isFirstClick = false;
-            // Highlight selected units
-            // selectedUnit.GetComponent<SpriteRenderer>().color = Color.blue;
+
         }
         else
         {
@@ -203,7 +218,7 @@ public class GameManager : MonoBehaviour
             {
                 selectedUnit = null;
                 isFirstClick = true;
-                unit.GetComponent<SpriteRenderer>().color = Color.white;
+                //unit.GetComponent<SpriteRenderer>().color = Color.white;
 
                 // Create a new level 0 unit of the same type in the position of the first clicked unit
                 int newUnitType = selectedUnit.GetComponent<Unit>().unitType;
@@ -261,7 +276,14 @@ public class GameManager : MonoBehaviour
                 UpdateMovesText();
                 if (currentMoves >= movesPerRound)
                 {
-                    monsterSpawner.spawnStarted = true;
+                    if (currentRoundConfig.isBossRound)
+                    {
+                        bossSpawner.SpawnBoss();
+                    }
+                    else
+                    {
+                        monsterSpawner.spawnStarted = true;
+                    }
                     currentMoves = 0; // 이동 횟수를 리셋
 
                 }
@@ -271,7 +293,7 @@ public class GameManager : MonoBehaviour
             isFirstClick = true;
         }
 
-        // 유닛이 움직이거나 진화했을 때
+
 
         void SwapUnits(GameObject unit1, GameObject unit2)
         {
@@ -280,5 +302,18 @@ public class GameManager : MonoBehaviour
             unit2.transform.position = tempPosition;
         }
     }
+
+
+    public void IncreaseUnitAttackPowerByPercentage(string unitName, float percentage)
+    {
+        foreach (UnitEvolutionData unitData in unitEvolutionData)
+        {
+            if (unitData.unitName == unitName)
+            {
+                unitData.baseAttackPower += unitData.baseAttackPower * (percentage / 100f);
+                break;
+            }
+        }
+    } //라운드보상
 
 }
