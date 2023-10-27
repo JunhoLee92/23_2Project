@@ -147,5 +147,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   AttackPower: 50
-  maxHealth: 17500
-  attackPreparationTime: 30
+  maxHealth: 5000
+  attackPreparationTime: 50
+  Phase2Hp: 5000
+  Phase3Hp: 7500

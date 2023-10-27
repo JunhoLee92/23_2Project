@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class Projectile : MonoBehaviour
 {
-    public float speed = 5f;       // Speed of the projectile
+    public float speed = 10f;       // Speed of the projectile
     public GameObject target;     // Target monster
     public float damage = 12f;    // Damage dealt by the projectile
     public float slowAmount = 0.4f;   // Slow percentage
