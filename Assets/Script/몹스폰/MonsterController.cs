@@ -10,7 +10,9 @@ public class MonsterController : MonoBehaviour, IDamageable
     private float originalSpeed;
     public GameObject slowEffectPrefab;  // 슬로우 애니메이션 프리팹을 참조하는 변수
     private GameObject currentSlowEffect;
-
+    private int poisonStacks = 0;
+    public int maxPoisonStacks = 3;
+    private float PoisonDamage=0;
     private void Start()
     {
         originalSpeed = speed;
@@ -79,6 +81,32 @@ public class MonsterController : MonoBehaviour, IDamageable
             Die();  // If yes, trigger the Die method
         }
     }
+    public int MaxPoisonStacks
+    {
+        get { return maxPoisonStacks; }
+        set { maxPoisonStacks = value; }
+    }
+    public void PoisonStack(float Damage)
+    {
+        poisonStacks++;
+        PoisonDamage = Damage;
+        if (poisonStacks == 1)  // If it's the first stack, start the poison routine
+        {
+            StartCoroutine(PoisonDamageRoutine());
+        }
+    }
+    private IEnumerator PoisonDamageRoutine()
+    {
+        while (poisonStacks > 0)
+        {
+            yield return new WaitForSeconds(1.0f); // Every 1 second
+            for (int i = 0; i < poisonStacks; i++)
+            {
+                TakeDamage(PoisonDamage);
+                Debug.Log("poisonDamage" + PoisonDamage);
+            }
+        }
+    }
 
     void Die()
     {
@@ -87,7 +115,8 @@ public class MonsterController : MonoBehaviour, IDamageable
         // such as playing a death animation, adding score, etc.
         if (this.gameObject != null)
         {
-            Destroy(gameObject);  // For now, simply destroy the monster game object
+            
+            Destroy(gameObject,0.5f);  // For now, simply destroy the monster game object
 
         }
         else

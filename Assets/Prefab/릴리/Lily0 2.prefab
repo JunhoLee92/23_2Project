@@ -141,7 +141,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 14a6357fd96825e4a87798e31a425f6a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  laserPrefab: {fileID: 7509413430293223689, guid: dbcfa3443b46f454380ebe3f59995293, type: 3}
+  laserPrefab: {fileID: 621768525366372826, guid: 21363a83b527eda4c87e785ccaa95aee, type: 3}
   damage: 17
   damageInterval: 0.2
   poisonDamagePercentage: 0.05
