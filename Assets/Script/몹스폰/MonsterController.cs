@@ -86,15 +86,17 @@ public class MonsterController : MonoBehaviour, IDamageable
         get { return maxPoisonStacks; }
         set { maxPoisonStacks = value; }
     }
+
     public void PoisonStack(float Damage)
     {
-        poisonStacks++;
+        poisonStacks = Mathf.Min(poisonStacks + 1, maxPoisonStacks);  // Ensure poison stacks don't exceed maxPoisonStacks
         PoisonDamage = Damage;
         if (poisonStacks == 1)  // If it's the first stack, start the poison routine
         {
             StartCoroutine(PoisonDamageRoutine());
         }
     }
+
     private IEnumerator PoisonDamageRoutine()
     {
         while (poisonStacks > 0)
