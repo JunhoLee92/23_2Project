@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.Tilemaps;
 using UnityEngine;
 using static UnityEngine.GraphicsBuffer;
 using static UnityEngine.RuleTile.TilingRuleOutput;
@@ -186,17 +185,17 @@ public class LilyAttack : MonoBehaviour
         {
             if (unitScript.unitLevel == 1)
             {
-                poisonDamagePercentage = 0.15f;
+                poisonDamagePercentage = 0.05f;
 
             }
             else if (unitScript.unitLevel == 3)
             {
-                poisonDamagePercentage = 0.25f;
+                poisonDamagePercentage = 0.1f;
 
             }
             else if (unitScript.unitLevel == 5)
             {
-                poisonDamagePercentage = 0.30f;
+                poisonDamagePercentage = 0.20f;
                 damageableEntity.MaxPoisonStacks = 5;
             }
         }
