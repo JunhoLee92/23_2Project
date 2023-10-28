@@ -25,6 +25,7 @@ public class GameManager : MonoBehaviour
     private int currentMoves = 0;
     private MonsterSponer monsterSpawner;
     public Text movesText;
+    public Text RoundText;
     private BossSpawner bossSpawner;
     private BossController bossController; //보스컨트롤러 
     [System.Serializable]
@@ -101,6 +102,7 @@ public class GameManager : MonoBehaviour
         InitGrid();
 
         UpdateMovesText();
+        UpdateRoundsText();
 
         SetupRound();
     }
@@ -180,12 +182,18 @@ public class GameManager : MonoBehaviour
                     // Handle the end of the last chapter, if necessary
                 }
             }
+            UpdateRoundsText(); //라운드 텍스트
             SetupRound();  // 라운드 설정
         }
     }
     void UpdateMovesText()
     {
         movesText.text = (movesPerRound - currentMoves).ToString();
+    }
+
+    void UpdateRoundsText()
+    {
+        RoundText.text = (currentRound.ToString()+1);
     }
     void InitGrid()
     {
