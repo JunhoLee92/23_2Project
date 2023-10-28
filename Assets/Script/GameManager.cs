@@ -28,6 +28,8 @@ public class GameManager : MonoBehaviour
     public Text RoundText;
     private BossSpawner bossSpawner;
     private BossController bossController; //보스컨트롤러 
+    public bool isMonsterSpawning = false;
+    private int activeMonsters;
     [System.Serializable]
     public class RoundConfig
     {
@@ -87,7 +89,7 @@ public class GameManager : MonoBehaviour
             return;
         }
         _instance = this;
-        DontDestroyOnLoad(this.gameObject);
+        //DontDestroyOnLoad(this.gameObject);
     }
 
 
@@ -142,32 +144,24 @@ public class GameManager : MonoBehaviour
     public void OnMonsterSpawned()
     {
         RoundConfig currentRoundConfig = chapters[currentChapter].rounds[currentRound];
+        isMonsterSpawning = true;
 
         Debug.Log("OnMonsterSpawned called");
 
         int totalMonstersForThisRound = 0;
         foreach (MonsterSpawnInfo info in chapters[currentChapter].rounds[currentRound].spawnInfos)
         {
+            
             totalMonstersForThisRound += info.count;
+            activeMonsters = totalMonstersForThisRound;
         }
 
 
-        // 현재 라운드가 10라운드이며 보스 라운드인 경우
-        //if (currentRound == 10 && currentRoundConfig.isBossRound)
-        //{
-        //    StartBossPhase();
-        //    // 보스가 살아있는지 확인
-        //    if (bossController.IsAlive)
-        //    {
-        //        // 보스가 살아있으면 다음 라운드 또는 챕터로 이동하지 않음
-        //        return;
-        //    }
-        //}
 
         if (monsterSpawner.totalSpawnedCount >= totalMonstersForThisRound)
         {
             monsterSpawner.spawnStarted = false;  // 스폰 중지
-
+            
             currentRound++;  // 다음 라운드로
 
             if (currentRound >= chapters[currentChapter].rounds.Length)  // Check if all rounds in the current chapter are completed
@@ -186,6 +180,15 @@ public class GameManager : MonoBehaviour
             SetupRound();  // 라운드 설정
         }
     }
+
+    public void OnMonsterDestroyed()
+    {
+        activeMonsters--;
+        if (activeMonsters <= 0)
+        {
+            isMonsterSpawning = false;
+        }
+    }
     void UpdateMovesText()
     {
         movesText.text = (movesPerRound - currentMoves).ToString();
@@ -193,7 +196,7 @@ public class GameManager : MonoBehaviour
 
     void UpdateRoundsText()
     {
-        RoundText.text = (currentRound.ToString()+1);
+        RoundText.text = (currentRound+1).ToString();
     }
     void InitGrid()
     {
@@ -213,6 +216,11 @@ public class GameManager : MonoBehaviour
 
     public void OnUnitClicked(GameObject unit)
     {
+        // 몬스터 스폰 중에는 아무런 동작도 수행하지 않음
+        if (isMonsterSpawning)
+        {
+            return;
+        }
         RoundConfig currentRoundConfig = chapters[currentChapter].rounds[currentRound];
         if (isFirstClick)
         {
@@ -226,15 +234,14 @@ public class GameManager : MonoBehaviour
             {
                 selectedUnit = null;
                 isFirstClick = true;
-                //unit.GetComponent<SpriteRenderer>().color = Color.white;
-
-                // Create a new level 0 unit of the same type in the position of the first clicked unit
-                int newUnitType = selectedUnit.GetComponent<Unit>().unitType;
-                int newUnitLevel = 0; // Always create a level 0 unit
-                GameObject newUnitPrefab = unitEvolutionData[newUnitType].unitPrefabs[newUnitLevel];
-                GameObject newUnit = Instantiate(newUnitPrefab, selectedUnit.transform.position, Quaternion.identity);
-                newUnit.GetComponent<Unit>().unitType = newUnitType; // Set the correct unit type
-                newUnit.GetComponent<Unit>().SetGridPosition(selectedUnit.GetComponent<Unit>().gridIndex);
+                
+                //// Create a new level 0 unit of the same type in the position of the first clicked unit
+                //int newUnitType = selectedUnit.GetComponent<Unit>().unitType;
+                //int newUnitLevel = 0; // Always create a level 0 unit
+                //GameObject newUnitPrefab = unitEvolutionData[newUnitType].unitPrefabs[newUnitLevel];
+                //GameObject newUnit = Instantiate(newUnitPrefab, selectedUnit.transform.position, Quaternion.identity);
+                //newUnit.GetComponent<Unit>().unitType = newUnitType; // Set the correct unit type
+                //newUnit.GetComponent<Unit>().SetGridPosition(selectedUnit.GetComponent<Unit>().gridIndex);
                 return;
             }
 

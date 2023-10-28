@@ -8,6 +8,6 @@ public class SceneChanger1 : MonoBehaviour
     // Start is called before the first frame update
     public void OnClick()
     {
-        SceneManager.LoadScene("Squad");
+        SceneManager.LoadScene("Ingame");
     }
 }

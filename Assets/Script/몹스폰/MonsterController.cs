@@ -13,9 +13,11 @@ public class MonsterController : MonoBehaviour, IDamageable
     private int poisonStacks = 0;
     public int maxPoisonStacks = 3;
     private float PoisonDamage=0;
+    GameManager gameManager;
     private void Start()
     {
         originalSpeed = speed;
+        gameManager = GameManager.Instance;
     }
     void Update()
     {
@@ -117,7 +119,7 @@ public class MonsterController : MonoBehaviour, IDamageable
         // such as playing a death animation, adding score, etc.
         if (this.gameObject != null)
         {
-            
+            gameManager.OnMonsterDestroyed();
             Destroy(gameObject,0.5f);  // For now, simply destroy the monster game object
 
         }
