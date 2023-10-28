@@ -170,48 +170,97 @@ public class LilyAttack : MonoBehaviour
         }
     }
 
+    //void ShootLaser(GameObject target)
+    //{
+       
+       
+    //        GameObject laser = Instantiate(laserPrefab, transform.position, Quaternion.identity,transform);
+    //    laser.transform.up = target.transform.position - transform.position;
+    //    float laserLength = Vector2.Distance(transform.position, target.transform.position);
+    //   laser.transform.localScale = new Vector2(1, laserLength / 4.5f);
+    //    // Deal damage to the monster
+    //    IDamageable damageableEntity = target.GetComponent<IDamageable>();
+
+    //    if (unitScript && unitScript.unitType == 2)  // Checking if it's Lily
+    //    {
+    //        if (unitScript.unitLevel == 1)
+    //        {
+    //            poisonDamagePercentage = 0.05f;
+
+    //        }
+    //        else if (unitScript.unitLevel == 3)
+    //        {
+    //            poisonDamagePercentage = 0.1f;
+
+    //        }
+    //        else if (unitScript.unitLevel == 5)
+    //        {
+    //            poisonDamagePercentage = 0.20f;
+    //            damageableEntity.MaxPoisonStacks = 5;
+    //        }
+    //    }
+
+    //    if (damageableEntity != null)
+    //    {
+            
+    //        damageableEntity.TakeDamage(AttackDamage);
+    //        damageableEntity.PoisonStack(poisonDamagePercentage * AttackDamage);
+    //    }
+
+
+
+       
+    //    Destroy(laser, 0.5f);
+    //}
+
+    //For Test: Lily Attack Delay 1sec//
+
     void ShootLaser(GameObject target)
     {
-       
-       
-            GameObject laser = Instantiate(laserPrefab, transform.position, Quaternion.identity,transform);
+        GameObject laser = Instantiate(laserPrefab, transform.position, Quaternion.identity, transform);
         laser.transform.up = target.transform.position - transform.position;
         float laserLength = Vector2.Distance(transform.position, target.transform.position);
-       laser.transform.localScale = new Vector2(1, laserLength / 4.5f);
-        // Deal damage to the monster
-        IDamageable damageableEntity = target.GetComponent<IDamageable>();
+        laser.transform.localScale = new Vector2(1, laserLength / 4.5f);
 
-        if (unitScript && unitScript.unitType == 2)  // Checking if it's Lily
-        {
-            if (unitScript.unitLevel == 1)
-            {
-                poisonDamagePercentage = 0.05f;
+        // 데미지를 입히는 부분을 코루틴으로 변경
+        StartCoroutine(DealDamageWithDelay(target, 1.0f));
 
-            }
-            else if (unitScript.unitLevel == 3)
-            {
-                poisonDamagePercentage = 0.1f;
-
-            }
-            else if (unitScript.unitLevel == 5)
-            {
-                poisonDamagePercentage = 0.20f;
-                damageableEntity.MaxPoisonStacks = 5;
-            }
-        }
-
-        if (damageableEntity != null)
-        {
-            damageableEntity.TakeDamage(AttackDamage);
-            damageableEntity.PoisonStack(poisonDamagePercentage * AttackDamage);
-        }
-
-
-
-       
         Destroy(laser, 0.5f);
     }
 
+    IEnumerator DealDamageWithDelay(GameObject target, float delay)
+    {
+        yield return new WaitForSeconds(delay);
+
+        if (target == null)  // Check if the target GameObject is destroyed
+        {
+            yield break;  // Exit the coroutine if the target is destroyed
+        }
+
+        IDamageable damageableEntity = target.GetComponent<IDamageable>();
+        if (damageableEntity != null)
+        {
+            if (unitScript && unitScript.unitType == 2)  // Checking if it's Lily
+            {
+                if (unitScript.unitLevel == 1)
+                {
+                    poisonDamagePercentage = 0.05f;
+                }
+                else if (unitScript.unitLevel == 3)
+                {
+                    poisonDamagePercentage = 0.1f;
+                }
+                else if (unitScript.unitLevel == 5)
+                {
+                    poisonDamagePercentage = 0.20f;
+                    damageableEntity.MaxPoisonStacks = 5;
+                }
+            }
+
+            damageableEntity.TakeDamage(AttackDamage);
+            damageableEntity.PoisonStack(poisonDamagePercentage * AttackDamage);
+        }
+    }
     GameObject FindClosestMonster()
     {
         GameObject[] monsters = GameObject.FindGameObjectsWithTag("Monster");
