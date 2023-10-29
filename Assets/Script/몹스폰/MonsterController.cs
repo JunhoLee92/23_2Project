@@ -120,7 +120,7 @@ public class MonsterController : MonoBehaviour, IDamageable
         if (this.gameObject != null)
         {
             gameManager.OnMonsterDestroyed();
-            Destroy(gameObject,0.5f);  // For now, simply destroy the monster game object
+            Destroy(gameObject);  // For now, simply destroy the monster game object
 
         }
         else

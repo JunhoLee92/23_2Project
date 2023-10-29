@@ -220,12 +220,12 @@ public class LilyAttack : MonoBehaviour
         GameObject laser = Instantiate(laserPrefab, transform.position, Quaternion.identity, transform);
         laser.transform.up = target.transform.position - transform.position;
         float laserLength = Vector2.Distance(transform.position, target.transform.position);
-        laser.transform.localScale = new Vector2(1, laserLength / 4.5f);
+        laser.transform.localScale = new Vector2(0.5f, laserLength / 4.5f);
 
         // 데미지를 입히는 부분을 코루틴으로 변경
-        StartCoroutine(DealDamageWithDelay(target, 1.0f));
+        StartCoroutine(DealDamageWithDelay(target,0.3f));
 
-        Destroy(laser, 0.5f);
+        Destroy(laser,0.3f);
     }
 
     IEnumerator DealDamageWithDelay(GameObject target, float delay)
