@@ -73,10 +73,7 @@ public class MonsterController : MonoBehaviour, IDamageable
     {
         
         float Hprate = Hp / MaxHp;
-        Debug.Log("최대체력" + MaxHp);
-        Debug.Log("현재체력" + Hp);
-        Debug.Log("현재체력비율" + Hprate);
-        Debug.Log("필요체력비율" + ExecuteHpRate);
+        
        
         if (Hprate <= ExecuteHpRate)
         {
@@ -95,7 +92,7 @@ public class MonsterController : MonoBehaviour, IDamageable
         currentExecuteEffect = Instantiate(executeEffectPrefab, transform.position, Quaternion.identity, transform);
 
         Debug.Log("Execute");
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.3f);
         
         if (currentExecuteEffect != null)
         {
