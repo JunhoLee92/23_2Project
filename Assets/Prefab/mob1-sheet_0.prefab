@@ -149,8 +149,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   monsterType: 0
   Hp: 100
+  MaxHp: 0
   speed: 0
   slowEffectPrefab: {fileID: 529208772664306363, guid: 46cd643c3a598da46a51c6dffae144a4, type: 3}
+  executeEffectPrefab: {fileID: 1504060381473831597, guid: e29da5f2bb533ed43b6c5448ac16fb9a, type: 3}
+  maxPoisonStacks: 3
 --- !u!114 &5257411977410277725
 MonoBehaviour:
   m_ObjectHideFlags: 0
