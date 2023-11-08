@@ -6,10 +6,13 @@ public class MonsterController : MonoBehaviour, IDamageable
 {
     public MonsterType monsterType;
     public float Hp;
+    public float MaxHp;
     public float speed;
     private float originalSpeed;
     public GameObject slowEffectPrefab;  // 슬로우 애니메이션 프리팹을 참조하는 변수
     private GameObject currentSlowEffect;
+    public GameObject executeEffectPrefab;
+    private GameObject currentExecuteEffect;
     private int poisonStacks = 0;
     public int maxPoisonStacks = 3;
     private float PoisonDamage=0;
@@ -18,6 +21,7 @@ public class MonsterController : MonoBehaviour, IDamageable
     {
         originalSpeed = speed;
         gameManager = GameManager.Instance;
+        MaxHp = Hp;
     }
     void Update()
     {
@@ -63,6 +67,43 @@ public class MonsterController : MonoBehaviour, IDamageable
         }
 
         speed = originalSpeed;
+    }
+
+    public void Execute(float ExecuteHpRate)
+    {
+        
+        float Hprate = Hp / MaxHp;
+        Debug.Log("최대체력" + MaxHp);
+        Debug.Log("현재체력" + Hp);
+        Debug.Log("현재체력비율" + Hprate);
+        Debug.Log("필요체력비율" + ExecuteHpRate);
+       
+        if (Hprate <= ExecuteHpRate)
+        {
+            Debug.Log("처형");
+            StartCoroutine(ApplyExecute());
+            
+        }
+       
+        
+    }
+
+
+    IEnumerator ApplyExecute()
+    {
+
+        currentExecuteEffect = Instantiate(executeEffectPrefab, transform.position, Quaternion.identity, transform);
+
+        Debug.Log("Execute");
+        yield return new WaitForSeconds(0.5f);
+        
+        if (currentExecuteEffect != null)
+        {
+            Destroy(currentExecuteEffect);
+        }
+        Die();
+
+        
     }
     //public void DecreaseSpeed(float reductionAmount)
     //{
