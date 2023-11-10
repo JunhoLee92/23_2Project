@@ -19,14 +19,7 @@ public class YukiAttack : MonoBehaviour
         unitScript = GetComponent<Unit>();
 
         // Add the following debug lines
-        if (unitScript == null)
-        {
-            Debug.LogError("Unit script is not attached!");
-        }
-        else
-        {
-            Debug.Log("Unit script is attached. UnitType: " + unitScript.unitType);
-        }
+       
 
     }
 

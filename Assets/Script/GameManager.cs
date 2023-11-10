@@ -11,12 +11,13 @@ public class UnitEvolutionData
     public string unitName;
     public int maxLevel = 5;
     public GameObject[] unitPrefabs;
-    public float baseAttackPower = 10f;
+    public bool isChecked; //배열 제외 여부
 }
 
 public class GameManager : MonoBehaviour
 {
     public UnitEvolutionData[] unitEvolutionData; // Define this array in the inspector
+    private UnitEvolutionData[] filteredEvolutions; //FilteredEvolutonData
     public Transform[] spawnPositions;
     private GameObject[] grid;
     private GameObject selectedUnit;
@@ -101,6 +102,29 @@ public class GameManager : MonoBehaviour
         bossSpawner = FindObjectOfType<BossSpawner>();
         bossController = FindObjectOfType<BossController>(); //보스컨트롤러
         grid = new GameObject[spawnPositions.Length];
+
+        //유닛정보 필터넣기
+        int count = 0;
+        foreach (var evolution in unitEvolutionData)
+        {
+            if (evolution.isChecked)
+            {
+                count++;
+            }
+        }
+
+        // 필터링된 배열을 새로 만들기
+        filteredEvolutions = new UnitEvolutionData[count];
+        int index = 0;
+        foreach (var evolution in unitEvolutionData)
+        {
+            if (evolution.isChecked)
+            {
+                filteredEvolutions[index] = evolution;
+                index++;
+            }
+        }
+
         InitGrid();
 
         UpdateMovesText();
@@ -134,11 +158,7 @@ public class GameManager : MonoBehaviour
         }
 
     }
-    //void StartBossPhase()
-    //{
-    //    int bossPhase = 1;
-    //    bossSpawner.SpawnBoss(bossPhase);  // BossSpawner를 사용하여 보스 스폰
-    //}
+   
 
 
     public void OnMonsterSpawned()
@@ -202,9 +222,9 @@ public class GameManager : MonoBehaviour
     {
         for (int i = 0; i < spawnPositions.Length; i++)
         {
-            int randomUnitType = Random.Range(0, unitEvolutionData.Length);
+            int randomUnitType = Random.Range(0, filteredEvolutions.Length);
             int initialLevel = 0; // Start with level 0 units
-            GameObject unitPrefab = unitEvolutionData[randomUnitType].unitPrefabs[initialLevel];
+            GameObject unitPrefab = filteredEvolutions[randomUnitType].unitPrefabs[initialLevel];
             GameObject unit = Instantiate(unitPrefab, spawnPositions[i].position, Quaternion.identity);
             unit.GetComponent<Unit>().unitType = randomUnitType;
             unit.GetComponent<Unit>().unitLevel = initialLevel;
@@ -235,13 +255,7 @@ public class GameManager : MonoBehaviour
                 selectedUnit = null;
                 isFirstClick = true;
                 
-                //// Create a new level 0 unit of the same type in the position of the first clicked unit
-                //int newUnitType = selectedUnit.GetComponent<Unit>().unitType;
-                //int newUnitLevel = 0; // Always create a level 0 unit
-                //GameObject newUnitPrefab = unitEvolutionData[newUnitType].unitPrefabs[newUnitLevel];
-                //GameObject newUnit = Instantiate(newUnitPrefab, selectedUnit.transform.position, Quaternion.identity);
-                //newUnit.GetComponent<Unit>().unitType = newUnitType; // Set the correct unit type
-                //newUnit.GetComponent<Unit>().SetGridPosition(selectedUnit.GetComponent<Unit>().gridIndex);
+                
                 return;
             }
 
@@ -258,10 +272,10 @@ public class GameManager : MonoBehaviour
 
                     // Ensure the new level doesn't exceed the maximum level
                     int newLevel = currentLevel + 1;
-                    if (newLevel <= unitEvolutionData[unit.GetComponent<Unit>().unitType].maxLevel)
+                    if (newLevel <= filteredEvolutions[unit.GetComponent<Unit>().unitType].maxLevel)
                     {
                         // Instantiate the new unit prefab for the second unit
-                        GameObject newUnitPrefab = unitEvolutionData[unit.GetComponent<Unit>().unitType].unitPrefabs[newLevel];
+                        GameObject newUnitPrefab = filteredEvolutions[unit.GetComponent<Unit>().unitType].unitPrefabs[newLevel];
                         GameObject newUnit = Instantiate(newUnitPrefab, unit.transform.position, Quaternion.identity);
                         newUnit.GetComponent<Unit>().unitType = unit.GetComponent<Unit>().unitType; // Set the correct unit type
                         newUnit.GetComponent<Unit>().SetGridPosition(unit.GetComponent<Unit>().gridIndex);
@@ -272,8 +286,8 @@ public class GameManager : MonoBehaviour
                     }
 
                     // Create a random level 0 unit at the location of the first unit
-                    int randomUnitType = Random.Range(0, unitEvolutionData.Length); // Choose a random unit type
-                    GameObject randomUnitPrefab = unitEvolutionData[randomUnitType].unitPrefabs[0]; // Level 0 prefab
+                    int randomUnitType = Random.Range(0, filteredEvolutions.Length); // Choose a random unit type
+                    GameObject randomUnitPrefab = filteredEvolutions[randomUnitType].unitPrefabs[0]; // Level 0 prefab
                     GameObject newRandomUnit = Instantiate(randomUnitPrefab, selectedUnit.transform.position, Quaternion.identity);
                     newRandomUnit.GetComponent<Unit>().unitType = randomUnitType; // Set the correct unit type
                     newRandomUnit.GetComponent<Unit>().SetGridPosition(selectedUnit.GetComponent<Unit>().gridIndex);
@@ -319,16 +333,16 @@ public class GameManager : MonoBehaviour
     }
 
 
-    public void IncreaseUnitAttackPowerByPercentage(string unitName, float percentage)
-    {
-        foreach (UnitEvolutionData unitData in unitEvolutionData)
-        {
-            if (unitData.unitName == unitName)
-            {
-                unitData.baseAttackPower += unitData.baseAttackPower * (percentage / 100f);
-                break;
-            }
-        }
-    } //라운드보상
+    //public void IncreaseUnitAttackPowerByPercentage(string unitName, float percentage)
+    //{
+    //    foreach (UnitEvolutionData unitData in unitEvolutionData)
+    //    {
+    //        if (unitData.unitName == unitName)
+    //        {
+    //            unitData.baseAttackPower += unitData.baseAttackPower * (percentage / 100f);
+    //            break;
+    //        }
+    //    }
+    //} //라운드보상
 
 }

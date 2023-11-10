@@ -65,10 +65,10 @@ public class RoundRewardSystem : MonoBehaviour
         selectedCard.effect.Invoke();  // Execute the effect of the selected card
     }
 
-    public void IncreaseUnitAttackPower(string unitName, float percentage)
-    {
-        GameManager.Instance.IncreaseUnitAttackPowerByPercentage(unitName, percentage);
-    }
+    //public void IncreaseUnitAttackPower(string unitName, float percentage)
+    //{
+    //    GameManager.Instance.IncreaseUnitAttackPowerByPercentage(unitName, percentage);
+    //}
 
     public void DecreaseMonsterSpeed(float percentage)
     {
