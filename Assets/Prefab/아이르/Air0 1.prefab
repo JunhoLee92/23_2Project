@@ -12,9 +12,10 @@ GameObject:
   - component: {fileID: 8486120657682532522}
   - component: {fileID: 7152281666391731404}
   - component: {fileID: 3259943523000871830}
+  - component: {fileID: 1448146787277459209}
   m_Layer: 0
   m_Name: Air0 1
-  m_TagString: Unit
+  m_TagString: Aire
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -128,3 +129,16 @@ MonoBehaviour:
   gridIndex: 0
   unitLevel: 1
   attackPower: 10
+--- !u!114 &1448146787277459209
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8486120657682532521}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e5db1af549033af418e77ee73222d125, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  linePrefab: {fileID: 2203598700685943112, guid: f59922a66194f5e4bb6feae9091edd6b, type: 3}
