@@ -5,14 +5,14 @@ using UnityEngine;
 using UnityEngine.UI;
 
 
-[System.Serializable]
-public class UnitEvolutionData
-{
-    public string unitName;
-    public int maxLevel = 5;
-    public GameObject[] unitPrefabs;
-    public bool isChecked; //배열 제외 여부
-}
+//[System.Serializable]
+//public class UnitEvolutionData
+//{
+//    public string unitName;
+//    public int maxLevel = 5;
+//    public GameObject[] unitPrefabs;
+//    public bool isChecked; //배열 제외 여부
+//}
 
 public class GameManager : MonoBehaviour
 {
@@ -91,6 +91,11 @@ public class GameManager : MonoBehaviour
         }
         _instance = this;
         //DontDestroyOnLoad(this.gameObject);
+
+        if (Squad_Data.Instance != null)
+        {
+            unitEvolutionData = Squad_Data.Instance.unitEvolutionData;
+        }
     }
 
 
