@@ -21,9 +21,9 @@ public class UnitAttack : MonoBehaviour
     {
         if (GameManager.Instance.unitEvolutionData[0].isPrestige==true)
         {
-            Debug.Log("Ä®¸®ÁøÈ­");
+            Debug.Log("KaliPrestige");
             attackSpeed = attackSpeed * 1.5f;
-            Debug.Log("Ä®¸®°ø¼Ó" + attackSpeed);
+            Debug.Log("KaliAttackSpeed" + attackSpeed);
         }
         unitScript = GetComponent<Unit>();
         attackInterval = 1f / attackSpeed;  // Calculate the time between attacks
