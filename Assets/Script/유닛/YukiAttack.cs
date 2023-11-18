@@ -11,6 +11,8 @@ public class YukiAttack : MonoBehaviour
     private float attackInterval;
     private float nextAttackTime = 0f;
     private Unit unitScript;
+    float blizzardCooltime = 10.0f;
+    float nextBlizzardTime = 0.0f;
 
     void Start()
     {
@@ -18,8 +20,10 @@ public class YukiAttack : MonoBehaviour
 
         unitScript = GetComponent<Unit>();
 
+        nextBlizzardTime = Time.time + blizzardCooltime;
+
         // Add the following debug lines
-       
+
 
     }
 
@@ -34,9 +38,17 @@ public class YukiAttack : MonoBehaviour
             nextAttackTime = Time.time + attackInterval;
         }
 
-       
-    }
+        if(Time.time>=nextBlizzardTime && GameManager.Instance.unitEvolutionData[1].isPrestige == true)
+        {
+            blizzard();
+            nextBlizzardTime = Time.time + blizzardCooltime;
+        }
 
+    }
+    GameObject[] FindAllMonsters()
+    {
+        return GameObject.FindGameObjectsWithTag("Monster");
+    }
     GameObject FindClosestMonster()
     {
         // This will find the closest monster based on distance within the attack range. 
@@ -83,13 +95,13 @@ public class YukiAttack : MonoBehaviour
                 freezeProbability = 0.3f;
             }
 
-           
+
 
             // Check if we should apply the freeze effect based on the probability
-            if (Random.Range(0f,1f) <= freezeProbability)
+            if (Random.Range(0f, 1f) <= freezeProbability)
             {
-                
-               
+
+
                 MonsterController monsterScript = target.GetComponent<MonsterController>();
                 if (monsterScript)
                 {
@@ -104,4 +116,18 @@ public class YukiAttack : MonoBehaviour
             }
         }
     }
+
+    void blizzard()
+    {
+        GameObject[] allMonsters =FindAllMonsters();
+        
+        foreach (GameObject monster in allMonsters)
+        {
+            MonsterController monsterScript = monster.GetComponent<MonsterController>();
+            monsterScript.Slow(1.0f, 1.0f);
+        }
+
+        Debug.Log("Blizzard");
+    }    
 }
+

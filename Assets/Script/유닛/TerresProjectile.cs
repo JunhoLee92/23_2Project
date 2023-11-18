@@ -57,7 +57,7 @@ public class TerresProjectile : MonoBehaviour
         if (damageableEntity != null)
         {
             damageableEntity.TakeDamage(damage*1.3f);
-            Debug.Log("차지어택");
+            Debug.Log("ChargedAttack");
         }
         Destroy(gameObject);
     }

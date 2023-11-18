@@ -5,19 +5,12 @@ using UnityEngine;
 using UnityEngine.UI;
 
 
-//[System.Serializable]
-//public class UnitEvolutionData
-//{
-//    public string unitName;
-//    public int maxLevel = 5;
-//    public GameObject[] unitPrefabs;
-//    public bool isChecked; //배열 제외 여부
-//}
+
 
 public class GameManager : MonoBehaviour
 {
     public UnitEvolutionData[] unitEvolutionData; // Define this array in the inspector
-    private UnitEvolutionData[] filteredEvolutions; //FilteredEvolutonData
+    public UnitEvolutionData[] filteredEvolutions; //FilteredEvolutonData
     public Transform[] spawnPositions;
     private GameObject[] grid;
     private GameObject selectedUnit;

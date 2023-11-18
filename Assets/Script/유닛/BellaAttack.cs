@@ -7,22 +7,40 @@ public class BellaAttack : MonoBehaviour
     public float attackDamage = 7f;
     public float attackSpeed = 1.0f;
     public GameObject projectilePrefab;
-    private Unit unitScript;  // Assume this is set appropriately elsewhere in the code
+    private Unit unitScript;  
 
     private float attackInterval;
     private float nextAttackTime = 0f;
+    private BellaPrestige bellapretige;
 
+    private void Awake()
+    {
+        bellapretige = FindObjectOfType<BellaPrestige>();
+        if (bellapretige == null)
+        {
+            Debug.LogError("BellaPrestige is Null");
+        }
+    }
     void Start()
     {
+        if (GameManager.Instance.unitEvolutionData[5].isPrestige == true)
+        {
+            Debug.Log("BellaPrestige");
+            bellapretige.UpdateStrongestBella();
+
+        }
+
         unitScript = GetComponent<Unit>();
         attackInterval = 1f / attackSpeed;
+       
+       
     }
 
     void Update()
     {
         if (Time.time >= nextAttackTime)
         {
-            // Find the closest target that is attackable, logic not shown here
+            // Find the closest target that is attackable
             GameObject target = FindClosestMonster();
             if (target != null && Time.time >= nextAttackTime)
             {
@@ -67,13 +85,13 @@ public class BellaAttack : MonoBehaviour
     {
         Unit unitScript = GetComponent<Unit>();
         MonsterController monsterscript = target.GetComponent<MonsterController>();
-        
+
 
 
         // Execute logic based on the unit's level
-        if (unitScript.unitLevel ==1)
+        if (unitScript.unitLevel == 1)
         {
-            Debug.Log("벨라레벨" + unitScript.unitLevel);
+            Debug.Log("BellaLevel" + unitScript.unitLevel);
             float ExecuteHpRate = 0.3f;
             monsterscript.Execute(ExecuteHpRate);
 
@@ -84,7 +102,7 @@ public class BellaAttack : MonoBehaviour
             if (Random.value <= 0.05f)
                 monsterscript.Execute(1.0f);
 
-            else 
+            else
                 monsterscript.Execute(ExecuteHpRate);
 
         }
@@ -93,5 +111,17 @@ public class BellaAttack : MonoBehaviour
             float ExecuteHpRate = 0.45f;
             monsterscript.Execute(ExecuteHpRate);
         }
+    }
+
+    public void ResetAttackDamageToBase()
+    {
+        attackDamage = 7.0f;
+        Debug.Log("Rollback" + attackDamage);
+    }
+
+    public void IncreaseAttackDamage(float Times)
+    {
+        attackDamage = attackDamage * Times;
+        Debug.Log("Prestige Apply" + attackDamage);
     }
 }
