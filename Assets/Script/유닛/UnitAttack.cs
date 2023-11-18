@@ -19,6 +19,12 @@ public class UnitAttack : MonoBehaviour
     float scaley;
     void Start()
     {
+        if (GameManager.Instance.unitEvolutionData[0].isPrestige==true)
+        {
+            Debug.Log("Ä®¸®ÁøÈ­");
+            attackSpeed = attackSpeed * 1.5f;
+            Debug.Log("Ä®¸®°ø¼Ó" + attackSpeed);
+        }
         unitScript = GetComponent<Unit>();
         attackInterval = 1f / attackSpeed;  // Calculate the time between attacks
     }

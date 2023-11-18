@@ -9,7 +9,7 @@ public class MonsterController : MonoBehaviour, IDamageable
     public float MaxHp;
     public float speed;
     private float originalSpeed;
-    public GameObject slowEffectPrefab;  // 슬로우 애니메이션 프리팹을 참조하는 변수
+    public GameObject slowEffectPrefab;  // 
     private GameObject currentSlowEffect;
     public GameObject executeEffectPrefab;
     private GameObject currentExecuteEffect;
@@ -32,7 +32,7 @@ public class MonsterController : MonoBehaviour, IDamageable
             BaseHealth baseHealth = FindObjectOfType<BaseHealth>();
             if (baseHealth != null)
             {
-                baseHealth.TakeDamage(10);  // 예: 본진에 10의 데미지를 입힘
+                baseHealth.TakeDamage(10);  // 
             }
             Destroy(gameObject);
         }
@@ -60,7 +60,7 @@ public class MonsterController : MonoBehaviour, IDamageable
 
         Debug.Log("Frozen");
         yield return new WaitForSeconds(duration);
-        //슬로우 애니 파괴
+        //Slow Anim Destroy
         if (currentSlowEffect != null)
         {
             Destroy(currentSlowEffect);
@@ -77,7 +77,7 @@ public class MonsterController : MonoBehaviour, IDamageable
        
         if (Hprate <= ExecuteHpRate)
         {
-            Debug.Log("처형");
+            Debug.Log("Execute");
             StartCoroutine(ApplyExecute());
             
         }
@@ -105,7 +105,7 @@ public class MonsterController : MonoBehaviour, IDamageable
     //public void DecreaseSpeed(float reductionAmount)
     //{
     //    speed -= reductionAmount;
-    //    if (speed < 1f) speed = 1f; // 속도가 특정 임계값 아래로 내려가지 않도록 합니다.
+    //    if (speed < 1f) speed = 1f; // 
     //}
 
     public void TakeDamage(float damage)
@@ -137,11 +137,43 @@ public class MonsterController : MonoBehaviour, IDamageable
         }
     }
 
+    public void EnhancedPoisonStack(float Percentage,float Damage) //If Lily isPrestige
+    {
+        poisonStacks = Mathf.Min(poisonStacks + 1, maxPoisonStacks); 
+        PoisonDamage = Damage;
+        if (poisonStacks == 1)  
+        {
+            StartCoroutine(EnhancedPoisonDamageRoutine(Percentage,Damage));
+            
+        }
+    }
+    private IEnumerator EnhancedPoisonDamageRoutine(float Percentage, float Damage)
+    {
+        int IncreaseCount = 0;
+        while (poisonStacks > 0)
+        {
+            yield return new WaitForSeconds(1.0f); // Every 1 second
+             if(IncreaseCount<=10)
+            {
+                Percentage += 0.01f;
+                IncreaseCount++;
+                Debug.Log("Enhanced");
+
+            }
+            for (int i = 0; i < poisonStacks; i++)
+            {
+                TakeDamage(Percentage*Damage);
+                Debug.Log("poisonDamage" +Percentage*Damage);
+            }
+        }
+    }
+
     private IEnumerator PoisonDamageRoutine()
     {
         while (poisonStacks > 0)
         {
             yield return new WaitForSeconds(1.0f); // Every 1 second
+            
             for (int i = 0; i < poisonStacks; i++)
             {
                 TakeDamage(PoisonDamage);

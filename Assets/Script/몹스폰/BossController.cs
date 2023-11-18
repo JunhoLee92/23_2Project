@@ -146,6 +146,37 @@ public class BossController : MonoBehaviour,IDamageable
         }
     }
 
+    public void EnhancedPoisonStack(float Percentage, float Damage) //If Lily isPrestige
+    {
+        poisonStacks = Mathf.Min(poisonStacks + 1, maxPoisonStacks);
+        PoisonDamage = Damage;
+        if (poisonStacks == 1)
+        {
+            StartCoroutine(EnhancedPoisonDamageRoutine(Percentage, Damage));
+
+        }
+    }
+    private IEnumerator EnhancedPoisonDamageRoutine(float Percentage, float Damage)
+    {
+        int IncreaseCount = 0;
+        while (poisonStacks > 0)
+        {
+            yield return new WaitForSeconds(1.0f); // Every 1 second
+            if (IncreaseCount <= 10)
+            {
+                Percentage += 0.01f;
+                IncreaseCount++;
+                Debug.Log("Enhanced");
+
+            }
+            for (int i = 0; i < poisonStacks; i++)
+            {
+                TakeDamage(Percentage * Damage);
+                Debug.Log("poisonDamage" + Percentage * Damage);
+            }
+        }
+    }
+
     private IEnumerator PoisonDamageRoutine()
     {
         while (poisonStacks > 0)
@@ -158,5 +189,21 @@ public class BossController : MonoBehaviour,IDamageable
             }
         }
     }
+
+    //private IEnumerator IncreasePoisonDamage() //If Lily's Prestige
+    //{
+    //    float duration = 10f;
+    //    float interval = 1f;
+
+    //    float endTime = Time.time + duration;
+
+    //    while(Time.time <endTime)
+    //    {
+    //        PoisonDamage += 1.01f * PoisonDamage;
+    //        Debug.Log("PoisonIncrease" + PoisonDamage);
+    //    }
+    //    yield return new WaitForSeconds(interval);
+      
+    //}
 
 }

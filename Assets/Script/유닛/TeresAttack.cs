@@ -15,6 +15,7 @@ public class TeresAttack : MonoBehaviour
     private Unit unitScript;
     private int maxEmbersStacks = 5;  
     private int currentEmberStacks=0;
+    private float prestigeBonus = 0; 
 
     // Start is called before the first frame update
     void Start()
@@ -24,6 +25,12 @@ public class TeresAttack : MonoBehaviour
         unitScript = GetComponent<Unit>();
 
         currentAttackDamage = attackDamage;
+
+        if (GameManager.Instance.unitEvolutionData[4].isPrestige==true)
+        {
+            prestigeBonus = 0.2f;
+            Debug.Log("ChargedAttackBonus" + prestigeBonus);
+        }
     }
 
 
@@ -67,7 +74,7 @@ public class TeresAttack : MonoBehaviour
 
        
 
-        if (unitScript.unitLevel >= 3 && currentEmberStacks >= 1 && Random.Range(0f, 1f) <= 0.3f)
+        if (unitScript.unitLevel >= 3 && currentEmberStacks >= 1 && Random.Range(0f, 1f) <= 0.3f+prestigeBonus)
         {
             
             projectileToUse = chargedProjectilePrefab;
@@ -108,15 +115,14 @@ public class TeresAttack : MonoBehaviour
         }
     }
 
-   void ChargedAttack() //강공격 매서드
+   void ChargedAttack() 
     {
         if (currentEmberStacks > 0)
         {
             --currentEmberStacks;
         }
 
-        //currentAttackDamage * 1.3 의 피해
-        //강공격 애니메이션
+        
 }
 
 
