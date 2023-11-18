@@ -45,8 +45,16 @@ public class BellaAttack : MonoBehaviour
             if (target != null && Time.time >= nextAttackTime)
             {
                 FireProjectile(target);
-                TryExecute(target);
+                
                 nextAttackTime = Time.time + attackInterval;
+
+                //MonsterController monster = target.GetComponent<MonsterController>();
+
+                if (LayerMask.LayerToName(target.layer) != "Boss")
+                {
+                    TryExecute(target);
+
+                }
             }
         }
     }
@@ -85,7 +93,10 @@ public class BellaAttack : MonoBehaviour
     {
         Unit unitScript = GetComponent<Unit>();
         MonsterController monsterscript = target.GetComponent<MonsterController>();
-
+        //if(monsterscript != null)
+        //{
+        //    return;
+        //}
 
 
         // Execute logic based on the unit's level
