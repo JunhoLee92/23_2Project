@@ -14,6 +14,7 @@ public class UIManager : MonoBehaviour
     public Image userImage;
     public Image profileUserImage;
     public GameObject popupPanel;
+    public GameObject Pause;
     private static UIManager instance;
     private void Awake()
     {
@@ -64,6 +65,8 @@ public class UIManager : MonoBehaviour
             Time.timeScale = 0; // 게임 일시 정지
         }
     }
+
+    
 }
 
 
