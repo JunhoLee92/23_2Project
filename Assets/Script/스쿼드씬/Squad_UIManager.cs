@@ -86,16 +86,19 @@ public class Squad_UIManager : MonoBehaviour
                     if (unitData != null)
                     {
                         unitThumbnails[i].sprite = unitData.thumbnailSprite;
+                        unitThumbnails[i].color = new Color(unitThumbnails[i].color.r, unitThumbnails[i].color.g, unitThumbnails[i].color.b, 1);
                     }
                 }
                 else
                 {
                     unitThumbnails[i].sprite = null; //
+                    unitThumbnails[i].color = new Color(unitThumbnails[i].color.r, unitThumbnails[i].color.g, unitThumbnails[i].color.b, 0);
                 }
             }
             else
             {
                 unitThumbnails[i].sprite = null; // 
+                unitThumbnails[i].color = new Color(unitThumbnails[i].color.r, unitThumbnails[i].color.g, unitThumbnails[i].color.b, 0);
             }
 
         }
@@ -124,11 +127,13 @@ public class Squad_UIManager : MonoBehaviour
             if (leaderUnit != null)
             {
                 standingImage.sprite = leaderUnit.standingSprite; // 
+                standingImage.color=new Color(standingImage.color.r,standingImage.color.g,standingImage.color.b, 1);
             }
             else
             {
                 Debug.Log(leaderName);
-                standingImage.sprite = StandingIdle.sprite; // Delete Image If there's No Squadleader
+                standingImage.sprite = StandingIdle.sprite;
+                standingImage.color = new Color(standingImage.color.r, standingImage.color.g, standingImage.color.b, 0);// Delete Image If there's No Squadleader
             }
         }
     }

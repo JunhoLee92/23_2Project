@@ -7273,7 +7273,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2416215981608702596, guid: e30ceaa1faae3f74680cdf0a6428c394, type: 3}
       propertyPath: chapters.Array.data[0].rounds.Array.data[0].isBossRound
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2416215981608702596, guid: e30ceaa1faae3f74680cdf0a6428c394, type: 3}
       propertyPath: chapters.Array.data[0].rounds.Array.data[9].isBossRound

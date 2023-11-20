@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
-
+using UnityEngine.SceneManagement;
 
 
 
@@ -15,21 +15,21 @@ public class GameManager : MonoBehaviour
     private GameObject[] grid;
     private GameObject selectedUnit;
     private bool isFirstClick = true;
-    public int movesPerRound; // 예: 5회의 이동 횟수를 가진다고 가정
+    public int movesPerRound; 
     private int currentMoves = 0;
     private MonsterSponer monsterSpawner;
     public Text movesText;
     public Text RoundText;
     private BossSpawner bossSpawner;
-    private BossController bossController; //보스컨트롤러 
+    private BossController bossController; 
     public bool isMonsterSpawning = false;
     private int activeMonsters;
     [System.Serializable]
     public class RoundConfig
     {
         public int movesPerRound;
-        public int monstersPerSpawn; //한번에 몇마리 생성할지
-        public bool isBossRound;  // 이 라운드에 보스가 스폰되는지 여부
+        public int monstersPerSpawn; 
+        public bool isBossRound;  
         public GameObject bossPrefab;
 
         public float spawnInterval;
@@ -38,7 +38,7 @@ public class GameManager : MonoBehaviour
     }
 
     [System.Serializable]
-    public class MonsterSpawnInfo  //몬스터 스폰 정보
+    public class MonsterSpawnInfo  
     {
         public MonsterType monsterType;
         public int count;
@@ -98,10 +98,10 @@ public class GameManager : MonoBehaviour
 
         monsterSpawner = FindObjectOfType<MonsterSponer>();
         bossSpawner = FindObjectOfType<BossSpawner>();
-        bossController = FindObjectOfType<BossController>(); //보스컨트롤러
+        bossController = FindObjectOfType<BossController>(); 
         grid = new GameObject[spawnPositions.Length];
 
-        //유닛정보 필터넣기
+        //unit info filtering
         int count = 0;
         foreach (var evolution in unitEvolutionData)
         {
@@ -111,7 +111,7 @@ public class GameManager : MonoBehaviour
             }
         }
 
-        // 필터링된 배열을 새로 만들기
+        
         filteredEvolutions = new UnitEvolutionData[count];
         int index = 0;
         foreach (var evolution in unitEvolutionData)
@@ -122,8 +122,18 @@ public class GameManager : MonoBehaviour
                 index++;
             }
         }
-
+        if (SceneManager.GetActiveScene().name == "InGame")
+        {
+            currentChapter = 0;
+            currentRound = 0;
+        }
+        if (SceneManager.GetActiveScene().name == "Chapter1") //check chapter
+        {
+            currentChapter = 1;
+            currentRound = 0;
+        }
         InitGrid();
+        
 
         UpdateMovesText();
         UpdateRoundsText();
@@ -140,7 +150,7 @@ public class GameManager : MonoBehaviour
     void SetupRound()
     {
         Debug.Log("Setting up round: " + currentRound);
-        monsterSpawner.totalSpawnedCount = 0;  // 라운드가 시작될 때 몬스터 소환 카운트를 0으로 초기화합니다.
+        monsterSpawner.totalSpawnedCount = 0; 
         monsterSpawner.spawnStarted = false;
         if (currentRound < chapters[currentChapter].rounds.Length)
         {
@@ -152,7 +162,7 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            // 게임 종료 또는 다른 로직
+            // game end or other logic
         }
 
     }
@@ -178,12 +188,17 @@ public class GameManager : MonoBehaviour
 
         if (monsterSpawner.totalSpawnedCount >= totalMonstersForThisRound)
         {
-            monsterSpawner.spawnStarted = false;  // 스폰 중지
+            monsterSpawner.spawnStarted = false;  // sapwn stop
             
-            currentRound++;  // 다음 라운드로
+            currentRound++;  // next round
 
             if (currentRound >= chapters[currentChapter].rounds.Length)  // Check if all rounds in the current chapter are completed
             {
+                PlayerPrefs.SetInt("Chapter0Completed", 1);
+                SceneManager.LoadScene("HomeScene");
+
+                Debug.Log("win");
+                
                 if (currentChapter < chapters.Length - 1)  // Ensure we're not exceeding the total number of chapters
                 {
                     currentChapter++;  // Move to the next chapter
@@ -194,8 +209,8 @@ public class GameManager : MonoBehaviour
                     // Handle the end of the last chapter, if necessary
                 }
             }
-            UpdateRoundsText(); //라운드 텍스트
-            SetupRound();  // 라운드 설정
+            UpdateRoundsText(); 
+            SetupRound();  
         }
     }
 
@@ -234,7 +249,7 @@ public class GameManager : MonoBehaviour
 
     public void OnUnitClicked(GameObject unit)
     {
-        // 몬스터 스폰 중에는 아무런 동작도 수행하지 않음
+       
         if (isMonsterSpawning)
         {
             return;
@@ -311,7 +326,7 @@ public class GameManager : MonoBehaviour
                     {
                         monsterSpawner.spawnStarted = true;
                     }
-                    currentMoves = 0; // 이동 횟수를 리셋
+                    currentMoves = 0; 
 
                 }
             }
@@ -341,6 +356,5 @@ public class GameManager : MonoBehaviour
     //            break;
     //        }
     //    }
-    //} //라운드보상
-
+    //} 
 }
