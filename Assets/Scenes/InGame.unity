@@ -7324,7 +7324,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2416215981608702596, guid: e30ceaa1faae3f74680cdf0a6428c394, type: 3}
       propertyPath: unitEvolutionData.Array.data[2].isChecked
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2416215981608702596, guid: e30ceaa1faae3f74680cdf0a6428c394, type: 3}
       propertyPath: unitEvolutionData.Array.data[3].isChecked
@@ -7336,7 +7336,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2416215981608702596, guid: e30ceaa1faae3f74680cdf0a6428c394, type: 3}
       propertyPath: unitEvolutionData.Array.data[5].isChecked
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2416215981608702596, guid: e30ceaa1faae3f74680cdf0a6428c394, type: 3}
       propertyPath: unitEvolutionData.Array.data[0].isPrestige
@@ -7356,7 +7356,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2416215981608702596, guid: e30ceaa1faae3f74680cdf0a6428c394, type: 3}
       propertyPath: unitEvolutionData.Array.data[5].isPrestige
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2416215981608702596, guid: e30ceaa1faae3f74680cdf0a6428c394, type: 3}
       propertyPath: unitEvolutionData.Array.data[4].baseAttackPower
@@ -7380,7 +7380,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2416215981608702596, guid: e30ceaa1faae3f74680cdf0a6428c394, type: 3}
       propertyPath: chapters.Array.data[0].rounds.Array.data[0].movesPerRound
-      value: 5
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 2416215981608702596, guid: e30ceaa1faae3f74680cdf0a6428c394, type: 3}
       propertyPath: chapters.Array.data[0].rounds.Array.data[0].spawnInterval
