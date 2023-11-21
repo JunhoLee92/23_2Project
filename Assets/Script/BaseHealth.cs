@@ -6,7 +6,7 @@ public class BaseHealth : MonoBehaviour
 {
     public int maxHealth = 100;  // 본진의 최대 HP
     private int currentHealth;  // 본진의 현재 HP
-
+    public GameObject defeat;
     void Start()
     {
         currentHealth = maxHealth;  // 시작 시 현재 HP를 최대 HP로 설정
@@ -22,6 +22,7 @@ public class BaseHealth : MonoBehaviour
         {
             // TODO: 게임 종료 로직 (예: 씬 전환, 메시지 표시 등)
             Debug.Log("Base destroyed!");
+           defeat.SetActive(true);
         }
     }
 }

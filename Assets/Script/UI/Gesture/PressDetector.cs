@@ -4,18 +4,21 @@ using UnityEngine.SceneManagement;
 
 public class PressDetector : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 {
-    public GameObject Tutorial;
-    public GameObject Chapter1;
-    private float pressStartTime;
+   
+    static float pressStartTime;
     private const float PressDurationThreshold = 0.5f;
     public void OnPointerDown(PointerEventData eventData)
     {
         pressStartTime = Time.time;
+        Debug.Log(pressStartTime);
+        Debug.Log("pointerDown");
     }
 
     public void OnPointerUp(PointerEventData eventData)
     {
+        Debug.Log("pointerUp");
         float pressDuration = Time.time - pressStartTime;
+        Debug.Log(pressDuration);
         if (pressDuration >= PressDurationThreshold)
         {
             Debug.Log("Press detected"+gameObject);
