@@ -24,6 +24,7 @@ public class GameManager : MonoBehaviour
     private BossController bossController; 
     public bool isMonsterSpawning = false;
     private int activeMonsters;
+    public GameObject victory;
     [System.Serializable]
     public class RoundConfig
     {
@@ -198,6 +199,7 @@ public class GameManager : MonoBehaviour
                 SceneManager.LoadScene("HomeScene");
 
                 Debug.Log("win");
+                victory.SetActive(true);
                 
                 if (currentChapter < chapters.Length - 1)  // Ensure we're not exceeding the total number of chapters
                 {

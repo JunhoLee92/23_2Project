@@ -14,8 +14,10 @@ public class PausePanelManager : MonoBehaviour
     {
         restart.onClick.AddListener(() => ButtonClicked(restart));
         home.onClick.AddListener(() => ButtonClicked(home));
-        play.onClick.AddListener(() => ButtonClicked(play));
-
+        if (play != null)
+        {
+            play.onClick.AddListener(() => ButtonClicked(play));
+        }
 
     }
 
@@ -28,10 +30,13 @@ public class PausePanelManager : MonoBehaviour
     {
         if (button == restart)
         {
+            Time.timeScale = 1;
             SceneManager.LoadScene("Ingame");
         }
-        else if(button == home)
+
+        else if (button == home)
         {
+            Time.timeScale = 1;
             SceneManager.LoadScene("HomeScene");
 
         }
