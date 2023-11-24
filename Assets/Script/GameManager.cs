@@ -24,8 +24,10 @@ public class GameManager : MonoBehaviour
     private BossController bossController;
     public bool isMonsterSpawning = false;
     private int activeMonsters;
-
+    public int currentMonsters;
+    public GameObject roundRewardsPanel;
     public GameObject victory;
+    public bool isGamePaused;
     [System.Serializable]
     public class RoundConfig
     {
@@ -161,7 +163,7 @@ public class GameManager : MonoBehaviour
             initialMonsterCount += spawnInfo.count;
         }
 
-        monsterSpawner.currentMonsters = initialMonsterCount;
+        currentMonsters = initialMonsterCount;
 
         if (currentRound < chapters[currentChapter].rounds.Length)
         {
@@ -201,8 +203,7 @@ public class GameManager : MonoBehaviour
         {
             monsterSpawner.spawnStarted = false;
 
-            if (monsterSpawner.currentMonsters <= 0)
-            {
+          
 
 
                 //currentRound++;  // next round
@@ -228,13 +229,13 @@ public class GameManager : MonoBehaviour
 
                 //UpdateRoundsText();
                 //SetupRound();
-            }
+            
         }
     }
 
     public void OnMonsterDestroyed()
     {
-        monsterSpawner.currentMonsters--;
+       currentMonsters--;
 
         if (activeMonsters <= 0)
         {
@@ -246,8 +247,9 @@ public class GameManager : MonoBehaviour
 
     void CheckForRoundCompletion()
     {
-        if(monsterSpawner.currentMonsters<=0)
+        if(currentMonsters<=0)
         {
+            RoundRewardsPanel();
             NextRound();
         }
     }
@@ -256,6 +258,13 @@ public class GameManager : MonoBehaviour
         currentRound++;
         UpdateRoundsText();
         SetupRound();
+    }
+
+    public void RoundRewardsPanel()
+    {
+        roundRewardsPanel.SetActive(true);
+        Time.timeScale = 0;
+        isGamePaused = true;
     }
     void UpdateMovesText()
     {
@@ -285,6 +294,10 @@ public class GameManager : MonoBehaviour
     public void OnUnitClicked(GameObject unit)
     {
        
+        if(isGamePaused==true)
+        {
+            return;
+        }
         if (isMonsterSpawning)
         {
             return;

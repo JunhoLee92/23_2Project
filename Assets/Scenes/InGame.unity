@@ -2280,7 +2280,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 480073005}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: 
+        m_MethodName: 
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &480073005
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3825,6 +3837,7 @@ GameObject:
   - component: {fileID: 978345367}
   - component: {fileID: 978345369}
   - component: {fileID: 978345368}
+  - component: {fileID: 978345370}
   m_Layer: 5
   m_Name: Reward
   m_TagString: Untagged
@@ -3892,6 +3905,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 978345366}
   m_CullTransparentMesh: 1
+--- !u!114 &978345370
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 978345366}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 09cd56735dd52754db087083caf718a6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  reward1: {fileID: 1600799755}
+  reward2: {fileID: 480073004}
+  reward3: {fileID: 1897138069}
 --- !u!1 &982347173
 GameObject:
   m_ObjectHideFlags: 0
@@ -7820,6 +7848,10 @@ PrefabInstance:
       propertyPath: movesText
       value: 
       objectReference: {fileID: 1703212975}
+    - target: {fileID: 2416215981608702596, guid: e30ceaa1faae3f74680cdf0a6428c394, type: 3}
+      propertyPath: roundRewardsPanel
+      value: 
+      objectReference: {fileID: 978345366}
     - target: {fileID: 2416215981608702596, guid: e30ceaa1faae3f74680cdf0a6428c394, type: 3}
       propertyPath: spawnPositions.Array.data[0]
       value: 

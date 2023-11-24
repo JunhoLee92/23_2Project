@@ -15,11 +15,15 @@ public class PauseManager : MonoBehaviour
         {
             panel.SetActive(false);
             Time.timeScale = 1;
+
+            GameManager.Instance.isGamePaused = false;
         }
         else
         {
             panel.SetActive(true);
             Time.timeScale = 0;
+
+            GameManager.Instance.isGamePaused = true;
         }
     }
 }
