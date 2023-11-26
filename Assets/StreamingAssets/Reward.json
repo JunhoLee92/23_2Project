@@ -1,0 +1,29 @@
+[
+    {
+        "Grade": "Common",
+        "EffectType": "AttackPower",
+        "EffectValue": 2
+    },
+    {
+        "Grade": "Rare",
+        "EffectType": "AttackPower",
+        "EffectValue": 5
+    },
+    {
+        "Grade": "SR",
+        "EffectType": "AttackPower",
+        "EffectValue": 10 
+    },
+    {
+        "Grade": "SSR",
+        "EffectType": "AttackPower",
+        "EffectValue": 10 
+    },
+    { "Grade": "Special",
+    "EffectType": "AttackPower",
+    "EffectValue": 10 
+
+    }
+   
+    
+]

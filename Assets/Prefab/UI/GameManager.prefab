@@ -1,0 +1,389 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &3793597117671327615
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5406707758882098807}
+  - component: {fileID: 1493640219900170506}
+  - component: {fileID: 4684346342092926412}
+  - component: {fileID: 3056419311009655789}
+  m_Layer: 0
+  m_Name: GameManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5406707758882098807
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3793597117671327615}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 1, w: 0}
+  m_LocalPosition: {x: -2.5152574, y: -1.098354, z: 0.3229275}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 180}
+--- !u!114 &1493640219900170506
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3793597117671327615}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cfe6ced2ae6984d4fba3a8b72e8e230c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  unitEvolutionData:
+  - unitName: Kali
+    maxLevel: 5
+    unitPrefabs:
+    - {fileID: 2810937099206993808, guid: 35b8e9ca9999aff47bb9c1510830e67a, type: 3}
+    - {fileID: 2810937099206993808, guid: b1ee63ec79ac09640a955d620481119c, type: 3}
+    - {fileID: 2810937099206993808, guid: ac51d571a7cbf16459ea535b869f728a, type: 3}
+    - {fileID: 2810937099206993808, guid: 12c1ae97fd5d6944a828d9443013ea37, type: 3}
+    - {fileID: 2810937099206993808, guid: dc55f9c152fabeb4ab7b50928e1aeb15, type: 3}
+    - {fileID: 2810937099206993808, guid: cd4829892f5ec8a4585a10af91880554, type: 3}
+    isChecked: 0
+    isPrestige: 0
+    thumbnailSprite: {fileID: 0}
+    standingSprite: {fileID: 0}
+  - unitName: Yuki
+    maxLevel: 5
+    unitPrefabs:
+    - {fileID: 6696982989512433780, guid: fb251cb085c3ac3449dc8bf4ff4577d0, type: 3}
+    - {fileID: 6696982989512433780, guid: 2bda4fa2ff13e2147b5e3983bd48d770, type: 3}
+    - {fileID: 6696982989512433780, guid: e46af2b33aa00e94dbb8a7257b51dfda, type: 3}
+    - {fileID: 6696982989512433780, guid: 748df63e70b9532468484251396a1ae0, type: 3}
+    - {fileID: 6696982989512433780, guid: 4e05fce11e2329042826f29045c34a39, type: 3}
+    - {fileID: 6696982989512433780, guid: 5f8851407dcedd842ba814f1d741e31d, type: 3}
+    isChecked: 1
+    isPrestige: 0
+    thumbnailSprite: {fileID: 0}
+    standingSprite: {fileID: 0}
+  - unitName: Lily
+    maxLevel: 5
+    unitPrefabs:
+    - {fileID: 6927735548618191631, guid: fa608a69079b3774197717a4acec6747, type: 3}
+    - {fileID: 6927735548618191631, guid: d39c554837874f34bb0aa8ab31cdc2d2, type: 3}
+    - {fileID: 6927735548618191631, guid: bc824d316be8a6649aa018fbb13becae, type: 3}
+    - {fileID: 6927735548618191631, guid: 00083b9c25f630f44b9e95ab2efda1c9, type: 3}
+    - {fileID: 6927735548618191631, guid: 5c9a3e64fc7bcac41a0cd0718664e71d, type: 3}
+    - {fileID: 6927735548618191631, guid: 4e8c22dc255639045ad8186357f890a9, type: 3}
+    isChecked: 1
+    isPrestige: 0
+    thumbnailSprite: {fileID: 0}
+    standingSprite: {fileID: 0}
+  - unitName: Air
+    maxLevel: 5
+    unitPrefabs:
+    - {fileID: 8486120657682532521, guid: 2ae9e8379f0b5ea468315c86185d9c19, type: 3}
+    - {fileID: 8486120657682532521, guid: 14613398236e5ac4ab57eed1473e95ed, type: 3}
+    - {fileID: 8486120657682532521, guid: 9bd9fc7ad8c33854a9dda78012445779, type: 3}
+    - {fileID: 8486120657682532521, guid: 3ba33e410a0e71445994b411ea43cfd8, type: 3}
+    - {fileID: 8486120657682532521, guid: 9800b72b5d2d0754f87215bcb99d8ca4, type: 3}
+    - {fileID: 8486120657682532521, guid: 752c8f594b1c16e44ab2f3230a16adf4, type: 3}
+    isChecked: 0
+    isPrestige: 0
+    thumbnailSprite: {fileID: 0}
+    standingSprite: {fileID: 0}
+  - unitName: Terres
+    maxLevel: 5
+    unitPrefabs:
+    - {fileID: 8599803818756352086, guid: 4c155e9f159314c4aa081f58b93a9e94, type: 3}
+    - {fileID: 775165694861550591, guid: d90f4f7badccf064facbd556db835e03, type: 3}
+    - {fileID: 649476585499795326, guid: f178ff5035d8f3c4bb09c2ef46d316dc, type: 3}
+    - {fileID: 3271046710830148621, guid: 15bec94273f50c44e8ba4f55cc4bf39b, type: 3}
+    - {fileID: 6548341318062415206, guid: ce6098cabc79bbc4b9c3ba7b1db2466e, type: 3}
+    - {fileID: 2249828613786117253, guid: 3094fb2734b070a44ba4a34e29185728, type: 3}
+    isChecked: 0
+    isPrestige: 0
+    thumbnailSprite: {fileID: 0}
+    standingSprite: {fileID: 0}
+  - unitName: Bella
+    maxLevel: 5
+    unitPrefabs:
+    - {fileID: 5083697797014155355, guid: 816ee72a3ff785a40b93903f84c7766a, type: 3}
+    - {fileID: 6535708817775028136, guid: 11f433a38f3df7b4cbbe1148fc692968, type: 3}
+    - {fileID: 8350636332645453047, guid: c57144f23d7397c44ba41d068f4f557b, type: 3}
+    - {fileID: 4373272026866054249, guid: fc911df4e133d204c911aa0b50b499f1, type: 3}
+    - {fileID: 4891198845485660216, guid: 19afdfc667a1d9f49b7e6ea458969c17, type: 3}
+    - {fileID: 9174880064785874138, guid: 84843cbfb09fd6f41a9edb97d4534b29, type: 3}
+    isChecked: 1
+    isPrestige: 0
+    thumbnailSprite: {fileID: 0}
+    standingSprite: {fileID: 0}
+  filteredEvolutions: []
+  spawnPositions:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  movesPerRound: 5
+  movesText: {fileID: 0}
+  RoundText: {fileID: 0}
+  isMonsterSpawning: 0
+  currentMonsters: 0
+  roundRewardsPanel: {fileID: 0}
+  victory: {fileID: 0}
+  isGamePaused: 0
+  chapters:
+  - rounds:
+    - movesPerRound: 5
+      monstersPerSpawn: 1
+      isBossRound: 0
+      bossPrefab: {fileID: 0}
+      spawnInterval: 1
+      spawnInfos:
+      - monsterType: 0
+        count: 10
+        Hp: 70
+        speed: 1
+    - movesPerRound: 6
+      monstersPerSpawn: 1
+      isBossRound: 0
+      bossPrefab: {fileID: 0}
+      spawnInterval: 0.67
+      spawnInfos:
+      - monsterType: 0
+        count: 15
+        Hp: 80
+        speed: 1
+    - movesPerRound: 7
+      monstersPerSpawn: 1
+      isBossRound: 0
+      bossPrefab: {fileID: 0}
+      spawnInterval: 1
+      spawnInfos:
+      - monsterType: 1
+        count: 10
+        Hp: 100
+        speed: 2.5
+    - movesPerRound: 8
+      monstersPerSpawn: 1
+      isBossRound: 0
+      bossPrefab: {fileID: 0}
+      spawnInterval: 1.11
+      spawnInfos:
+      - monsterType: 0
+        count: 15
+        Hp: 80
+        speed: 1
+    - movesPerRound: 9
+      monstersPerSpawn: 1
+      isBossRound: 0
+      bossPrefab: {fileID: 0}
+      spawnInterval: 1
+      spawnInfos:
+      - monsterType: 1
+        count: 10
+        Hp: 100
+        speed: 1
+    - movesPerRound: 10
+      monstersPerSpawn: 1
+      isBossRound: 0
+      bossPrefab: {fileID: 0}
+      spawnInterval: 1
+      spawnInfos:
+      - monsterType: 0
+        count: 15
+        Hp: 80
+        speed: 1
+      - monsterType: 1
+        count: 10
+        Hp: 100
+        speed: 2.5
+    - movesPerRound: 11
+      monstersPerSpawn: 1
+      isBossRound: 0
+      bossPrefab: {fileID: 0}
+      spawnInterval: 1
+      spawnInfos:
+      - monsterType: 0
+        count: 15
+        Hp: 35
+        speed: 3
+      - monsterType: 0
+        count: 20
+        Hp: 80
+        speed: 1
+      - monsterType: 1
+        count: 10
+        Hp: 100
+        speed: 2.5
+    - movesPerRound: 12
+      monstersPerSpawn: 1
+      isBossRound: 0
+      bossPrefab: {fileID: 0}
+      spawnInterval: 1
+      spawnInfos:
+      - monsterType: 0
+        count: 25
+        Hp: 80
+        speed: 2.5
+      - monsterType: 1
+        count: 15
+        Hp: 100
+        speed: 5
+    - movesPerRound: 13
+      monstersPerSpawn: 1
+      isBossRound: 0
+      bossPrefab: {fileID: 0}
+      spawnInterval: 1
+      spawnInfos:
+      - monsterType: 0
+        count: 30
+        Hp: 80
+        speed: 2.5
+      - monsterType: 1
+        count: 20
+        Hp: 100
+        speed: 5
+    - movesPerRound: 13
+      monstersPerSpawn: 1
+      isBossRound: 1
+      bossPrefab: {fileID: 0}
+      spawnInterval: 1
+      spawnInfos:
+      - monsterType: 2
+        count: 1
+        Hp: 100
+        speed: 2.5
+  - rounds:
+    - movesPerRound: 2
+      monstersPerSpawn: 1
+      isBossRound: 0
+      bossPrefab: {fileID: 0}
+      spawnInterval: 5
+      spawnInfos: []
+    - movesPerRound: 2
+      monstersPerSpawn: 1
+      isBossRound: 0
+      bossPrefab: {fileID: 0}
+      spawnInterval: 5
+      spawnInfos: []
+    - movesPerRound: 2
+      monstersPerSpawn: 1
+      isBossRound: 0
+      bossPrefab: {fileID: 0}
+      spawnInterval: 5
+      spawnInfos: []
+    - movesPerRound: 2
+      monstersPerSpawn: 1
+      isBossRound: 0
+      bossPrefab: {fileID: 0}
+      spawnInterval: 5
+      spawnInfos: []
+    - movesPerRound: 2
+      monstersPerSpawn: 1
+      isBossRound: 0
+      bossPrefab: {fileID: 0}
+      spawnInterval: 5
+      spawnInfos: []
+    - movesPerRound: 2
+      monstersPerSpawn: 1
+      isBossRound: 0
+      bossPrefab: {fileID: 0}
+      spawnInterval: 5
+      spawnInfos: []
+    - movesPerRound: 2
+      monstersPerSpawn: 1
+      isBossRound: 0
+      bossPrefab: {fileID: 0}
+      spawnInterval: 5
+      spawnInfos: []
+    - movesPerRound: 2
+      monstersPerSpawn: 1
+      isBossRound: 0
+      bossPrefab: {fileID: 0}
+      spawnInterval: 5
+      spawnInfos: []
+    - movesPerRound: 2
+      monstersPerSpawn: 1
+      isBossRound: 0
+      bossPrefab: {fileID: 0}
+      spawnInterval: 5
+      spawnInfos: []
+    - movesPerRound: 2
+      monstersPerSpawn: 1
+      isBossRound: 0
+      bossPrefab: {fileID: 0}
+      spawnInterval: 5
+      spawnInfos: []
+--- !u!114 &4684346342092926412
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3793597117671327615}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b0a4e66f9bf9ee4b87ae3708d4bd90c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  availableCards:
+  - Grade: 0
+    Name: 
+    RelatedUnit: 
+    EffectDescription: 
+  - Grade: 0
+    Name: 
+    RelatedUnit: 
+    EffectDescription: 
+--- !u!114 &3056419311009655789
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3793597117671327615}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e63e51ce50e95347b194d39f861ce52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

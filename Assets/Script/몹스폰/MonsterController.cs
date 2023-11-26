@@ -15,7 +15,8 @@ public class MonsterController : MonoBehaviour, IDamageable
     private GameObject currentExecuteEffect;
     private int poisonStacks = 0;
     public int maxPoisonStacks = 3;
-    private float PoisonDamage=0;
+    private float PoisonDamage = 0;
+    private bool isDead = false;
     GameManager gameManager;
     private void Start()
     {
@@ -32,9 +33,15 @@ public class MonsterController : MonoBehaviour, IDamageable
             BaseHealth baseHealth = FindObjectOfType<BaseHealth>();
             if (baseHealth != null)
             {
-                baseHealth.TakeDamage(10);  // 
+                baseHealth.TakeDamage(10);
+
+                if (isDead == false)
+                {
+                    isDead = true;
+                    Die();// 
+                }
             }
-            Destroy(gameObject);
+            
         }
     }
 
@@ -98,7 +105,12 @@ public class MonsterController : MonoBehaviour, IDamageable
         {
             Destroy(currentExecuteEffect);
         }
-        Die();
+
+        if (isDead == false)
+        {
+            isDead = true;
+            Die();
+        }
 
         
     }
@@ -110,14 +122,16 @@ public class MonsterController : MonoBehaviour, IDamageable
 
     public void TakeDamage(float damage)
     {
+        if (isDead) return;
+
         if (this == null || gameObject == null)
             return;
 
         Hp -= damage;  // Subtract damage from HP
         Debug.Log(Hp);
         // Check if the monster's HP is zero or below
-        if (Hp <= 0f)
-        {
+        if (Hp <= 0f && !isDead )
+        {  isDead = true;
             Die();  // If yes, trigger the Die method
         }
     }
@@ -185,12 +199,11 @@ public class MonsterController : MonoBehaviour, IDamageable
     void Die()
     {
 
-        // Here you can add logic for what happens when the monster dies,
-        // such as playing a death animation, adding score, etc.
+        
         if (this.gameObject != null)
         {
             gameManager.OnMonsterDestroyed();
-            Destroy(gameObject);  // For now, simply destroy the monster game object
+            Destroy(gameObject); 
 
         }
         else

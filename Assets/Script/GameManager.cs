@@ -4,7 +4,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
-
+using System.Linq;
 
 
 public class GameManager : MonoBehaviour
@@ -15,22 +15,27 @@ public class GameManager : MonoBehaviour
     private GameObject[] grid;
     private GameObject selectedUnit;
     private bool isFirstClick = true;
-    public int movesPerRound; 
+    public int movesPerRound;
     private int currentMoves = 0;
     private MonsterSponer monsterSpawner;
     public Text movesText;
     public Text RoundText;
     private BossSpawner bossSpawner;
-    private BossController bossController; 
+    private BossController bossController;
     public bool isMonsterSpawning = false;
     private int activeMonsters;
+    public int currentMonsters;
+    public GameObject roundRewardsPanel;
+
+    public RoundRewardSystem roundRewardSystem;
     public GameObject victory;
+    public bool isGamePaused;
     [System.Serializable]
     public class RoundConfig
     {
         public int movesPerRound;
-        public int monstersPerSpawn; 
-        public bool isBossRound;  
+        public int monstersPerSpawn;
+        public bool isBossRound;
         public GameObject bossPrefab;
 
         public float spawnInterval;
@@ -39,7 +44,7 @@ public class GameManager : MonoBehaviour
     }
 
     [System.Serializable]
-    public class MonsterSpawnInfo  
+    public class MonsterSpawnInfo
     {
         public MonsterType monsterType;
         public int count;
@@ -99,8 +104,9 @@ public class GameManager : MonoBehaviour
 
         monsterSpawner = FindObjectOfType<MonsterSponer>();
         bossSpawner = FindObjectOfType<BossSpawner>();
-        bossController = FindObjectOfType<BossController>(); 
+        bossController = FindObjectOfType<BossController>();
         grid = new GameObject[spawnPositions.Length];
+        
 
         //unit info filtering
         int count = 0;
@@ -112,7 +118,7 @@ public class GameManager : MonoBehaviour
             }
         }
 
-        
+
         filteredEvolutions = new UnitEvolutionData[count];
         int index = 0;
         foreach (var evolution in unitEvolutionData)
@@ -134,7 +140,7 @@ public class GameManager : MonoBehaviour
             currentRound = 0;
         }
         InitGrid();
-        
+
 
         UpdateMovesText();
         UpdateRoundsText();
@@ -151,8 +157,17 @@ public class GameManager : MonoBehaviour
     void SetupRound()
     {
         Debug.Log("Setting up round: " + currentRound);
-        monsterSpawner.totalSpawnedCount = 0; 
+        monsterSpawner.totalSpawnedCount = 0;
         monsterSpawner.spawnStarted = false;
+
+        int initialMonsterCount = 0;
+        foreach (var spawnInfo in chapters[currentChapter].rounds[currentRound].spawnInfos)
+        {
+            initialMonsterCount += spawnInfo.count;
+        }
+
+        currentMonsters = initialMonsterCount;
+
         if (currentRound < chapters[currentChapter].rounds.Length)
         {
             movesPerRound = chapters[currentChapter].rounds[currentRound].movesPerRound;
@@ -167,7 +182,7 @@ public class GameManager : MonoBehaviour
         }
 
     }
-   
+
 
 
     public void OnMonsterSpawned()
@@ -180,7 +195,7 @@ public class GameManager : MonoBehaviour
         int totalMonstersForThisRound = 0;
         foreach (MonsterSpawnInfo info in chapters[currentChapter].rounds[currentRound].spawnInfos)
         {
-            
+
             totalMonstersForThisRound += info.count;
             activeMonsters = totalMonstersForThisRound;
         }
@@ -189,40 +204,94 @@ public class GameManager : MonoBehaviour
 
         if (monsterSpawner.totalSpawnedCount >= totalMonstersForThisRound)
         {
-            monsterSpawner.spawnStarted = false;  // sapwn stop
+            monsterSpawner.spawnStarted = false;
+
+          
+
+
+                //currentRound++;  // next round
+
+                if (currentRound >= chapters[currentChapter].rounds.Length)  // Check if all rounds in the current chapter are completed
+                {
+                    PlayerPrefs.SetInt("Chapter0Completed", 1);
+                    SceneManager.LoadScene("HomeScene");
+
+                    Debug.Log("win");
+                    victory.SetActive(true);
+
+                    if (currentChapter < chapters.Length - 1)  // Ensure we're not exceeding the total number of chapters
+                    {
+                        currentChapter++;  // Move to the next chapter
+                        currentRound = 0;  // Reset the round to the first round of the new chapter
+                    }
+                    else
+                    {
+                        // Handle the end of the last chapter, if necessary
+                    }
+                }
+
+                //UpdateRoundsText();
+                //SetupRound();
             
-            currentRound++;  // next round
-
-            if (currentRound >= chapters[currentChapter].rounds.Length)  // Check if all rounds in the current chapter are completed
-            {
-                PlayerPrefs.SetInt("Chapter0Completed", 1);
-                SceneManager.LoadScene("HomeScene");
-
-                Debug.Log("win");
-                victory.SetActive(true);
-                
-                if (currentChapter < chapters.Length - 1)  // Ensure we're not exceeding the total number of chapters
-                {
-                    currentChapter++;  // Move to the next chapter
-                    currentRound = 0;  // Reset the round to the first round of the new chapter
-                }
-                else
-                {
-                    // Handle the end of the last chapter, if necessary
-                }
-            }
-            UpdateRoundsText(); 
-            SetupRound();  
         }
     }
 
     public void OnMonsterDestroyed()
     {
-        activeMonsters--;
+       currentMonsters--;
+
         if (activeMonsters <= 0)
         {
             isMonsterSpawning = false;
         }
+        CheckForRoundCompletion();
+
+    }
+
+    void CheckForRoundCompletion()
+    {
+        if(currentMonsters<=0)
+        { 
+            RoundRewardsPanel();
+            NextRound();
+        }
+    }
+    public void NextRound()
+    {
+        currentRound++;
+        UpdateRoundsText();
+        SetupRound();
+    }
+
+   
+
+    private List<string> GetActiveUnitNames()
+{
+    return filteredEvolutions.Select(evolution => evolution.unitName).ToList();
+}
+
+
+    public void RoundRewardsPanel()
+    
+    {   List<RewardCard> rewards = roundRewardSystem.GenerateRoundRewards(currentRound, GetActiveUnitNames());
+        RewardsPanel rewardsPanelScript = roundRewardsPanel.GetComponent<RewardsPanel>();
+       
+        roundRewardsPanel.SetActive(true);
+       Debug.Log("Generated: " + rewards.Count);
+foreach (var reward in rewards)
+{
+    if (reward == null)
+    {
+        Debug.LogError("reward null");
+    }
+    else
+    {
+        Debug.Log("reward: " + reward.Name);
+    }
+}
+        rewardsPanelScript.ShowRewards(rewards);
+        Time.timeScale = 0;
+        isGamePaused = true;
     }
     void UpdateMovesText()
     {
@@ -252,6 +321,10 @@ public class GameManager : MonoBehaviour
     public void OnUnitClicked(GameObject unit)
     {
        
+        if(isGamePaused==true)
+        {
+            return;
+        }
         if (isMonsterSpawning)
         {
             return;

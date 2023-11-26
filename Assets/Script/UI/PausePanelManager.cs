@@ -31,19 +31,23 @@ public class PausePanelManager : MonoBehaviour
         if (button == restart)
         {
             Time.timeScale = 1;
+            GameManager.Instance.isGamePaused = false;
             SceneManager.LoadScene("Ingame");
         }
 
         else if (button == home)
         {
             Time.timeScale = 1;
+            GameManager.Instance.isGamePaused = false;
             SceneManager.LoadScene("HomeScene");
 
         }
         else if (button == play)
         {
-            this.gameObject.SetActive(false);
             Time.timeScale = 1;
+            GameManager.Instance.isGamePaused = false;
+            this.gameObject.SetActive(false);
+          
         }
     }
 }
