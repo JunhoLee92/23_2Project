@@ -4,7 +4,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
-
+using System.Linq;
 
 
 public class GameManager : MonoBehaviour
@@ -26,6 +26,8 @@ public class GameManager : MonoBehaviour
     private int activeMonsters;
     public int currentMonsters;
     public GameObject roundRewardsPanel;
+
+    public RoundRewardSystem roundRewardSystem;
     public GameObject victory;
     public bool isGamePaused;
     [System.Serializable]
@@ -104,6 +106,7 @@ public class GameManager : MonoBehaviour
         bossSpawner = FindObjectOfType<BossSpawner>();
         bossController = FindObjectOfType<BossController>();
         grid = new GameObject[spawnPositions.Length];
+        
 
         //unit info filtering
         int count = 0;
@@ -248,7 +251,7 @@ public class GameManager : MonoBehaviour
     void CheckForRoundCompletion()
     {
         if(currentMonsters<=0)
-        {
+        { 
             RoundRewardsPanel();
             NextRound();
         }
@@ -260,9 +263,33 @@ public class GameManager : MonoBehaviour
         SetupRound();
     }
 
+   
+
+    private List<string> GetActiveUnitNames()
+{
+    return filteredEvolutions.Select(evolution => evolution.unitName).ToList();
+}
+
+
     public void RoundRewardsPanel()
-    {
+    
+    {   List<RewardCard> rewards = roundRewardSystem.GenerateRoundRewards(currentRound, GetActiveUnitNames());
+        RewardsPanel rewardsPanelScript = roundRewardsPanel.GetComponent<RewardsPanel>();
+       
         roundRewardsPanel.SetActive(true);
+       Debug.Log("Generated: " + rewards.Count);
+foreach (var reward in rewards)
+{
+    if (reward == null)
+    {
+        Debug.LogError("reward null");
+    }
+    else
+    {
+        Debug.Log("reward: " + reward.Name);
+    }
+}
+        rewardsPanelScript.ShowRewards(rewards);
         Time.timeScale = 0;
         isGamePaused = true;
     }

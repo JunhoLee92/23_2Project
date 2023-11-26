@@ -1,87 +1,162 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using System.IO;
+[System.Serializable]
+public class RewardCardTemplate
+{
+    public string Grade;
+    public string EffectType;
+    public float EffectValue;
+}
+
+[System.Serializable]
+public class RewardCardTemplateList
+{
+    public List<RewardCardTemplate> templates;
+}
+public class RoundRewardSystem : MonoBehaviour
+{
+    
+    public enum CardGrade { Common, Rare, SR, SSR, Special }
+    public List<RewardCard> availableCards;  // All available reward cards
+    private List<RewardCard> selectedSpecialCards = new List<RewardCard>(); // Track selected special cards
+     private List<RewardCardTemplate> cardTemplates;
+    private Dictionary<int, Dictionary<CardGrade, float>> roundProbabilities = new Dictionary<int, Dictionary<CardGrade, float>>
+    {
+        {0, new Dictionary<CardGrade, float> {{CardGrade.Common, 80.38f}, {CardGrade.Rare, 8.78f}, {CardGrade.SR, 0.56f}, {CardGrade.SSR, 0.28f}, {CardGrade.Special, 10f}}},
+         {1, new Dictionary<CardGrade, float> {{CardGrade.Common, 67.47f}, {CardGrade.Rare, 15.05f}, {CardGrade.SR, 1.67f}, {CardGrade.SSR, 0.81f}, {CardGrade.Special, 15f}}},
+          {2, new Dictionary<CardGrade, float> {{CardGrade.Common, 54.56f}, {CardGrade.Rare, 21.32f}, {CardGrade.SR, 2.78f}, {CardGrade.SSR, 1.34f}, {CardGrade.Special, 20f}}},
+           {3, new Dictionary<CardGrade, float> {{CardGrade.Common, 41.65f}, {CardGrade.Rare, 27.59f}, {CardGrade.SR, 3.89f}, {CardGrade.SSR, 1.87f}, {CardGrade.Special, 25f}}},
+            {4, new Dictionary<CardGrade, float> {{CardGrade.Common, 28.74f}, {CardGrade.Rare, 33.85f}, {CardGrade.SR, 5f}, {CardGrade.SSR, 2.4f}, {CardGrade.Special, 30f}}},
+            {5, new Dictionary<CardGrade, float> {{CardGrade.Common, 14.83f}, {CardGrade.Rare, 37.32f}, {CardGrade.SR, 9.27f}, {CardGrade.SSR, 3.58f}, {CardGrade.Special, 35f}}},
+            {6, new Dictionary<CardGrade, float> {{CardGrade.Common, 0f}, {CardGrade.Rare,42.78f}, {CardGrade.SR, 12.46f}, {CardGrade.SSR, 4.76f}, {CardGrade.Special, 40f}}},
+            {7, new Dictionary<CardGrade, float> {{CardGrade.Common, 0f}, {CardGrade.Rare, 33.41f}, {CardGrade.SR, 15.65f}, {CardGrade.SSR, 5.94f}, {CardGrade.Special, 45f}}},
+            {8, new Dictionary<CardGrade, float> {{CardGrade.Common, 0f}, {CardGrade.Rare, 24.04f}, {CardGrade.SR, 18.84f}, {CardGrade.SSR, 7.12f}, {CardGrade.Special, 50f}}}
+        // ... Add probabilities for other rounds
+    };
+
+      void Start()
+    {
+        LoadCardDataFromJson();
+        
+    }
+//    private void LoadCardDataFromJson()
+//     {
+//         string filePath = Path.Combine(Application.streamingAssetsPath, "Reward.json");
+//         if (File.Exists(filePath))
+//         {
+//             string dataAsJson = File.ReadAllText(filePath);
+//             RewardCardTemplateList loadedData = JsonUtility.FromJson<RewardCardTemplateList>("{\"templates\":" + dataAsJson + "}");
+//             cardTemplates = loadedData.templates;
+//         }
+//         else
+//         {
+//             Debug.LogError("Cannot Find Card Data");
+//         }
+//     }
+
+private void LoadCardDataFromJson()
+{
+    string filePath = Path.Combine(Application.streamingAssetsPath, "Reward.json");
+    if (File.Exists(filePath))
+    {
+        string dataAsJson = File.ReadAllText(filePath);
+        RewardCardTemplateList loadedData = JsonUtility.FromJson<RewardCardTemplateList>("{\"templates\":" + dataAsJson + "}");
+        cardTemplates = loadedData.templates;
+
+         availableCards.Clear(); // 
+    foreach (var template in cardTemplates)
+    {
+        RewardCard newCard = new RewardCard
+        {
+            Grade = ParseCardGrade(template.Grade),
+            Name = template.Grade + " Attack Power Card",
+            EffectDescription = "Increases attack power by " + template.EffectValue,
+            RelatedUnit="Kali"
+            // need Effect Delegate Setting 
+        };
+        availableCards.Add(newCard);
+    }
+    }
+    else
+    {
+        Debug.LogError("Cannot Find Card Data");
+    }
+}
+
+private CardGrade ParseCardGrade(string grade)
+{
+    switch (grade)
+    {
+        case "Common": return CardGrade.Common;
+        case "Rare": return CardGrade.Rare;
+        case "SR" : return CardGrade.SR;
+        case "SSR" : return CardGrade.SSR;
+        default: return CardGrade.Common; //default
+    }
+}
+   public List<RewardCard> GenerateRoundRewards(int currentRound, List<string> activeUnits)
+{
+    List<RewardCard> selectedCards = new List<RewardCard>();
+    List<RewardCard> possibleCards = FilterCardsBasedOnActiveUnits(activeUnits);
+
+    for (int i = 0; i < 3; i++)
+    {
+        RewardCard selectedCard = SelectCardForRound(currentRound, possibleCards);
+        if (selectedCard != null)
+        {
+            selectedCards.Add(selectedCard);
+        }
+        else
+        {
+            Debug.LogError("Cannot Find available Cards.");
+        }
+    }
+
+    return selectedCards;
+}
+    
+
+    private RewardCard SelectCardForRound(int round, List<RewardCard> possibleCards)
+    {
+        float randomValue = Random.value * 100f;
+        CardGrade selectedGrade = DetermineCardGrade(randomValue, round);
+        return possibleCards.Where(card => card.Grade == selectedGrade).OrderBy(_ => Random.value).FirstOrDefault();
+    }
+
+    private CardGrade DetermineCardGrade(float randomValue, int round)
+    {
+        float accumulatedProbability = 0f;
+        foreach (var gradeProbability in roundProbabilities[round])
+        {
+            accumulatedProbability += gradeProbability.Value;
+            if (randomValue <= accumulatedProbability)
+                return gradeProbability.Key;
+        }
+        return CardGrade.Common;  // Fallback
+    }
+
+    private List<RewardCard> FilterCardsBasedOnActiveUnits(List<string> activeUnits)
+    {
+        return availableCards.Where(card => activeUnits.Contains(card.RelatedUnit)).ToList();
+    }
+
+     
+}
 
 [System.Serializable]
 public class RewardCard
 {
-    public enum CardGrade { Common, Rare, SR, SSR, Special }
+    public RoundRewardSystem.CardGrade Grade;
+    public string Name;
+    public string RelatedUnit; 
+    public string EffectDescription;
+    public System.Action Effect;
 
-    public CardGrade grade;
-    public string cardName;
-    public string effectDescription;
-    public System.Action effect;  // Delegate to represent the effect function to be executed
-}
-
-public class RoundRewardSystem : MonoBehaviour
-{
-    private RewardCard selectedCard;
-    public List<RewardCard> availableCards;  // All available reward cards
-    public List<RewardCard> selectedCards = new List<RewardCard>();  // The 3 randomly selected cards for the round
-
-    // Probabilities for each card grade for each round
-    private Dictionary<int, Dictionary<RewardCard.CardGrade, float>> roundProbabilities = new Dictionary<int, Dictionary<RewardCard.CardGrade, float>>
+    public void ApplyEffect()
     {
-        // Example probabilities for the first two rounds (based on the provided data)
-        {1, new Dictionary<RewardCard.CardGrade, float> {{RewardCard.CardGrade.Common, 80.38f}, {RewardCard.CardGrade.Rare, 8.78f}, {RewardCard.CardGrade.SR, 0.56f}, {RewardCard.CardGrade.SSR, 0.28f}, {RewardCard.CardGrade.Special, 10f}}},
-        {2, new Dictionary<RewardCard.CardGrade, float> {{RewardCard.CardGrade.Common, 67.47f}, {RewardCard.CardGrade.Rare, 15.05f}, {RewardCard.CardGrade.SR, 1.67f}, {RewardCard.CardGrade.SSR, 0.81f}, {RewardCard.CardGrade.Special, 15f}}}
-        // ... Add probabilities for other rounds
-    };
-
-    // Generate 3 random reward cards based on the round probabilities
-    public void GenerateRoundRewards(int currentRound)
-    {
-        for (int i = 0; i < 3; i++)
-        {
-            float randomValue = Random.Range(0f, 100f);
-            RewardCard.CardGrade selectedGrade = DetermineCardGrade(randomValue, currentRound);
-            RewardCard generateCard = availableCards.FirstOrDefault(card => card.grade == selectedGrade);  // Get a card of the determined grade
-            if (generateCard != null)
-            {
-                selectedCards.Add(generateCard);
-            }
-        }
+        
+        Debug.Log($"{Name}Apply Effect");
     }
-
-    // Determine the card grade based on the random value and round probabilities
-    private RewardCard.CardGrade DetermineCardGrade(float randomValue, int currentRound)
-    {
-        // Use the probabilities for the current round to determine the card grade
-        float accumulatedProbability = 0f;
-        foreach (var pair in roundProbabilities[currentRound])
-        {
-            accumulatedProbability += pair.Value;
-            if (randomValue <= accumulatedProbability)
-            {
-                return pair.Key;
-            }
-        }
-        return RewardCard.CardGrade.Common;  // Default to Common grade if no match found
-    }
-
-    // Apply the effect of the selected card
-    public void ApplyCardEffect(RewardCard selectedCard)
-    {
-        selectedCard.effect.Invoke();  // Execute the effect of the selected card
-    }
-
-    //public void IncreaseUnitAttackPower(string unitName, float percentage)
-    //{
-    //    GameManager.Instance.IncreaseUnitAttackPowerByPercentage(unitName, percentage);
-    //}
-
-    public void DecreaseMonsterSpeed(float percentage)
-    {
-        // Logic to decrease monster's movement speed by the given percentage
-        // This can be implemented once the Monster's speed management system is available
-    }
-
-    public void ApplySelectedCardEffect()
-    {
-        if (selectedCard != null)
-        {
-            selectedCard.effect.Invoke();  // Execute the effect of the selected card
-        }
-    }
-
 }
