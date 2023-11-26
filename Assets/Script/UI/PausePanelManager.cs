@@ -12,6 +12,8 @@ public class PausePanelManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Time.timeScale=0;
+        GameManager.Instance.isGamePaused=true;
         restart.onClick.AddListener(() => ButtonClicked(restart));
         home.onClick.AddListener(() => ButtonClicked(home));
         if (play != null)

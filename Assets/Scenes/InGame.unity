@@ -1552,6 +1552,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &295708860 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3793597117671327615, guid: c331dfb0c169487498aaec9a26c5d6cd, type: 3}
+  m_PrefabInstance: {fileID: 5536472600752842937}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &298548211
 GameObject:
   m_ObjectHideFlags: 0
@@ -4232,12 +4237,26 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4684346342092926412, guid: c331dfb0c169487498aaec9a26c5d6cd, type: 3}
   m_PrefabInstance: {fileID: 5536472600752842937}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 295708860}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4b0a4e66f9bf9ee4b87ae3708d4bd90c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1174807996
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 295708860}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67bf7a4c49c22dd42b714e5a78c5bd0c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  victory: {fileID: 1301253526}
+  defaeat: {fileID: 1252003023}
 --- !u!114 &1218452953 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8182739457569523132, guid: 1248ff5b16fb97c49b512d7cac3b2e66, type: 3}
@@ -6964,7 +6983,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0.7186279, y: -189.52063}
+  m_AnchoredPosition: {x: 0.71875, y: -189.52063}
   m_SizeDelta: {x: -1573.1736, y: -900.2383}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1894950321
@@ -7969,6 +7988,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Defeat
       objectReference: {fileID: 0}
+    - target: {fileID: 8746981024764216501, guid: 4bd95ac7f86e14f46b9cdd758ea4eb0d, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 9031122921865886336, guid: 4bd95ac7f86e14f46b9cdd758ea4eb0d, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -8068,6 +8091,10 @@ PrefabInstance:
     - target: {fileID: 7607709676517912995, guid: 1248ff5b16fb97c49b512d7cac3b2e66, type: 3}
       propertyPath: m_Name
       value: Victory
+      objectReference: {fileID: 0}
+    - target: {fileID: 7607709676517912995, guid: 1248ff5b16fb97c49b512d7cac3b2e66, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8818645362386261957, guid: 1248ff5b16fb97c49b512d7cac3b2e66, type: 3}
       propertyPath: m_Pivot.x
@@ -8177,6 +8204,10 @@ PrefabInstance:
       propertyPath: movesText
       value: 
       objectReference: {fileID: 1703212975}
+    - target: {fileID: 1493640219900170506, guid: c331dfb0c169487498aaec9a26c5d6cd, type: 3}
+      propertyPath: victoryManager
+      value: 
+      objectReference: {fileID: 1174807996}
     - target: {fileID: 1493640219900170506, guid: c331dfb0c169487498aaec9a26c5d6cd, type: 3}
       propertyPath: roundRewardSystem
       value: 
@@ -8343,6 +8374,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1493640219900170506, guid: c331dfb0c169487498aaec9a26c5d6cd, type: 3}
       propertyPath: chapters.Array.data[0].rounds.Array.data[0].spawnInfos.Array.data[0].count
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1493640219900170506, guid: c331dfb0c169487498aaec9a26c5d6cd, type: 3}
+      propertyPath: chapters.Array.data[0].rounds.Array.data[1].spawnInfos.Array.data[0].count
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1493640219900170506, guid: c331dfb0c169487498aaec9a26c5d6cd, type: 3}
+      propertyPath: chapters.Array.data[0].rounds.Array.data[2].spawnInfos.Array.data[0].count
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1493640219900170506, guid: c331dfb0c169487498aaec9a26c5d6cd, type: 3}
+      propertyPath: chapters.Array.data[0].rounds.Array.data[3].spawnInfos.Array.data[0].count
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3793597117671327615, guid: c331dfb0c169487498aaec9a26c5d6cd, type: 3}
@@ -8428,7 +8471,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 3793597117671327615, guid: c331dfb0c169487498aaec9a26c5d6cd, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1174807996}
   m_SourcePrefab: {fileID: 100100000, guid: c331dfb0c169487498aaec9a26c5d6cd, type: 3}
 --- !u!1001 &7118081467249775609
 PrefabInstance:

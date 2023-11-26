@@ -4,25 +4,25 @@ using UnityEngine;
 
 public class BaseHealth : MonoBehaviour
 {
-    public int maxHealth = 100;  // º»ÁøÀÇ ÃÖ´ë HP
-    private int currentHealth;  // º»ÁøÀÇ ÇöÀç HP
+    public int maxHealth = 100;  // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´ï¿½ HP
+    private int currentHealth;  // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ HP
     public GameObject defeat;
     void Start()
     {
-        currentHealth = maxHealth;  // ½ÃÀÛ ½Ã ÇöÀç HP¸¦ ÃÖ´ë HP·Î ¼³Á¤
+        currentHealth = maxHealth;  // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ HPï¿½ï¿½ ï¿½Ö´ï¿½ HPï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     }
 
-    // ¸ó½ºÅÍ°¡ º»Áø¿¡ µµ´ÞÇÒ ¶§ È£ÃâÇÏ´Â ÇÔ¼ö
+    // ï¿½ï¿½ï¿½Í°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ È£ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½Ô¼ï¿½
     public void TakeDamage(int damage)
     {
-        currentHealth -= damage;  // µ¥¹ÌÁö¸¸Å­ HP °¨¼Ò
-        Debug.Log("ÇöÀç º»Áø Ã¼·Â" + currentHealth);
-        // ÇöÀç HP°¡ 0 ¹Ì¸¸ÀÌ¸é °ÔÀÓ Á¾·á ·ÎÁ÷ ½ÇÇà
+        currentHealth -= damage;  // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Å­ HP ï¿½ï¿½ï¿½ï¿½
+        Debug.Log("ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Ã¼ï¿½ï¿½" + currentHealth);
+        // ï¿½ï¿½ï¿½ï¿½ HPï¿½ï¿½ 0 ï¿½Ì¸ï¿½ï¿½Ì¸ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         if (currentHealth <= 0)
         {
-            // TODO: °ÔÀÓ Á¾·á ·ÎÁ÷ (¿¹: ¾À ÀüÈ¯, ¸Þ½ÃÁö Ç¥½Ã µî)
+            // TODO: ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ (ï¿½ï¿½: ï¿½ï¿½ ï¿½ï¿½È¯, ï¿½Þ½ï¿½ï¿½ï¿½ Ç¥ï¿½ï¿½ ï¿½ï¿½)
             Debug.Log("Base destroyed!");
-           defeat.SetActive(true);
+           GameManager.Instance.Defeat();
         }
     }
 }

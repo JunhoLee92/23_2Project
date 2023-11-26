@@ -16,13 +16,15 @@ public class BossController : MonoBehaviour,IDamageable
     public float Phase2Hp;
     public float Phase3Hp;
     private int currentPhase = 1;
-    private float phaseHealthLimit;  // °¢ ÆäÀÌÁî¿¡¼­ Ã¼·Â ÇÑµµ
+    private float phaseHealthLimit;  // ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½î¿¡ï¿½ï¿½ Ã¼ï¿½ï¿½ ï¿½Ñµï¿½
     private float attackTimer;
     SpriteRenderer spriteRenderer;
     BossSpawner bossSpawner;
     private int poisonStacks = 0;
     public int maxPoisonStacks = 3;
     private float PoisonDamage = 0;
+
+    public GameObject victory;
     private void Start()
     {
         bossSpawner = GetComponent<BossSpawner>();
@@ -42,12 +44,12 @@ public class BossController : MonoBehaviour,IDamageable
         else
         {
             BaseHealth baseHealth = FindObjectOfType<BaseHealth>();
-            baseHealth.TakeDamage(AttackPower);  // 50Àº º¸½ºÀÇ °ø°Ý·ÂÀ» ³ªÅ¸³»´Â ¿¹½Ã °ªÀÔ´Ï´Ù.
+            baseHealth.TakeDamage(AttackPower);  // 50ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ý·ï¿½ï¿½ï¿½ ï¿½ï¿½Å¸ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ô´Ï´ï¿½.
             NextPhase();
-            attackTimer = attackPreparationTime;  // Å¸ÀÌ¸Ó ¸®¼Â
+            attackTimer = attackPreparationTime;  // Å¸ï¿½Ì¸ï¿½ ï¿½ï¿½ï¿½ï¿½
         }
 
-        // Ã¼·ÂÀÌ ÇÑµµ ÀÌÇÏ·Î ¶³¾îÁ³°Å³ª °ø°Ý ÁØºñ ½Ã°£ÀÌ Áö³ª¸é ´ÙÀ½ ÆäÀÌÁî·Î ÀüÈ¯
+        // Ã¼ï¿½ï¿½ï¿½ï¿½ ï¿½Ñµï¿½ ï¿½ï¿½ï¿½Ï·ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Å³ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Øºï¿½ ï¿½Ã°ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È¯
         
     }
 
@@ -60,7 +62,7 @@ public class BossController : MonoBehaviour,IDamageable
 
         if (currentHealth<=0 || attackTimer <= 0)
         {
-            // Ã¼·Â °¨¼Ò¿¡ µû¸¥ ÆäÀÌÁî ÀüÈ¯ Á¶°Ç Ãß°¡
+            // Ã¼ï¿½ï¿½ ï¿½ï¿½ï¿½Ò¿ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È¯ ï¿½ï¿½ï¿½ï¿½ ï¿½ß°ï¿½
             if (currentPhase == 1 )
             {
                 NextPhase();
@@ -71,12 +73,12 @@ public class BossController : MonoBehaviour,IDamageable
                 NextPhase();
                 currentHealth = Phase3Hp;
             }
-            else if (currentPhase==3) // ¸¶Áö¸· ÆäÀÌÁî¿¡¼­´Â attackTimer°¡ 0ÀÌµÇ¾îµµ NextPhase¸¦ È£ÃâÇÏÁö ¾ÊÀ½
+            else if (currentPhase==3) // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½î¿¡ï¿½ï¿½ï¿½ï¿½ attackTimerï¿½ï¿½ 0ï¿½ÌµÇ¾îµµ NextPhaseï¿½ï¿½ È£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
             {
                 NextPhase();
             }
         }
-        //Debug.Log("º¸½ºÇöÀçÃ¼·Â:" + currentHealth);
+        //Debug.Log("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã¼ï¿½ï¿½:" + currentHealth);
         
     }
 
@@ -115,20 +117,22 @@ public class BossController : MonoBehaviour,IDamageable
         {
             if (currentHealth <= 0)
             {
-                Debug.Log("½Â¸®");
+                GameManager.Instance.Victory();
+                Debug.Log("ï¿½Â¸ï¿½");
             }
             else {
-                Debug.Log("ÆÐ¹è");
+                GameManager.Instance.Defeat();
+                Debug.Log("ï¿½Ð¹ï¿½");
                     }
 
-            // º¸½º¸¦ ¼¼ ¹ø °ÝÆÄÇßÀ» ¶§ Ã³¸®
+            // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ Ã³ï¿½ï¿½
             Destroy(gameObject);
-            // °ÔÀÓ Á¾·á ¶Ç´Â ´ÙÀ½ ¶ó¿îµå/Ã©ÅÍ ·ÎÁ÷ Ãß°¡
+            // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ç´ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½/Ã©ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ß°ï¿½
             return;
         }
 
         attackTimer = attackPreparationTime;
-        // ´Ù¸¥ ÆäÀÌÁî ÀüÈ¯ ·ÎÁ÷ (¿¹: ¾Ö´Ï¸ÞÀÌ¼Ç, °ø°Ý ÆÐÅÏ º¯°æ µî)
+        // ï¿½Ù¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È¯ ï¿½ï¿½ï¿½ï¿½ (ï¿½ï¿½: ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½, ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½)
     }
     public int MaxPoisonStacks
     {
