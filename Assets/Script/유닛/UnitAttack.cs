@@ -7,7 +7,7 @@ public class UnitAttack : MonoBehaviour
 {
 
     public float attackDamage = 21f;       // Attack power
-    public float attackRange;         // Attack range (1 block)
+    public float attackRange=1;         // Attack range (1 block)
     public float attackSpeed = 2.2f;       // Attacks per second
     public GameObject attackEffectPrefab;  // Reference to the attack effect sprite prefab
     public float effectDuration = 0.5f;    // Duration for which the effect sprite is visible
@@ -15,8 +15,14 @@ public class UnitAttack : MonoBehaviour
     private float attackInterval;          // Time between attacks
     private float nextAttackTime = 0f;     // Time when next attack can occur
     private Unit unitScript;
-    float scalex;
-    float scaley;
+    float scalex=1;
+    float scaley=1;
+
+    bool isSpecialA=false;
+    bool isSpecialB=false;
+
+    private static bool globalSpecialAApplied = false;
+    private static bool globalSpecialBApplied = false;
     void Start()
     {
         if (GameManager.Instance.unitEvolutionData[0].isPrestige==true)
@@ -27,6 +33,44 @@ public class UnitAttack : MonoBehaviour
         }
         unitScript = GetComponent<Unit>();
         attackInterval = 1f / attackSpeed;  // Calculate the time between attacks
+
+      if (globalSpecialAApplied)
+        {
+            attackRange *= 1.2f;
+            scalex *= 1.2f;
+            scaley *= 1.2f;
+        }
+
+        if (globalSpecialBApplied)
+        {
+            attackRange *= 1.3f;
+            scalex *= 1.3f;
+            scaley *= 1.3f;
+        }
+
+        if (unitScript.unitLevel == 1 || unitScript.unitLevel==2)
+        {
+            attackRange *= 1f;
+            scalex *= 1f;
+            scaley *= 1f;
+
+        }
+        else if (unitScript.unitLevel == 3 || unitScript.unitLevel==4)
+        {
+            attackRange = attackRange*1.2f;
+            scalex = scalex*1.2f;
+            scaley = scaley*1.2f;
+
+        }
+
+        else if (unitScript.unitLevel == 5)
+        {
+            attackRange = attackRange*1.5f;
+            scalex = scalex*1.5f;
+            scaley = scaley*1.5f;
+        }
+
+        Debug.Log("범위"+attackRange);
     }
 
     void Update()
@@ -37,30 +81,28 @@ public class UnitAttack : MonoBehaviour
             Attack();
             nextAttackTime = Time.time + attackInterval;
         }
+
+        if(Input.GetKeyDown(KeyCode.Q)) //for special reward test
+        {
+            isSpecialA=true;
+            Debug.Log("special");
+
+        }
     }
 
     void Attack()
     {
-        if (unitScript.unitLevel == 1 || unitScript.unitLevel==2)
+        if(isSpecialA==true)
         {
-            attackRange = 1f;
-            scalex= 1f;
-            scaley= 1f;
-
+            SpecialA();
+            
+            
         }
-        else if (unitScript.unitLevel == 3 || unitScript.unitLevel==4)
+        
+        if(isSpecialB==true)
         {
-            attackRange = 1.2f;
-            scalex = 1.2f;
-            scaley = 1.2f;
-
-        }
-
-        else if (unitScript.unitLevel == 5)
-        {
-            attackRange = 1.5f;
-            scalex = 1.5f;
-            scaley = 1.5f;
+            SpecialB();
+            
         }
 
         // Detect monsters within attack range using a simple overlap check
@@ -80,6 +122,30 @@ public class UnitAttack : MonoBehaviour
                 // Destroy the effect sprite after the set duration
                 Destroy(effectInstance, effectDuration);
             }
+        }
+    }
+
+    void SpecialA()
+    {
+        if (!globalSpecialAApplied)
+        {
+            attackRange *= 1.2f;
+            scalex *= 1.2f;
+            scaley *= 1.2f;
+            globalSpecialAApplied = true;
+        }
+        
+       
+    }
+
+    void SpecialB()
+    {   
+       if (!globalSpecialBApplied)
+        {
+            attackRange *= 1.3f;
+            scalex *= 1.3f;
+            scaley *= 1.3f;
+            globalSpecialBApplied = true;
         }
     }
 }

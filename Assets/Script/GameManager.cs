@@ -28,7 +28,7 @@ public class GameManager : MonoBehaviour
     public GameObject roundRewardsPanel;
 
     public RoundRewardSystem roundRewardSystem;
-    public GameObject victory;
+    public Victory victoryManager;
     public bool isGamePaused;
     [System.Serializable]
     public class RoundConfig
@@ -217,7 +217,7 @@ public class GameManager : MonoBehaviour
                     SceneManager.LoadScene("HomeScene");
 
                     Debug.Log("win");
-                    victory.SetActive(true);
+                    Victory();
 
                     if (currentChapter < chapters.Length - 1)  // Ensure we're not exceeding the total number of chapters
                     {
@@ -418,8 +418,20 @@ foreach (var reward in rewards)
             unit1.transform.position = unit2.transform.position;
             unit2.transform.position = tempPosition;
         }
+
+
+      
     }
 
+    public void Defeat()
+        {
+           victoryManager.DefeatOn();
+        }
+
+    public void Victory()
+        {
+            victoryManager.VictoryOn();
+        }
 
     //public void IncreaseUnitAttackPowerByPercentage(string unitName, float percentage)
     //{

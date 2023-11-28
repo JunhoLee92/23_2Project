@@ -23,7 +23,18 @@
     "EffectType": "AttackPower",
     "EffectValue": 10 
 
+    },
+    { "Grade": "Special",
+    "EffectType": "AttackSpeed",
+    "EffectValue": 15 
+
+    },
+    { "Grade": "Special",
+    "EffectType": "Attack123",
+    "EffectValue": 20 
+
     }
+
    
     
 ]

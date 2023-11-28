@@ -17,10 +17,11 @@ public class RewardCardTemplateList
 }
 public class RoundRewardSystem : MonoBehaviour
 {
-    
+      public static RoundRewardSystem Instance { get; private set; }
     public enum CardGrade { Common, Rare, SR, SSR, Special }
     public List<RewardCard> availableCards;  // All available reward cards
-    private List<RewardCard> selectedSpecialCards = new List<RewardCard>(); // Track selected special cards
+   public HashSet<RewardCard> selectedSpecialCards = new HashSet<RewardCard>();
+
      private List<RewardCardTemplate> cardTemplates;
     private Dictionary<int, Dictionary<CardGrade, float>> roundProbabilities = new Dictionary<int, Dictionary<CardGrade, float>>
     {
@@ -33,28 +34,28 @@ public class RoundRewardSystem : MonoBehaviour
             {6, new Dictionary<CardGrade, float> {{CardGrade.Common, 0f}, {CardGrade.Rare,42.78f}, {CardGrade.SR, 12.46f}, {CardGrade.SSR, 4.76f}, {CardGrade.Special, 40f}}},
             {7, new Dictionary<CardGrade, float> {{CardGrade.Common, 0f}, {CardGrade.Rare, 33.41f}, {CardGrade.SR, 15.65f}, {CardGrade.SSR, 5.94f}, {CardGrade.Special, 45f}}},
             {8, new Dictionary<CardGrade, float> {{CardGrade.Common, 0f}, {CardGrade.Rare, 24.04f}, {CardGrade.SR, 18.84f}, {CardGrade.SSR, 7.12f}, {CardGrade.Special, 50f}}}
-        // ... Add probabilities for other rounds
+       
     };
+  void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else if (Instance != this)
+        {
+            Destroy(gameObject);
+        }
 
+        
+    }
       void Start()
     {
         LoadCardDataFromJson();
         
     }
-//    private void LoadCardDataFromJson()
-//     {
-//         string filePath = Path.Combine(Application.streamingAssetsPath, "Reward.json");
-//         if (File.Exists(filePath))
-//         {
-//             string dataAsJson = File.ReadAllText(filePath);
-//             RewardCardTemplateList loadedData = JsonUtility.FromJson<RewardCardTemplateList>("{\"templates\":" + dataAsJson + "}");
-//             cardTemplates = loadedData.templates;
-//         }
-//         else
-//         {
-//             Debug.LogError("Cannot Find Card Data");
-//         }
-//     }
+
 
 private void LoadCardDataFromJson()
 {
@@ -71,9 +72,13 @@ private void LoadCardDataFromJson()
         RewardCard newCard = new RewardCard
         {
             Grade = ParseCardGrade(template.Grade),
-            Name = template.Grade + " Attack Power Card",
-            EffectDescription = "Increases attack power by " + template.EffectValue,
+            Name = template.Grade + template.EffectType+ "Card",
+            EffectDescription = template.EffectType + template.EffectValue,
             RelatedUnit="Kali"
+            
+
+            
+
             // need Effect Delegate Setting 
         };
         availableCards.Add(newCard);
@@ -93,6 +98,7 @@ private CardGrade ParseCardGrade(string grade)
         case "Rare": return CardGrade.Rare;
         case "SR" : return CardGrade.SR;
         case "SSR" : return CardGrade.SSR;
+        case "Special" : return CardGrade.Special;
         default: return CardGrade.Common; //default
     }
 }
@@ -100,7 +106,8 @@ private CardGrade ParseCardGrade(string grade)
 {
     List<RewardCard> selectedCards = new List<RewardCard>();
     List<RewardCard> possibleCards = FilterCardsBasedOnActiveUnits(activeUnits);
-
+     possibleCards = possibleCards.Where(card => !selectedSpecialCards.Contains(card)).ToList(); 
+    Debug.Log("activeUnits"+activeUnits);
     for (int i = 0; i < 3; i++)
     {
         RewardCard selectedCard = SelectCardForRound(currentRound, possibleCards);
@@ -123,6 +130,15 @@ private CardGrade ParseCardGrade(string grade)
         float randomValue = Random.value * 100f;
         CardGrade selectedGrade = DetermineCardGrade(randomValue, round);
         return possibleCards.Where(card => card.Grade == selectedGrade).OrderBy(_ => Random.value).FirstOrDefault();
+    }
+
+     public void OnSpecialCardSelected(RewardCard specialCard)
+    {
+        if (specialCard.Grade == CardGrade.Special)
+        {
+            selectedSpecialCards.Add(specialCard);
+            Debug.Log("SpecialCardSelected");
+        }
     }
 
     private CardGrade DetermineCardGrade(float randomValue, int round)

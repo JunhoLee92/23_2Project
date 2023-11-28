@@ -56,8 +56,14 @@ public class RewardsPanel : MonoBehaviour
     private void ApplyReward(RewardCard reward)
     { Debug.Log("Reward Applied: " + reward.Name);
         reward.ApplyEffect(); 
+        if (reward.Grade == RoundRewardSystem.CardGrade.Special)
+    {
+        RoundRewardSystem.Instance.OnSpecialCardSelected(reward);
+        Debug.Log("SpecialCard"+reward);
+    }
         Time.timeScale=1;
         GameManager.Instance.isGamePaused = false;
+        
         gameObject.SetActive(false); 
         
     }
