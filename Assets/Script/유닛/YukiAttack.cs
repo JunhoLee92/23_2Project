@@ -14,6 +14,15 @@ public class YukiAttack : MonoBehaviour
     float blizzardCooltime = 10.0f;
     float nextBlizzardTime = 0.0f;
 
+    float freezeDuration = 1f;
+    static float freezeProbability = 0.15f; 
+
+    bool isSpecialA=false;
+    bool isSpecialB=false;
+    static bool globalSpecialAApplied=false;
+
+    static bool globalSpecialBApplied=false;
+
     void Start()
     {
         attackInterval = 1f / attackSpeed;
@@ -21,6 +30,34 @@ public class YukiAttack : MonoBehaviour
         unitScript = GetComponent<Unit>();
 
         nextBlizzardTime = Time.time + blizzardCooltime;
+
+         if (unitScript.unitLevel == 1)
+            {
+                freezeProbability = 0.15f;
+
+            }
+            else if (unitScript.unitLevel >= 3)
+            {
+                freezeProbability = 0.3f;
+            }
+
+              else if (unitScript.unitLevel == 5)
+                    {
+                        freezeDuration += 0.2f;
+                    }
+
+
+
+            if(globalSpecialAApplied)
+            {
+                freezeProbability+=0.15f;
+            }
+
+            if(globalSpecialBApplied)
+            {
+                freezeDuration+=0.2f;
+            }
+
 
         // Add the following debug lines
 
@@ -42,6 +79,12 @@ public class YukiAttack : MonoBehaviour
         {
             blizzard();
             nextBlizzardTime = Time.time + blizzardCooltime;
+        }
+
+        if(Input.GetKeyDown(KeyCode.Q)) //for special test
+        {
+            isSpecialA=true;
+            // SpecialA();
         }
 
     }
@@ -69,7 +112,17 @@ public class YukiAttack : MonoBehaviour
     }
 
     void Shoot(GameObject target)
-    {
+    {   
+        if(isSpecialA)
+        {
+            SpecialA();
+            isSpecialA=false;
+        }
+        if(isSpecialB)
+        {
+            SpecialB();
+            isSpecialB=false;
+        }
         GameObject projectile = Instantiate(projectilePrefab, transform.position, Quaternion.identity);
         Projectile projectileScript = projectile.GetComponent<Projectile>();
         projectileScript.target = target;
@@ -78,23 +131,10 @@ public class YukiAttack : MonoBehaviour
         // Accessing the Unit script to get Yuki's current level
         Unit unitScript = GetComponent<Unit>();
 
-        if (unitScript && unitScript.unitType == 1)  // Checking if it's Yuki
-        {
-            Debug.Log("Unit Type: " + unitScript.unitType);
-            Debug.Log("Unit Level: " + unitScript.unitLevel);
+        
+             // Initialize freeze probability
 
-            float freezeProbability = 0f;  // Initialize freeze probability
-
-            if (unitScript.unitLevel == 1)
-            {
-                freezeProbability = 0.15f;
-
-            }
-            else if (unitScript.unitLevel == 3)
-            {
-                freezeProbability = 0.3f;
-            }
-
+           
 
 
             // Check if we should apply the freeze effect based on the probability
@@ -105,16 +145,15 @@ public class YukiAttack : MonoBehaviour
                 MonsterController monsterScript = target.GetComponent<MonsterController>();
                 if (monsterScript)
                 {
-                    float freezeDuration = 1f;  // Default freeze duration
-                    if (unitScript.unitLevel == 5)
-                    {
-                        freezeDuration += 0.2f;
-                    }
+                      // Default freeze duration
+                  
                     monsterScript.Slow(0.4f, freezeDuration);  // 1f slow amount means complete stop
                 }
                 Debug.Log("FrozenCheck");
             }
-        }
+        
+
+        Debug.Log("둔화확룔"+freezeProbability);
     }
 
     void blizzard()
@@ -129,5 +168,26 @@ public class YukiAttack : MonoBehaviour
 
         Debug.Log("Blizzard");
     }    
+
+    public void SpecialA()
+    {
+        isSpecialA=true;
+        if(!globalSpecialAApplied)
+        {
+        freezeProbability+=0.15f;
+        globalSpecialAApplied=true;
+        Debug.Log("스페셜1적용");
+        }
+    }
+
+    public void SpecialB()
+    {
+        isSpecialB=true;
+        if(!globalSpecialBApplied)
+        {
+            freezeDuration+=0.2f;
+            globalSpecialBApplied=true;
+        }
+    }
 }
 

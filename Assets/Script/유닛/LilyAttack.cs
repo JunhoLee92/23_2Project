@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Rendering;
 using static UnityEngine.GraphicsBuffer;
 using static UnityEngine.RuleTile.TilingRuleOutput;
 
@@ -12,11 +14,19 @@ public class LilyAttack : MonoBehaviour
 
     public GameObject laserPrefab;
     public float AttackDamage = 17f;
-    private float poisonDamagePercentage = 0.15f;
+    private float poisonDamagePercentage = 0.05f;
     private GameObject target;
     private Coroutine laserAttackCoroutine;
     private Unit unitScript;
     private bool isPrestige = false;
+
+     private static bool globalSpecialAApplied = false;
+    private static bool globalSpecialBApplied = false;
+
+      bool isSpecialA=false;
+     bool isSpecialB=false;
+
+     private int MaxPoisonStacks=3;
 
     private void Start()
     {
@@ -29,8 +39,46 @@ public class LilyAttack : MonoBehaviour
         unitScript = GetComponent<Unit>();
         // Start the laser attack loop
         laserAttackCoroutine = StartCoroutine(LaserAttackLoop());
+
+         if (unitScript.unitLevel == 1)
+                {
+                    poisonDamagePercentage = 0.05f;
+                      
+                }
+                else if (unitScript.unitLevel == 3)
+                {
+                    poisonDamagePercentage = 0.1f;
+                    
+                }
+                else if (unitScript.unitLevel == 5)
+                {
+                    poisonDamagePercentage = 0.20f;
+                    MaxPoisonStacks+=2;
+                    
+                }
+
+                if(globalSpecialAApplied)
+                {
+                    poisonDamagePercentage+=0.05f;
+                }
+
+                if(globalSpecialBApplied)
+                {
+                    poisonDamagePercentage+=0.1f;
+                    MaxPoisonStacks+=2;
+
+                }
     }
 
+    void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.Q)) //for special reward test
+        {
+            isSpecialA=true;
+            Debug.Log("special");
+
+        }
+    }
     private void OnDestroy()
     {
         if (laserAttackCoroutine != null)
@@ -86,26 +134,25 @@ public class LilyAttack : MonoBehaviour
         {
             yield break;  // Exit the coroutine if the target is destroyed
         }
+        if(isSpecialA)
+        {
+            SpecialA();
+            
+        }
 
+        if(isSpecialB)
+        {
+            SpecialB();
+        }
+        Debug.Log("독스택"+poisonDamagePercentage);
         IDamageable damageableEntity = target.GetComponent<IDamageable>();
         if (damageableEntity != null)
         {
-            if (unitScript && unitScript.unitType == 2)  // Checking if it's Lily
-            {
-                if (unitScript.unitLevel == 1)
-                {
-                    poisonDamagePercentage = 0.05f;
-                }
-                else if (unitScript.unitLevel == 3)
-                {
-                    poisonDamagePercentage = 0.1f;
-                }
-                else if (unitScript.unitLevel == 5)
-                {
-                    poisonDamagePercentage = 0.20f;
-                    damageableEntity.MaxPoisonStacks = 5;
-                }
-            }
+            
+            
+               
+
+            damageableEntity.MaxPoisonStacks = MaxPoisonStacks;
 
             damageableEntity.TakeDamage(AttackDamage);
             damageableEntity.PoisonStack(poisonDamagePercentage * AttackDamage);
@@ -120,27 +167,11 @@ public class LilyAttack : MonoBehaviour
         {
             yield break;  // Exit the coroutine if the target is destroyed
         }
-
+            
         IDamageable damageableEntity = target.GetComponent<IDamageable>();
         if (damageableEntity != null)
         {
-            if (unitScript && unitScript.unitType == 2)  // Checking if it's Lily
-            {
-                if (unitScript.unitLevel == 1)
-                {
-                    poisonDamagePercentage = 0.05f;
-                }
-                else if (unitScript.unitLevel == 3)
-                {
-                    poisonDamagePercentage = 0.1f;
-                }
-                else if (unitScript.unitLevel == 5)
-                {
-                    poisonDamagePercentage = 0.20f;
-                    damageableEntity.MaxPoisonStacks = 5;
-                }
-            }
-
+           
             damageableEntity.TakeDamage(AttackDamage);
             damageableEntity.EnhancedPoisonStack(poisonDamagePercentage,AttackDamage);
         }
@@ -161,6 +192,26 @@ public class LilyAttack : MonoBehaviour
             }
         }
         return closest;
+    }
+
+    public void SpecialA()
+    {   if(!globalSpecialAApplied)
+        {
+            poisonDamagePercentage+=0.05f;
+            globalSpecialAApplied=true;
+        }
+
+    }
+
+    public void SpecialB()
+    {
+        if(!globalSpecialBApplied)
+        {
+            poisonDamagePercentage+=0.1f;
+            MaxPoisonStacks+=2;
+            globalSpecialBApplied=true;
+
+        }
     }
 }
 

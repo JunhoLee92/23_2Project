@@ -3902,7 +3902,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 978345366}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 09cd56735dd52754db087083caf718a6, type: 3}
   m_Name: 
@@ -4238,7 +4238,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 5536472600752842937}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 295708860}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4b0a4e66f9bf9ee4b87ae3708d4bd90c, type: 3}
   m_Name: 
@@ -8373,12 +8373,20 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1493640219900170506, guid: c331dfb0c169487498aaec9a26c5d6cd, type: 3}
+      propertyPath: unitEvolutionData.Array.data[4].isChecked
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1493640219900170506, guid: c331dfb0c169487498aaec9a26c5d6cd, type: 3}
+      propertyPath: chapters.Array.data[0].rounds.Array.data[0].spawnInfos.Array.data[0].Hp
+      value: 70
+      objectReference: {fileID: 0}
+    - target: {fileID: 1493640219900170506, guid: c331dfb0c169487498aaec9a26c5d6cd, type: 3}
       propertyPath: chapters.Array.data[0].rounds.Array.data[0].spawnInfos.Array.data[0].count
       value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 1493640219900170506, guid: c331dfb0c169487498aaec9a26c5d6cd, type: 3}
       propertyPath: chapters.Array.data[0].rounds.Array.data[1].spawnInfos.Array.data[0].count
-      value: 1
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 1493640219900170506, guid: c331dfb0c169487498aaec9a26c5d6cd, type: 3}
       propertyPath: chapters.Array.data[0].rounds.Array.data[2].spawnInfos.Array.data[0].count
@@ -8391,6 +8399,10 @@ PrefabInstance:
     - target: {fileID: 3793597117671327615, guid: c331dfb0c169487498aaec9a26c5d6cd, type: 3}
       propertyPath: m_Name
       value: GameManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 4684346342092926412, guid: c331dfb0c169487498aaec9a26c5d6cd, type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4684346342092926412, guid: c331dfb0c169487498aaec9a26c5d6cd, type: 3}
       propertyPath: availableCards.Array.size

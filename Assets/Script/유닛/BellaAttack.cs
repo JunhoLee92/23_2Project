@@ -9,9 +9,19 @@ public class BellaAttack : MonoBehaviour
     public GameObject projectilePrefab;
     private Unit unitScript;  
 
+    float ExecuteHpRate = 0.3f;
+
     private float attackInterval;
     private float nextAttackTime = 0f;
     private BellaPrestige bellapretige;
+
+    
+
+    bool isSpecialA=false;
+    bool isSpecialB=false;
+
+    private static bool globalSpecialAApplied = false;
+    private static bool globalSpecialBApplied = false;
 
     private void Awake()
     {
@@ -28,6 +38,12 @@ public class BellaAttack : MonoBehaviour
             Debug.Log("BellaPrestige");
             bellapretige.UpdateStrongestBella();
 
+        }
+
+         if(globalSpecialBApplied)
+        {
+            ExecuteHpRate+=0.15f;
+            
         }
 
         unitScript = GetComponent<Unit>();
@@ -57,6 +73,15 @@ public class BellaAttack : MonoBehaviour
                 }
             }
         }
+
+        if(Input.GetKeyDown(KeyCode.Q))
+        {
+            isSpecialB=true;
+            // SpecialB();
+        }
+
+        
+
     }
 
 
@@ -87,29 +112,38 @@ public class BellaAttack : MonoBehaviour
         bellaProjectile.GetComponent<BellaProjectile>().target = target;
         bellaProjectile.GetComponent<BellaProjectile>().damage = attackDamage;
 
+        
     }
 
     void TryExecute(GameObject target)
     {
+
+        if(isSpecialB==true)
+        {
+            SpecialB();
+            
+            
+        }
         Unit unitScript = GetComponent<Unit>();
         MonsterController monsterscript = target.GetComponent<MonsterController>();
         //if(monsterscript != null)
         //{
         //    return;
         //}
-
-
+        
+        
+        Debug.Log("Executerate"+ExecuteHpRate);
         // Execute logic based on the unit's level
         if (unitScript.unitLevel == 1)
         {
-            Debug.Log("BellaLevel" + unitScript.unitLevel);
-            float ExecuteHpRate = 0.3f;
+            
+            
             monsterscript.Execute(ExecuteHpRate);
 
         }
         else if (unitScript.unitLevel == 3)
         {
-            float ExecuteHpRate = 0.3f;
+            
             if (Random.value <= 0.05f)
                 monsterscript.Execute(1.0f);
 
@@ -119,7 +153,7 @@ public class BellaAttack : MonoBehaviour
         }
         else if (unitScript.unitLevel == 5)
         {
-            float ExecuteHpRate = 0.45f;
+            ExecuteHpRate = 0.45f;
             monsterscript.Execute(ExecuteHpRate);
         }
     }
@@ -134,5 +168,19 @@ public class BellaAttack : MonoBehaviour
     {
         attackDamage = attackDamage * Times;
         Debug.Log("Prestige Apply" + attackDamage);
+    }
+
+    public void SpecialA()
+    {
+        //Check
+    }
+    public void SpecialB()
+    {
+        if(!globalSpecialBApplied)
+        {
+            ExecuteHpRate+=0.15f;
+            globalSpecialBApplied=true;
+            Debug.Log("specialB");
+        }
     }
 }
