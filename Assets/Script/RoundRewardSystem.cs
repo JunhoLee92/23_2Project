@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using System.IO;
+using System;
 [System.Serializable]
 public class RewardCardTemplate
 {
@@ -21,6 +22,7 @@ public class RoundRewardSystem : MonoBehaviour
     public enum CardGrade { Common, Rare, SR, SSR, Special }
     public List<RewardCard> availableCards;  // All available reward cards
    public HashSet<RewardCard> selectedSpecialCards = new HashSet<RewardCard>();
+     private List<RewardCard> allCards = new List<RewardCard>();
 
      private List<RewardCardTemplate> cardTemplates;
     private Dictionary<int, Dictionary<CardGrade, float>> roundProbabilities = new Dictionary<int, Dictionary<CardGrade, float>>
@@ -52,44 +54,79 @@ public class RoundRewardSystem : MonoBehaviour
     }
       void Start()
     {
-        LoadCardDataFromJson();
+        InitializeAllCards();
         
     }
 
-
-private void LoadCardDataFromJson()
+void Update()
 {
-    string filePath = Path.Combine(Application.streamingAssetsPath, "Reward.json");
-    if (File.Exists(filePath))
+    if(Input.GetKeyDown(KeyCode.A))
     {
-        string dataAsJson = File.ReadAllText(filePath);
-        RewardCardTemplateList loadedData = JsonUtility.FromJson<RewardCardTemplateList>("{\"templates\":" + dataAsJson + "}");
-        cardTemplates = loadedData.templates;
-
-         availableCards.Clear(); // 
-    foreach (var template in cardTemplates)
-    {
-        RewardCard newCard = new RewardCard
-        {
-            Grade = ParseCardGrade(template.Grade),
-            Name = template.Grade + template.EffectType+ "Card",
-            EffectDescription = template.EffectType + template.EffectValue,
-            RelatedUnit="Kali"
-            
-
-            
-
-            // need Effect Delegate Setting 
-        };
-        availableCards.Add(newCard);
-    }
-    }
-    else
-    {
-        Debug.LogError("Cannot Find Card Data");
-    }
+        // TestSpecial();
+        Debug.Log("Kali ON");
+    } 
 }
 
+
+    private void InitializeAllCards()
+    {
+        string[] unitNames = { "Kali", "Yuki", "Lily", "Air", "Terres", "Bella" }; // Replace with actual unit names
+
+        foreach (var unitName in unitNames)
+        {
+            allCards.Add(CreateCard(unitName, "공격력", 2, CardGrade.Common, () => AttackDamageEffect(unitName)));
+            allCards.Add(CreateCard(unitName, "공격력", 5, CardGrade.Rare, () => AttackDamageEffect(unitName)));
+            allCards.Add(CreateCard(unitName, "공격력", 11, CardGrade.SR, () => AttackDamageEffect(unitName)));
+            allCards.Add(CreateCard(unitName, "공격속도", 5, CardGrade.Common, () => AttackSpeedEffect(unitName)));
+            allCards.Add(CreateCard(unitName, "공격속도", 10, CardGrade.Rare, () => AttackSpeedEffect(unitName)));
+            allCards.Add(CreateCard(unitName, "공격속도", 30, CardGrade.SR, () => AttackSpeedEffect(unitName)));
+            
+            // Add additional cards for other effects or grades as needed
+        }
+        allCards.Add(CreateCard("Kali", "공격범위", 20, CardGrade.Special, () => KaliSpecialA()));
+        allCards.Add(CreateCard("Kali", "공격범위", 30, CardGrade.Special, () => KaliSpecialB()));
+        allCards.Add(CreateCard("Yuki", "냉동확률", 15, CardGrade.Special, () => YukiSpecialA()));
+        allCards.Add(CreateCard("Yuki", "둔화지속", 0.2f, CardGrade.Special, () => YukiSpecialB()));
+        allCards.Add(CreateCard("Lily", "도트데미지", 5, CardGrade.Special, () => LilySpecialA(),"LV3이상 릴리의 도트 데미지 +5% 증가"));
+        allCards.Add(CreateCard("Lily", "도트데미지 추가증가", 5, CardGrade.Special, () => LilySpecialB(),"LV5 릴리의 독 디버프 데미지 +10% 증가 및 최대 중첩수 +2 증가") );
+        allCards.Add(CreateCard("Terres", "불씨강화", 30, CardGrade.Special, () => TerresSpecialB(),"LV3 이상 테레스의 불씨 1중첩 이상일 때 30% 확률로 불씨 1중첩을 소모하여 강공격을 한다. 강공격은 현재 테레스 공격력의 130% 데미지"));
+        allCards.Add(CreateCard("Terres", "중첩강화", 5, CardGrade.Special, () => TerresSpecialB(),"LV5 테레스의 불씨 중첩 획득 확률 +5% 증가"));
+        allCards.Add(CreateCard("Bella", "처형강화", 5, CardGrade.Special, () => YukiSpecialB(),"LV3 이상 벨라가 공격 시 적의 체력과 무관하게 5% 확률로 처형"));
+        allCards.Add(CreateCard("Bella", "처형강화2", 45, CardGrade.Special, () => YukiSpecialB(),"LV5 이상 벨라의 즉시 처형 기준 체력 +15% 증가"));
+
+        allCards.Add(CreateCard("몬스터", "속도감소", 5, CardGrade.Common, DecreaseEnemySpeed1, "적의 이동속도가 5% 감소합니다."));
+        allCards.Add(CreateCard("몬스터", "속도감소", 10, CardGrade.SR, DecreaseEnemySpeed1, "적의 이동속도가 10% 감소합니다."));
+        allCards.Add(CreateCard("몬스터", "속도감소", 15, CardGrade.SSR, DecreaseEnemySpeed1, "적의 이동속도가 15% 감소합니다."));
+        allCards.Add(CreateCard("모든유닛", "공격속도", 10, CardGrade.SSR, IncreaseAttackDamage1, "유닛 전체의 공격 속도가 10% 증가합니다."));
+         
+
+    }
+
+   
+    private RewardCard CreateCard(string unitName, string effectType, float effectValue, CardGrade grade, Action effectAction, string customDescription = null)
+{
+    string description = customDescription;
+    if (string.IsNullOrEmpty(customDescription))
+    {
+        description = effectType switch
+        {
+            "YukiSpecialA" => $"{unitName}의 둔화 지속 시간이 {effectValue}초 증가합니다.",
+            // Add more cases for unique descriptions
+            _ => $"{unitName}의 {effectType}이  {effectValue}% 증가합니다."
+        };
+    }
+
+    return new RewardCard
+    {
+        Grade = grade,
+        Name = $"{grade} {effectType} Card",
+        EffectDescription = description,
+        RelatedUnit = unitName,
+        Effect = effectAction
+    };
+}
+
+     
 private CardGrade ParseCardGrade(string grade)
 {
     switch (grade)
@@ -127,9 +164,9 @@ private CardGrade ParseCardGrade(string grade)
 
     private RewardCard SelectCardForRound(int round, List<RewardCard> possibleCards)
     {
-        float randomValue = Random.value * 100f;
+        float randomValue = UnityEngine.Random.value * 100f;
         CardGrade selectedGrade = DetermineCardGrade(randomValue, round);
-        return possibleCards.Where(card => card.Grade == selectedGrade).OrderBy(_ => Random.value).FirstOrDefault();
+        return possibleCards.Where(card => card.Grade == selectedGrade).OrderBy(_ => UnityEngine.Random.value).FirstOrDefault();
     }
 
      public void OnSpecialCardSelected(RewardCard specialCard)
@@ -153,10 +190,101 @@ private CardGrade ParseCardGrade(string grade)
         return CardGrade.Common;  // Fallback
     }
 
-    private List<RewardCard> FilterCardsBasedOnActiveUnits(List<string> activeUnits)
-    {
-        return availableCards.Where(card => activeUnits.Contains(card.RelatedUnit)).ToList();
-    }
+   private List<RewardCard> FilterCardsBasedOnActiveUnits(List<string> activeUnits)
+{
+    return allCards.FindAll(card => 
+        activeUnits.Contains(card.RelatedUnit) || 
+        card.RelatedUnit == "모든유닛" || 
+        card.RelatedUnit == "몬스터"
+    ).ToList();
+}
+
+
+
+/// Skill Effect Bellow
+
+public void KaliSpecialA()
+{
+      
+        UnitAttack.isSpecialA=true;
+        Debug.Log("스킬발동");
+}
+
+public void  KaliSpecialB()
+{
+      
+        UnitAttack.isSpecialA=true;
+        Debug.Log("스킬발동");
+}
+
+public void YukiSpecialA()
+{
+      
+        UnitAttack.isSpecialA=true;
+        Debug.Log("스킬발동");
+}
+
+public void YukiSpecialB()
+{
+      
+        UnitAttack.isSpecialA=true;
+        Debug.Log("스킬발동");
+}
+
+public void LilySpecialA()
+{
+Debug.Log("스킬발동");
+}
+public void LilySpecialB()
+{
+    Debug.Log("스킬발동");
+}
+
+public void AirSpecialA()
+{
+    Debug.Log("스킬발동");
+}
+public void AirSpecialB()
+{
+    Debug.Log("스킬발동");
+}
+
+public void TerresSpecialA()
+{
+    Debug.Log("스킬발동");
+}
+public void TerresSpecialB()
+{
+    Debug.Log("스킬발동");
+}
+
+public void BellaSpecialA()
+{
+    Debug.Log("스킬발동");
+}
+
+public void BellaSpecialB()
+{
+    Debug.Log("스킬발동");
+}
+public void DecreaseEnemySpeed1()
+{
+    Debug.Log("스킬발동");
+}
+
+public void IncreaseAttackDamage1()
+{
+Debug.Log("스킬발동");
+}
+public void AttackSpeedEffect(string unitName)
+{
+Debug.Log("스킬발동");
+}
+public void AttackDamageEffect(string untName)
+{
+Debug.Log("스킬발동");
+}
+
 
      
 }
@@ -176,3 +304,4 @@ public class RewardCard
         Debug.Log($"{Name}Apply Effect");
     }
 }
+

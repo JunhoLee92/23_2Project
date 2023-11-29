@@ -4238,7 +4238,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 5536472600752842937}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 295708860}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4b0a4e66f9bf9ee4b87ae3708d4bd90c, type: 3}
   m_Name: 
@@ -8402,7 +8402,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4684346342092926412, guid: c331dfb0c169487498aaec9a26c5d6cd, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4684346342092926412, guid: c331dfb0c169487498aaec9a26c5d6cd, type: 3}
       propertyPath: availableCards.Array.size

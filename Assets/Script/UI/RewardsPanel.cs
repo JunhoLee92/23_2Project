@@ -15,11 +15,7 @@ public class RewardsPanel : MonoBehaviour
     private List<RewardCard> currentRewards;
     void Start()
     {
-    //     reward1.onClick.AddListener(() => ButtonClicked(reward1));
-    //    reward2.onClick.AddListener(() => ButtonClicked(reward2));
-    //     reward3.onClick.AddListener(() => ButtonClicked(reward3));
-
-    
+       
 
     }
 
@@ -48,14 +44,14 @@ public class RewardsPanel : MonoBehaviour
         Debug.LogError("Button, text, or Reward null.");
         return;
         }
-        buttonText.text = reward.Name; 
+        buttonText.text = reward.EffectDescription; 
         button.onClick.RemoveAllListeners();
         button.onClick.AddListener(() => ApplyReward(reward));
         Debug.Log("Setup Rewards");
     }
     private void ApplyReward(RewardCard reward)
     { Debug.Log("Reward Applied: " + reward.Name);
-        reward.ApplyEffect(); 
+        reward.Effect(); 
         if (reward.Grade == RoundRewardSystem.CardGrade.Special)
     {
         RoundRewardSystem.Instance.OnSpecialCardSelected(reward);
@@ -67,32 +63,5 @@ public class RewardsPanel : MonoBehaviour
         gameObject.SetActive(false); 
         
     }
-    // Start is called before the first frame update
-    // public void ButtonClicked(Button button)
-    // {
-    //     if (button == reward1)
-    //     {
-    //         Time.timeScale = 1;
-    //         GameManager.Instance.isGamePaused = false;
-    //         this.gameObject.SetActive(false);
-            
-    //     }
-
-    //     else if (button == reward2)
-    //     {
-    //         Time.timeScale = 1;
-    //         GameManager.Instance.isGamePaused = false;
-    //         this.gameObject.SetActive(false);
-
-
-    //     }
-    //     else if (button == reward3)
-    //     {
-    //         Time.timeScale = 1;
-    //         GameManager.Instance.isGamePaused = false;
-    //         this.gameObject.SetActive(false);
-
-
-    //     }
-    // }
+   
 }

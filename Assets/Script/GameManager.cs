@@ -265,7 +265,7 @@ public class GameManager : MonoBehaviour
 
    
 
-    private List<string> GetActiveUnitNames()
+    public List<string> GetActiveUnitNames()
 {
     return filteredEvolutions.Select(evolution => evolution.unitName).ToList();
 }
@@ -433,6 +433,7 @@ foreach (var reward in rewards)
             victoryManager.VictoryOn();
         }
 
+        
     //public void IncreaseUnitAttackPowerByPercentage(string unitName, float percentage)
     //{
     //    foreach (UnitEvolutionData unitData in unitEvolutionData)

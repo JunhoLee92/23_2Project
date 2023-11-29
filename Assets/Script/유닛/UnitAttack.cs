@@ -18,11 +18,11 @@ public class UnitAttack : MonoBehaviour
     float scalex=1;
     float scaley=1;
 
-    bool isSpecialA=false;
+   public static bool isSpecialA=false;
     bool isSpecialB=false;
 
-    private static bool globalSpecialAApplied = false;
-    private static bool globalSpecialBApplied = false;
+    bool isBool=false;
+
     void Start()
     {
         if (GameManager.Instance.unitEvolutionData[0].isPrestige==true)
@@ -34,42 +34,33 @@ public class UnitAttack : MonoBehaviour
         unitScript = GetComponent<Unit>();
         attackInterval = 1f / attackSpeed;  // Calculate the time between attacks
 
-      if (globalSpecialAApplied)
+    
+        // if (unitScript.unitLevel == 1 || unitScript.unitLevel==2)
+        // {
+        //     attackRange *= 1f;
+        //     scalex *= 1f;
+        //     scaley *= 1f;
+
+        // }
+        // else if (unitScript.unitLevel == 3 || unitScript.unitLevel==4)
+        // {
+        //     attackRange = attackRange*1.2f;
+        //     scalex = scalex*1.2f;
+        //     scaley = scaley*1.2f;
+
+        // }
+
+        // else if (unitScript.unitLevel == 5)
+        // {
+        //     attackRange = attackRange*1.5f;
+        //     scalex = scalex*1.5f;
+        //     scaley = scaley*1.5f;
+        // }
+        if(isSpecialA && unitScript.unitLevel==3)
         {
-            attackRange *= 1.2f;
-            scalex *= 1.2f;
-            scaley *= 1.2f;
+            SpecialA();
+            isBool=true;
         }
-
-        if (globalSpecialBApplied)
-        {
-            attackRange *= 1.3f;
-            scalex *= 1.3f;
-            scaley *= 1.3f;
-        }
-
-        if (unitScript.unitLevel == 1 || unitScript.unitLevel==2)
-        {
-            attackRange *= 1f;
-            scalex *= 1f;
-            scaley *= 1f;
-
-        }
-        else if (unitScript.unitLevel == 3 || unitScript.unitLevel==4)
-        {
-            attackRange = attackRange*1.2f;
-            scalex = scalex*1.2f;
-            scaley = scaley*1.2f;
-
-        }
-
-        else if (unitScript.unitLevel == 5)
-        {
-            attackRange = attackRange*1.5f;
-            scalex = scalex*1.5f;
-            scaley = scaley*1.5f;
-        }
-
         Debug.Log("범위"+attackRange);
     }
 
@@ -92,18 +83,12 @@ public class UnitAttack : MonoBehaviour
 
     void Attack()
     {
-        if(isSpecialA==true)
-        {
-            SpecialA();
-            
-            
-        }
-        
-        if(isSpecialB==true)
-        {
-            SpecialB();
-            
-        }
+      if(!isBool&&isSpecialA&&unitScript.unitLevel==3)
+      {
+        Debug.Log("SpecialA");
+        SpecialA();
+        isBool=true;
+      }
 
         // Detect monsters within attack range using a simple overlap check
         Collider2D[] hitEntities = Physics2D.OverlapCircleAll(transform.position, attackRange);
@@ -125,28 +110,25 @@ public class UnitAttack : MonoBehaviour
         }
     }
 
-    void SpecialA()
+   public void SpecialA()
     {
-        if (!globalSpecialAApplied)
-        {
-            attackRange *= 1.2f;
-            scalex *= 1.2f;
-            scaley *= 1.2f;
-            globalSpecialAApplied = true;
-        }
         
-       
-    }
+        
+            attackRange *= 3.0f;
+            scalex *= 3.0f;
+            scaley *= 3.0f;
+           
+        
+        
+     }
 
     void SpecialB()
     {   
-       if (!globalSpecialBApplied)
-        {
+     
             attackRange *= 1.3f;
             scalex *= 1.3f;
             scaley *= 1.3f;
-            globalSpecialBApplied = true;
-        }
+         
     }
 }
 
