@@ -13,11 +13,13 @@ public class LilyAttack : MonoBehaviour
 
 
     public GameObject laserPrefab;
-    public float AttackDamage = 17f;
+    public float attackDamage = 17f;
     private float poisonDamagePercentage = 0.05f;
     private GameObject target;
     private Coroutine laserAttackCoroutine;
     private Unit unitScript;
+
+    public float attackSpeed;
     private bool isPrestige = false;
 
      public static bool isSpecialA=false;
@@ -38,6 +40,18 @@ public class LilyAttack : MonoBehaviour
 
         }
         unitScript = GetComponent<Unit>();
+
+          if (unitScript != null)
+        {
+            unitScript.OnAttackDamageChanged += UpdateDamage;
+            unitScript.OnAttackSpeedChanged += UpdateSpeed;
+            attackDamage = unitScript.AttackPower; // Initialize with current attack damage
+            attackSpeed =unitScript.AttackSpeed;
+            Debug.Log("Subscribed to OnAttackDamageChanged");
+        }
+    
+
+        attackDamage=unitScript.attackPower;
         // Start the laser attack loop
         laserAttackCoroutine = StartCoroutine(LaserAttackLoop());
 
@@ -89,6 +103,12 @@ public class LilyAttack : MonoBehaviour
         {
             StopCoroutine(laserAttackCoroutine);
         }
+           if (unitScript != null)
+        {
+            unitScript.OnAttackDamageChanged -= UpdateDamage;
+            unitScript.OnAttackSpeedChanged -= UpdateSpeed;
+            
+        }
     }
 
     IEnumerator LaserAttackLoop()
@@ -100,7 +120,7 @@ public class LilyAttack : MonoBehaviour
             if (target != null)
             {
                 ShootLaser(target);
-                yield return new WaitForSeconds(1 / 1.7f); // 1.7 times per second
+                yield return new WaitForSeconds(1 / attackSpeed); // 1.7 times per second
             }
             else
             {
@@ -163,8 +183,8 @@ public class LilyAttack : MonoBehaviour
 
             damageableEntity.MaxPoisonStacks = MaxPoisonStacks;
 
-            damageableEntity.TakeDamage(AttackDamage);
-            damageableEntity.PoisonStack(poisonDamagePercentage * AttackDamage);
+            damageableEntity.TakeDamage(attackDamage);
+            damageableEntity.PoisonStack(poisonDamagePercentage * attackDamage);
         }
     }
 
@@ -181,8 +201,8 @@ public class LilyAttack : MonoBehaviour
         if (damageableEntity != null)
         {
            
-            damageableEntity.TakeDamage(AttackDamage);
-            damageableEntity.EnhancedPoisonStack(poisonDamagePercentage,AttackDamage);
+            damageableEntity.TakeDamage(attackDamage);
+            damageableEntity.EnhancedPoisonStack(poisonDamagePercentage,attackDamage);
         }
     }
     GameObject FindClosestMonster()
@@ -202,6 +222,26 @@ public class LilyAttack : MonoBehaviour
         }
         return closest;
     }
+
+    private void UpdateDamage(float newDamage)
+    {
+        attackDamage = newDamage;
+        // Additional logic to handle damage change
+        Debug.Log("UPdateDamageKali"+attackDamage);
+    }
+
+    private void UpdateSpeed(float newSpeed)
+    {
+        Debug.Log($"Before increase: AttackSpeed = {attackSpeed}, AttackDamage = {attackDamage}");
+    // Logic to increase AttackSpeed
+        attackSpeed=newSpeed;
+         Debug.Log("UPdateSpeedKali"+attackSpeed);
+
+           Debug.Log($"After increase: AttackSpeed = {attackSpeed}, AttackDamage = {attackDamage}");
+
+    }
+
+  
 
     public void SpecialA()
     {  

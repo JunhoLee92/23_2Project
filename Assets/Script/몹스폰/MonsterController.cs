@@ -20,7 +20,9 @@ public class MonsterController : MonoBehaviour, IDamageable
     GameManager gameManager;
     private void Start()
     {
+        speed *= RoundRewardSystem.globalSpeedModifier;
         originalSpeed = speed;
+        
         gameManager = GameManager.Instance;
         MaxHp = Hp;
     }

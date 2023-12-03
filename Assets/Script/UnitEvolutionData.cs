@@ -14,4 +14,8 @@ public class UnitEvolutionData
     public bool isPrestige;
     public Sprite thumbnailSprite;
     public Sprite standingSprite;
+
+    public float damage;
+
+    public float attackSpeed;
 }

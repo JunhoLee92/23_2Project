@@ -35,6 +35,18 @@ public class TeresAttack : MonoBehaviour
 
         unitScript = GetComponent<Unit>();
 
+        
+  if (unitScript != null)
+        {
+            unitScript.OnAttackDamageChanged += UpdateDamage;
+            unitScript.OnAttackSpeedChanged += UpdateSpeed;
+            attackDamage = unitScript.AttackPower; // Initialize with current attack damage
+            attackSpeed =unitScript.AttackSpeed;
+            Debug.Log("Subscribed to OnAttackDamageChanged");
+        }
+
+        attackDamage=unitScript.attackPower;
+
         currentAttackDamage = attackDamage;
 
         if (GameManager.Instance.unitEvolutionData[4].isPrestige==true)
@@ -63,7 +75,7 @@ public class TeresAttack : MonoBehaviour
     {   
         // Find the closest monster within attack range
         GameObject target = FindClosestMonster();
-
+        attackInterval = 1f / attackSpeed;
         if (target && Time.time >= nextAttackTime)
         {
             Shoot(target);
@@ -155,6 +167,34 @@ public class TeresAttack : MonoBehaviour
         }
 
         
+    }
+
+    private void UpdateDamage(float newDamage)
+    {
+        attackDamage = newDamage;
+        // Additional logic to handle damage change
+        Debug.Log("UPdateDamageKali"+attackDamage);
+    }
+
+    private void UpdateSpeed(float newSpeed)
+    {
+        Debug.Log($"Before increase: AttackSpeed = {attackSpeed}, AttackDamage = {attackDamage}");
+    // Logic to increase AttackSpeed
+        attackSpeed=newSpeed;
+         Debug.Log("UPdateSpeedKali"+attackSpeed);
+
+           Debug.Log($"After increase: AttackSpeed = {attackSpeed}, AttackDamage = {attackDamage}");
+
+    }
+
+  void OnDestroy()
+    {
+        if (unitScript != null)
+        {
+            unitScript.OnAttackDamageChanged -= UpdateDamage;
+            unitScript.OnAttackSpeedChanged -= UpdateSpeed;
+            
+        }
     }
 public void SpecialA()
 {

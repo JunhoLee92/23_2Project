@@ -26,39 +26,25 @@ public class UnitAttack : MonoBehaviour
     bool isBoolA=false;
      bool isBoolB=false;
 
-    void Start()
-    {
-        if (GameManager.Instance.unitEvolutionData[0].isPrestige==true)
-        {
-            Debug.Log("KaliPrestige");
-            attackSpeed = attackSpeed * 1.5f;
-            Debug.Log("KaliAttackSpeed" + attackSpeed);
-        }
-        unitScript = GetComponent<Unit>();
-        attackInterval = 1f / attackSpeed;  // Calculate the time between attacks
 
     
-        // if (unitScript.unitLevel == 1 || unitScript.unitLevel==2)
-        // {
-        //     attackRange *= 1f;
-        //     scalex *= 1f;
-        //     scaley *= 1f;
+    void Start()
+    {
+      
+        unitScript = GetComponent<Unit>();
+       
+        attackInterval = 1f / attackSpeed;  // Calculate the time between attacks
 
-        // }
-        // else if (unitScript.unitLevel == 3 || unitScript.unitLevel==4)
-        // {
-        //     attackRange = attackRange*1.2f;
-        //     scalex = scalex*1.2f;
-        //     scaley = scaley*1.2f;
-
-        // }
-
-        // else if (unitScript.unitLevel == 5)
-        // {
-        //     attackRange = attackRange*1.5f;
-        //     scalex = scalex*1.5f;
-        //     scaley = scaley*1.5f;
-        // }
+          if (unitScript != null)
+        {
+            unitScript.OnAttackDamageChanged += UpdateDamage;
+            unitScript.OnAttackSpeedChanged += UpdateSpeed;
+            attackDamage = unitScript.AttackPower; // Initialize with current attack damage
+            attackSpeed =unitScript.AttackSpeed;
+            Debug.Log("Subscribed to OnAttackDamageChanged");
+        }
+    
+       
         if(isSpecialA && unitScript.unitLevel>=3)
         {
             SpecialA();
@@ -79,7 +65,9 @@ public class UnitAttack : MonoBehaviour
         if (Time.time >= nextAttackTime)
         {
             Attack();
+            attackInterval = 1f / attackSpeed;
             nextAttackTime = Time.time + attackInterval;
+           
         }
 
         if(Input.GetKeyDown(KeyCode.Q)) //for special reward test
@@ -88,6 +76,25 @@ public class UnitAttack : MonoBehaviour
             Debug.Log("special");
 
         }
+    }
+
+     
+     private void UpdateDamage(float newDamage)
+    {
+        attackDamage = newDamage;
+        // Additional logic to handle damage change
+        Debug.Log("UPdateDamageKali"+attackDamage);
+    }
+
+    private void UpdateSpeed(float newSpeed)
+    {
+        Debug.Log($"Before increase: AttackSpeed = {attackSpeed}, AttackDamage = {attackDamage}");
+    // Logic to increase AttackSpeed
+        attackSpeed=newSpeed;
+         Debug.Log("UPdateSpeedKali"+attackSpeed);
+
+           Debug.Log($"After increase: AttackSpeed = {attackSpeed}, AttackDamage = {attackDamage}");
+
     }
 
     void Attack()
@@ -123,6 +130,16 @@ public class UnitAttack : MonoBehaviour
                 // Destroy the effect sprite after the set duration
                 Destroy(effectInstance, effectDuration);
             }
+        }
+    }
+
+     void OnDestroy()
+    {
+        if (unitScript != null)
+        {
+            unitScript.OnAttackDamageChanged -= UpdateDamage;
+            unitScript.OnAttackSpeedChanged -= UpdateSpeed;
+            
         }
     }
 

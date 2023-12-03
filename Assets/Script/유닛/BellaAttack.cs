@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class BellaAttack : MonoBehaviour
 {
-    public float attackDamage = 7f;
+    public float attackDamage ;
     public float attackSpeed = 1.0f;
     public GameObject projectilePrefab;
     private Unit unitScript;  
@@ -36,6 +36,20 @@ public class BellaAttack : MonoBehaviour
     }
     void Start()
     {
+
+         unitScript = GetComponent<Unit>();
+        attackDamage=unitScript.attackPower;
+
+          if (unitScript != null)
+        {
+            unitScript.OnAttackDamageChanged += UpdateDamage;
+            unitScript.OnAttackSpeedChanged += UpdateSpeed;
+            attackDamage = unitScript.AttackPower; // Initialize with current attack damage
+            attackSpeed =unitScript.AttackSpeed;
+            Debug.Log("Subscribed to OnAttackDamageChanged");
+        }
+        attackInterval = 1f / attackSpeed;
+
         if (GameManager.Instance.unitEvolutionData[5].isPrestige == true)
         {
             Debug.Log("BellaPrestige");
@@ -55,14 +69,13 @@ public class BellaAttack : MonoBehaviour
             isBoolB=true;
         }
 
-        unitScript = GetComponent<Unit>();
-        attackInterval = 1f / attackSpeed;
+       
        
        
     }
 
     void Update()
-    {
+    {   attackInterval = 1f / attackSpeed;
         if (Time.time >= nextAttackTime)
         {
             // Find the closest target that is attackable
@@ -168,6 +181,37 @@ public class BellaAttack : MonoBehaviour
         //     ExecuteHpRate = 0.45f;
         //     monsterscript.Execute(ExecuteHpRate);
         // }
+    }
+
+    
+private void UpdateDamage(float newDamage)
+    {
+        attackDamage = newDamage;
+        // Additional logic to handle damage change
+        Debug.Log("UPdateDamageKali"+attackDamage);
+
+        bellapretige.UpdateStrongestBella();
+    }
+
+    private void UpdateSpeed(float newSpeed)
+    {
+        Debug.Log($"Before increase: AttackSpeed = {attackSpeed}, AttackDamage = {attackDamage}");
+    // Logic to increase AttackSpeed
+        attackSpeed=newSpeed;
+         Debug.Log("UPdateSpeedKali"+attackSpeed);
+
+           Debug.Log($"After increase: AttackSpeed = {attackSpeed}, AttackDamage = {attackDamage}");
+
+    }
+
+  void OnDestroy()
+    {
+        if (unitScript != null)
+        {
+            unitScript.OnAttackDamageChanged -= UpdateDamage;
+            unitScript.OnAttackSpeedChanged -= UpdateSpeed;
+            
+        }
     }
 
     public void ResetAttackDamageToBase()
