@@ -3913,6 +3913,11 @@ MonoBehaviour:
   rewardText1: {fileID: 236184265}
   rewardText2: {fileID: 1894950321}
   rewardText3: {fileID: 1121589464}
+  commonCardImage: {fileID: 21300000, guid: 9c42c05fdb07efb4fbe9517752975466, type: 3}
+  rareCardImage: {fileID: 21300000, guid: 277d801c6423dbf4fbd5393bf1aeffb2, type: 3}
+  srCardImage: {fileID: 21300000, guid: d7625dea77f9d3345a40b386f6e15144, type: 3}
+  ssrCardImage: {fileID: 21300000, guid: 2eb0df8f6ee52d945af4e451e7f93363, type: 3}
+  specialCardImage: {fileID: 21300000, guid: 2eb0df8f6ee52d945af4e451e7f93363, type: 3}
 --- !u!1 &982347173
 GameObject:
   m_ObjectHideFlags: 0
@@ -8362,11 +8367,11 @@ PrefabInstance:
       objectReference: {fileID: 1665490689}
     - target: {fileID: 1493640219900170506, guid: c331dfb0c169487498aaec9a26c5d6cd, type: 3}
       propertyPath: unitEvolutionData.Array.data[0].isChecked
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1493640219900170506, guid: c331dfb0c169487498aaec9a26c5d6cd, type: 3}
       propertyPath: unitEvolutionData.Array.data[1].isChecked
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1493640219900170506, guid: c331dfb0c169487498aaec9a26c5d6cd, type: 3}
       propertyPath: unitEvolutionData.Array.data[2].isChecked
@@ -8374,7 +8379,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1493640219900170506, guid: c331dfb0c169487498aaec9a26c5d6cd, type: 3}
       propertyPath: unitEvolutionData.Array.data[4].isChecked
-      value: 0
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1493640219900170506, guid: c331dfb0c169487498aaec9a26c5d6cd, type: 3}
+      propertyPath: chapters.Array.data[0].rounds.Array.data[0].movesPerRound
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 1493640219900170506, guid: c331dfb0c169487498aaec9a26c5d6cd, type: 3}
       propertyPath: chapters.Array.data[0].rounds.Array.data[0].spawnInfos.Array.data[0].Hp

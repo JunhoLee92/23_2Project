@@ -20,11 +20,12 @@ public class LilyAttack : MonoBehaviour
     private Unit unitScript;
     private bool isPrestige = false;
 
-     private static bool globalSpecialAApplied = false;
-    private static bool globalSpecialBApplied = false;
+     public static bool isSpecialA=false;
 
-      bool isSpecialA=false;
-     bool isSpecialB=false;
+   public static bool isSpecialB=false;
+
+    bool isBoolA=false;
+    bool isBoolB=false;
 
      private int MaxPoisonStacks=3;
 
@@ -40,34 +41,37 @@ public class LilyAttack : MonoBehaviour
         // Start the laser attack loop
         laserAttackCoroutine = StartCoroutine(LaserAttackLoop());
 
-         if (unitScript.unitLevel == 1)
-                {
-                    poisonDamagePercentage = 0.05f;
+        //  if (unitScript.unitLevel == 1)
+        //         {
+        //             poisonDamagePercentage = 0.05f;
                       
-                }
-                else if (unitScript.unitLevel == 3)
-                {
-                    poisonDamagePercentage = 0.1f;
+        //         }
+        //         else if (unitScript.unitLevel == 3)
+        //         {
+        //             poisonDamagePercentage = 0.1f;
                     
-                }
-                else if (unitScript.unitLevel == 5)
-                {
-                    poisonDamagePercentage = 0.20f;
-                    MaxPoisonStacks+=2;
+        //         }
+        //         else if (unitScript.unitLevel == 5)
+        //         {
+        //             poisonDamagePercentage = 0.20f;
+        //             MaxPoisonStacks+=2;
                     
-                }
+        //         }
 
-                if(globalSpecialAApplied)
-                {
-                    poisonDamagePercentage+=0.05f;
-                }
+        
+        
+        if(isSpecialA && unitScript.unitLevel>=3)
+        {
+            SpecialA();
+            isBoolA=true;
+        }
 
-                if(globalSpecialBApplied)
-                {
-                    poisonDamagePercentage+=0.1f;
-                    MaxPoisonStacks+=2;
-
-                }
+        if(isSpecialA && unitScript.unitLevel==5)
+        {
+            SpecialB();
+            isBoolB=true;
+        }
+                
     }
 
     void Update()
@@ -134,16 +138,21 @@ public class LilyAttack : MonoBehaviour
         {
             yield break;  // Exit the coroutine if the target is destroyed
         }
-        if(isSpecialA)
-        {
-            SpecialA();
-            
-        }
+      
+        if(!isBoolA&&isSpecialA&&unitScript.unitLevel>=3)
+      {
+        Debug.Log("SpecialA");
+        SpecialA();
+        isBoolA=true;
+      }
 
-        if(isSpecialB)
-        {
-            SpecialB();
-        }
+       if(!isBoolB&&isSpecialB&&unitScript.unitLevel==5)
+      {
+        Debug.Log("SpecialB");
+        SpecialB();
+        isBoolA=true;
+      }
+
         Debug.Log("독스택"+poisonDamagePercentage);
         IDamageable damageableEntity = target.GetComponent<IDamageable>();
         if (damageableEntity != null)
@@ -195,23 +204,17 @@ public class LilyAttack : MonoBehaviour
     }
 
     public void SpecialA()
-    {   if(!globalSpecialAApplied)
-        {
+    {  
             poisonDamagePercentage+=0.05f;
-            globalSpecialAApplied=true;
-        }
-
+         
     }
 
     public void SpecialB()
     {
-        if(!globalSpecialBApplied)
-        {
+        
             poisonDamagePercentage+=0.1f;
             MaxPoisonStacks+=2;
-            globalSpecialBApplied=true;
-
-        }
+        
     }
 }
 

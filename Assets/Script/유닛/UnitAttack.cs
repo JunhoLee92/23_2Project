@@ -19,9 +19,12 @@ public class UnitAttack : MonoBehaviour
     float scaley=1;
 
    public static bool isSpecialA=false;
-    bool isSpecialB=false;
 
-    bool isBool=false;
+   public static bool isSpecialB=false;
+    
+
+    bool isBoolA=false;
+     bool isBoolB=false;
 
     void Start()
     {
@@ -56,10 +59,16 @@ public class UnitAttack : MonoBehaviour
         //     scalex = scalex*1.5f;
         //     scaley = scaley*1.5f;
         // }
-        if(isSpecialA && unitScript.unitLevel==3)
+        if(isSpecialA && unitScript.unitLevel>=3)
         {
             SpecialA();
-            isBool=true;
+            isBoolA=true;
+        }
+
+        if(isSpecialA && unitScript.unitLevel==5)
+        {
+            SpecialB();
+            isBoolB=true;
         }
         Debug.Log("범위"+attackRange);
     }
@@ -75,7 +84,7 @@ public class UnitAttack : MonoBehaviour
 
         if(Input.GetKeyDown(KeyCode.Q)) //for special reward test
         {
-            isSpecialA=true;
+            isSpecialB=true;
             Debug.Log("special");
 
         }
@@ -83,11 +92,18 @@ public class UnitAttack : MonoBehaviour
 
     void Attack()
     {
-      if(!isBool&&isSpecialA&&unitScript.unitLevel==3)
+      if(!isBoolA&&isSpecialA&&unitScript.unitLevel>=3)
       {
         Debug.Log("SpecialA");
         SpecialA();
-        isBool=true;
+        isBoolA=true;
+      }
+
+       if(!isBoolB&&isSpecialB&&unitScript.unitLevel==5)
+      {
+        Debug.Log("SpecialB");
+        SpecialB();
+        isBoolA=true;
       }
 
         // Detect monsters within attack range using a simple overlap check
@@ -114,15 +130,15 @@ public class UnitAttack : MonoBehaviour
     {
         
         
-            attackRange *= 3.0f;
-            scalex *= 3.0f;
-            scaley *= 3.0f;
+            attackRange *= 1.2f;
+            scalex *= 1.2f;
+            scaley *= 1.2f;
            
         
         
      }
 
-    void SpecialB()
+   public void SpecialB()
     {   
      
             attackRange *= 1.3f;

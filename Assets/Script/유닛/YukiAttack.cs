@@ -17,11 +17,12 @@ public class YukiAttack : MonoBehaviour
     float freezeDuration = 1f;
     static float freezeProbability = 0.15f; 
 
-    bool isSpecialA=false;
-    bool isSpecialB=false;
-    static bool globalSpecialAApplied=false;
+    public static bool isSpecialA=false;
+    public static bool isSpecialB=false;
 
-    static bool globalSpecialBApplied=false;
+    bool isBoolA=false;
+    bool isBoolB=false;
+    
 
     void Start()
     {
@@ -31,32 +32,35 @@ public class YukiAttack : MonoBehaviour
 
         nextBlizzardTime = Time.time + blizzardCooltime;
 
-         if (unitScript.unitLevel == 1)
-            {
-                freezeProbability = 0.15f;
+        //  if (unitScript.unitLevel == 1)
+        //     {
+        //         freezeProbability = 0.15f;
 
-            }
-            else if (unitScript.unitLevel >= 3)
-            {
-                freezeProbability = 0.3f;
-            }
+        //     }
+        //     else if (unitScript.unitLevel >= 3)
+        //     {
+        //         freezeProbability = 0.3f;
+        //     }
 
-              else if (unitScript.unitLevel == 5)
-                    {
-                        freezeDuration += 0.2f;
-                    }
+        //       else if (unitScript.unitLevel == 5)
+        //             {
+        //                 freezeDuration += 0.2f;
+        //             }
 
 
 
-            if(globalSpecialAApplied)
-            {
-                freezeProbability+=0.15f;
-            }
+          
+        if(isSpecialA && unitScript.unitLevel>=3)
+        {
+            SpecialA();
+            isBoolA=true;
+        }
 
-            if(globalSpecialBApplied)
-            {
-                freezeDuration+=0.2f;
-            }
+        if(isSpecialA && unitScript.unitLevel==5)
+        {
+            SpecialB();
+            isBoolB=true;
+        }
 
 
         // Add the following debug lines
@@ -112,13 +116,14 @@ public class YukiAttack : MonoBehaviour
     }
 
     void Shoot(GameObject target)
-    {   
-        if(isSpecialA)
+    {    Unit unitScript = GetComponent<Unit>();
+
+        if(!isBoolA&&isSpecialA&&unitScript.unitLevel>=3)
         {
             SpecialA();
             isSpecialA=false;
         }
-        if(isSpecialB)
+        if(!isBoolB&&isSpecialB&&unitScript.unitLevel==5)
         {
             SpecialB();
             isSpecialB=false;
@@ -129,8 +134,7 @@ public class YukiAttack : MonoBehaviour
         projectileScript.damage = attackDamage;
 
         // Accessing the Unit script to get Yuki's current level
-        Unit unitScript = GetComponent<Unit>();
-
+       
         
              // Initialize freeze probability
 
@@ -171,23 +175,15 @@ public class YukiAttack : MonoBehaviour
 
     public void SpecialA()
     {
-        isSpecialA=true;
-        if(!globalSpecialAApplied)
-        {
+       
         freezeProbability+=0.15f;
-        globalSpecialAApplied=true;
-        Debug.Log("스페셜1적용");
-        }
+       
     }
 
     public void SpecialB()
     {
-        isSpecialB=true;
-        if(!globalSpecialBApplied)
-        {
-            freezeDuration+=0.2f;
-            globalSpecialBApplied=true;
-        }
+          freezeDuration+=0.2f;
+         
     }
 }
 

@@ -12,6 +12,12 @@ public class RewardsPanel : MonoBehaviour
     public Text rewardText2; 
     public Text rewardText3; 
 
+    public Sprite commonCardImage;
+public Sprite rareCardImage;
+public Sprite srCardImage;
+public Sprite ssrCardImage;
+public Sprite specialCardImage;
+
     private List<RewardCard> currentRewards;
     void Start()
     {
@@ -38,6 +44,27 @@ public class RewardsPanel : MonoBehaviour
      private void SetupRewardButton(Button button, Text buttonText, RewardCard reward)
     {
         Debug.Log("settingUp");
+
+         Image buttonImage = button.GetComponent<Image>();
+
+          switch (reward.Grade)
+    {
+        case RoundRewardSystem.CardGrade.Common:
+            buttonImage.sprite = commonCardImage;
+            break;
+        case RoundRewardSystem.CardGrade.Rare:
+            buttonImage.sprite = rareCardImage;
+            break;
+        case RoundRewardSystem.CardGrade.SR:
+            buttonImage.sprite = srCardImage;
+            break;
+        case RoundRewardSystem.CardGrade.SSR:
+            buttonImage.sprite = ssrCardImage;
+            break;
+        case RoundRewardSystem.CardGrade.Special:
+            buttonImage.sprite = specialCardImage;
+            break;
+    }
 
         if (button == null || buttonText == null || reward == null)
         {

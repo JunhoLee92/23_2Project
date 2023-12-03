@@ -91,8 +91,8 @@ void Update()
         allCards.Add(CreateCard("Lily", "도트데미지 추가증가", 5, CardGrade.Special, () => LilySpecialB(),"LV5 릴리의 독 디버프 데미지 +10% 증가 및 최대 중첩수 +2 증가") );
         allCards.Add(CreateCard("Terres", "불씨강화", 30, CardGrade.Special, () => TerresSpecialB(),"LV3 이상 테레스의 불씨 1중첩 이상일 때 30% 확률로 불씨 1중첩을 소모하여 강공격을 한다. 강공격은 현재 테레스 공격력의 130% 데미지"));
         allCards.Add(CreateCard("Terres", "중첩강화", 5, CardGrade.Special, () => TerresSpecialB(),"LV5 테레스의 불씨 중첩 획득 확률 +5% 증가"));
-        allCards.Add(CreateCard("Bella", "처형강화", 5, CardGrade.Special, () => YukiSpecialB(),"LV3 이상 벨라가 공격 시 적의 체력과 무관하게 5% 확률로 처형"));
-        allCards.Add(CreateCard("Bella", "처형강화2", 45, CardGrade.Special, () => YukiSpecialB(),"LV5 이상 벨라의 즉시 처형 기준 체력 +15% 증가"));
+        allCards.Add(CreateCard("Bella", "처형강화", 5, CardGrade.Special, () => BellaSpecialA(),"LV3 이상 벨라가 공격 시 적의 체력과 무관하게 5% 확률로 처형"));
+        allCards.Add(CreateCard("Bella", "처형강화2", 45, CardGrade.Special, () => BellaSpecialB(),"LV5 이상 벨라의 즉시 처형 기준 체력 +15% 증가"));
 
         allCards.Add(CreateCard("몬스터", "속도감소", 5, CardGrade.Common, DecreaseEnemySpeed1, "적의 이동속도가 5% 감소합니다."));
         allCards.Add(CreateCard("몬스터", "속도감소", 10, CardGrade.SR, DecreaseEnemySpeed1, "적의 이동속도가 10% 감소합니다."));
@@ -213,35 +213,38 @@ public void KaliSpecialA()
 public void  KaliSpecialB()
 {
       
-        UnitAttack.isSpecialA=true;
+        UnitAttack.isSpecialB=true;
         Debug.Log("스킬발동");
 }
 
 public void YukiSpecialA()
 {
       
-        UnitAttack.isSpecialA=true;
-        Debug.Log("스킬발동");
+       YukiAttack.isSpecialA=true;
+        Debug.Log("유키스킬발동");
 }
 
 public void YukiSpecialB()
 {
       
-        UnitAttack.isSpecialA=true;
-        Debug.Log("스킬발동");
+        YukiAttack.isSpecialB=true;
+        Debug.Log("유키스킬발동2");
 }
 
 public void LilySpecialA()
 {
-Debug.Log("스킬발동");
+    LilyAttack.isSpecialA=true;
+Debug.Log("LilySkillActive");
 }
 public void LilySpecialB()
 {
-    Debug.Log("스킬발동");
+    LilyAttack.isSpecialB=true;
+    Debug.Log("LilySkillActive2");
 }
 
 public void AirSpecialA()
 {
+    
     Debug.Log("스킬발동");
 }
 public void AirSpecialB()
@@ -251,21 +254,25 @@ public void AirSpecialB()
 
 public void TerresSpecialA()
 {
-    Debug.Log("스킬발동");
+    TeresAttack.isSpecialA=true;
+    Debug.Log("테레스스킬발동");
 }
 public void TerresSpecialB()
 {
-    Debug.Log("스킬발동");
+    TeresAttack.isSpecialB=true;
+    Debug.Log("테레스스킬발동2");
 }
 
 public void BellaSpecialA()
 {
-    Debug.Log("스킬발동");
+    BellaAttack.isSpecialA=true;
+    Debug.Log("벨라스킬발동");
 }
 
 public void BellaSpecialB()
 {
-    Debug.Log("스킬발동");
+    BellaAttack.isSpecialB=true;
+    Debug.Log("벨라스킬발동2");
 }
 public void DecreaseEnemySpeed1()
 {
