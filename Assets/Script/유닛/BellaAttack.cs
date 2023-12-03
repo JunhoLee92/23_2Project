@@ -4,12 +4,13 @@ using UnityEngine;
 
 public class BellaAttack : MonoBehaviour
 {
-    public float attackDamage = 7f;
+    public float attackDamage ;
     public float attackSpeed = 1.0f;
     public GameObject projectilePrefab;
     private Unit unitScript;  
 
     float ExecuteHpRate = 0.3f;
+    float UnconditionalExecutionRate;
 
     private float attackInterval;
     private float nextAttackTime = 0f;
@@ -17,11 +18,13 @@ public class BellaAttack : MonoBehaviour
 
     
 
-    bool isSpecialA=false;
-    bool isSpecialB=false;
+  public static bool isSpecialA=false;
 
-    private static bool globalSpecialAApplied = false;
-    private static bool globalSpecialBApplied = false;
+   public static bool isSpecialB=false;
+    
+
+    bool isBoolA=false;
+     bool isBoolB=false;
 
     private void Awake()
     {
@@ -33,6 +36,20 @@ public class BellaAttack : MonoBehaviour
     }
     void Start()
     {
+
+         unitScript = GetComponent<Unit>();
+        attackDamage=unitScript.attackPower;
+
+          if (unitScript != null)
+        {
+            unitScript.OnAttackDamageChanged += UpdateDamage;
+            unitScript.OnAttackSpeedChanged += UpdateSpeed;
+            attackDamage = unitScript.AttackPower; // Initialize with current attack damage
+            attackSpeed =unitScript.AttackSpeed;
+            Debug.Log("Subscribed to OnAttackDamageChanged");
+        }
+        attackInterval = 1f / attackSpeed;
+
         if (GameManager.Instance.unitEvolutionData[5].isPrestige == true)
         {
             Debug.Log("BellaPrestige");
@@ -40,20 +57,25 @@ public class BellaAttack : MonoBehaviour
 
         }
 
-         if(globalSpecialBApplied)
+       if(isSpecialA && unitScript.unitLevel>=3)
         {
-            ExecuteHpRate+=0.15f;
-            
+            SpecialA();
+            isBoolA=true;
         }
 
-        unitScript = GetComponent<Unit>();
-        attackInterval = 1f / attackSpeed;
+        if(isSpecialA && unitScript.unitLevel==5)
+        {
+            SpecialB();
+            isBoolB=true;
+        }
+
+       
        
        
     }
 
     void Update()
-    {
+    {   attackInterval = 1f / attackSpeed;
         if (Time.time >= nextAttackTime)
         {
             // Find the closest target that is attackable
@@ -117,14 +139,23 @@ public class BellaAttack : MonoBehaviour
 
     void TryExecute(GameObject target)
     {
-
-        if(isSpecialB==true)
-        {
-            SpecialB();
-            
-            
-        }
         Unit unitScript = GetComponent<Unit>();
+
+        if(!isBoolA&&isSpecialA&&unitScript.unitLevel>=3)
+      {
+        Debug.Log("SpecialA");
+        SpecialA();
+        isBoolA=true;
+      }
+
+       if(!isBoolB&&isSpecialB&&unitScript.unitLevel==5)
+      {
+        Debug.Log("SpecialB");
+        SpecialB();
+        isBoolA=true;
+      }
+
+        
         MonsterController monsterscript = target.GetComponent<MonsterController>();
         //if(monsterscript != null)
         //{
@@ -133,28 +164,53 @@ public class BellaAttack : MonoBehaviour
         
         
         Debug.Log("Executerate"+ExecuteHpRate);
-        // Execute logic based on the unit's level
-        if (unitScript.unitLevel == 1)
-        {
+       
+         
             
+          
             
-            monsterscript.Execute(ExecuteHpRate);
-
-        }
-        else if (unitScript.unitLevel == 3)
-        {
-            
-            if (Random.value <= 0.05f)
+            if (Random.value <= UnconditionalExecutionRate)
                 monsterscript.Execute(1.0f);
 
             else
                 monsterscript.Execute(ExecuteHpRate);
 
-        }
-        else if (unitScript.unitLevel == 5)
+       
+        // else if (unitScript.unitLevel == 5)
+        // {
+        //     ExecuteHpRate = 0.45f;
+        //     monsterscript.Execute(ExecuteHpRate);
+        // }
+    }
+
+    
+private void UpdateDamage(float newDamage)
+    {
+        attackDamage = newDamage;
+        // Additional logic to handle damage change
+        Debug.Log("UPdateDamageKali"+attackDamage);
+
+        bellapretige.UpdateStrongestBella();
+    }
+
+    private void UpdateSpeed(float newSpeed)
+    {
+        Debug.Log($"Before increase: AttackSpeed = {attackSpeed}, AttackDamage = {attackDamage}");
+    // Logic to increase AttackSpeed
+        attackSpeed=newSpeed;
+         Debug.Log("UPdateSpeedKali"+attackSpeed);
+
+           Debug.Log($"After increase: AttackSpeed = {attackSpeed}, AttackDamage = {attackDamage}");
+
+    }
+
+  void OnDestroy()
+    {
+        if (unitScript != null)
         {
-            ExecuteHpRate = 0.45f;
-            monsterscript.Execute(ExecuteHpRate);
+            unitScript.OnAttackDamageChanged -= UpdateDamage;
+            unitScript.OnAttackSpeedChanged -= UpdateSpeed;
+            
         }
     }
 
@@ -172,15 +228,11 @@ public class BellaAttack : MonoBehaviour
 
     public void SpecialA()
     {
-        //Check
+        UnconditionalExecutionRate=0.05f;
     }
     public void SpecialB()
     {
-        if(!globalSpecialBApplied)
-        {
-            ExecuteHpRate+=0.15f;
-            globalSpecialBApplied=true;
-            Debug.Log("specialB");
-        }
+        ExecuteHpRate+=0.15f;
+         
     }
 }

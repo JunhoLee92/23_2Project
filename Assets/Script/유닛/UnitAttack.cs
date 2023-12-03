@@ -19,47 +19,42 @@ public class UnitAttack : MonoBehaviour
     float scaley=1;
 
    public static bool isSpecialA=false;
-    bool isSpecialB=false;
 
-    bool isBool=false;
+   public static bool isSpecialB=false;
+    
 
-    void Start()
-    {
-        if (GameManager.Instance.unitEvolutionData[0].isPrestige==true)
-        {
-            Debug.Log("KaliPrestige");
-            attackSpeed = attackSpeed * 1.5f;
-            Debug.Log("KaliAttackSpeed" + attackSpeed);
-        }
-        unitScript = GetComponent<Unit>();
-        attackInterval = 1f / attackSpeed;  // Calculate the time between attacks
+    bool isBoolA=false;
+     bool isBoolB=false;
+
 
     
-        // if (unitScript.unitLevel == 1 || unitScript.unitLevel==2)
-        // {
-        //     attackRange *= 1f;
-        //     scalex *= 1f;
-        //     scaley *= 1f;
+    void Start()
+    {
+      
+        unitScript = GetComponent<Unit>();
+       
+        attackInterval = 1f / attackSpeed;  // Calculate the time between attacks
 
-        // }
-        // else if (unitScript.unitLevel == 3 || unitScript.unitLevel==4)
-        // {
-        //     attackRange = attackRange*1.2f;
-        //     scalex = scalex*1.2f;
-        //     scaley = scaley*1.2f;
-
-        // }
-
-        // else if (unitScript.unitLevel == 5)
-        // {
-        //     attackRange = attackRange*1.5f;
-        //     scalex = scalex*1.5f;
-        //     scaley = scaley*1.5f;
-        // }
-        if(isSpecialA && unitScript.unitLevel==3)
+          if (unitScript != null)
+        {
+            unitScript.OnAttackDamageChanged += UpdateDamage;
+            unitScript.OnAttackSpeedChanged += UpdateSpeed;
+            attackDamage = unitScript.AttackPower; // Initialize with current attack damage
+            attackSpeed =unitScript.AttackSpeed;
+            Debug.Log("Subscribed to OnAttackDamageChanged");
+        }
+    
+       
+        if(isSpecialA && unitScript.unitLevel>=3)
         {
             SpecialA();
-            isBool=true;
+            isBoolA=true;
+        }
+
+        if(isSpecialA && unitScript.unitLevel==5)
+        {
+            SpecialB();
+            isBoolB=true;
         }
         Debug.Log("범위"+attackRange);
     }
@@ -70,24 +65,52 @@ public class UnitAttack : MonoBehaviour
         if (Time.time >= nextAttackTime)
         {
             Attack();
+            attackInterval = 1f / attackSpeed;
             nextAttackTime = Time.time + attackInterval;
+           
         }
 
         if(Input.GetKeyDown(KeyCode.Q)) //for special reward test
         {
-            isSpecialA=true;
+            isSpecialB=true;
             Debug.Log("special");
 
         }
     }
 
+     
+     private void UpdateDamage(float newDamage)
+    {
+        attackDamage = newDamage;
+        // Additional logic to handle damage change
+        Debug.Log("UPdateDamageKali"+attackDamage);
+    }
+
+    private void UpdateSpeed(float newSpeed)
+    {
+        Debug.Log($"Before increase: AttackSpeed = {attackSpeed}, AttackDamage = {attackDamage}");
+    // Logic to increase AttackSpeed
+        attackSpeed=newSpeed;
+         Debug.Log("UPdateSpeedKali"+attackSpeed);
+
+           Debug.Log($"After increase: AttackSpeed = {attackSpeed}, AttackDamage = {attackDamage}");
+
+    }
+
     void Attack()
     {
-      if(!isBool&&isSpecialA&&unitScript.unitLevel==3)
+      if(!isBoolA&&isSpecialA&&unitScript.unitLevel>=3)
       {
         Debug.Log("SpecialA");
         SpecialA();
-        isBool=true;
+        isBoolA=true;
+      }
+
+       if(!isBoolB&&isSpecialB&&unitScript.unitLevel==5)
+      {
+        Debug.Log("SpecialB");
+        SpecialB();
+        isBoolA=true;
       }
 
         // Detect monsters within attack range using a simple overlap check
@@ -110,19 +133,29 @@ public class UnitAttack : MonoBehaviour
         }
     }
 
+     void OnDestroy()
+    {
+        if (unitScript != null)
+        {
+            unitScript.OnAttackDamageChanged -= UpdateDamage;
+            unitScript.OnAttackSpeedChanged -= UpdateSpeed;
+            
+        }
+    }
+
    public void SpecialA()
     {
         
         
-            attackRange *= 3.0f;
-            scalex *= 3.0f;
-            scaley *= 3.0f;
+            attackRange *= 1.2f;
+            scalex *= 1.2f;
+            scaley *= 1.2f;
            
         
         
      }
 
-    void SpecialB()
+   public void SpecialB()
     {   
      
             attackRange *= 1.3f;

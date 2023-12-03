@@ -27,6 +27,13 @@ public class GameManager : MonoBehaviour
     public int currentMonsters;
     public GameObject roundRewardsPanel;
 
+    public delegate void UpdateDamage();
+    public static event UpdateDamage OnUpdateDamage;
+
+    public delegate void UpdateSpeed();
+    public static event UpdateSpeed OnUpdateSpeed;
+
+
     public RoundRewardSystem roundRewardSystem;
     public Victory victoryManager;
     public bool isGamePaused;
@@ -146,6 +153,22 @@ public class GameManager : MonoBehaviour
         UpdateRoundsText();
 
         SetupRound();
+
+          if (unitEvolutionData[0].isPrestige==true)
+        {
+            Debug.Log("KaliPrestige");
+           foreach (UnitEvolutionData unitData in filteredEvolutions)
+       {
+           if (unitData.unitName =="Kali")
+           {
+               unitData.damage = unitData.damage *1.5f;
+               break;
+           }
+       }
+           
+        }
+
+
     }
 
 
@@ -313,6 +336,8 @@ foreach (var reward in rewards)
             unit.GetComponent<Unit>().unitType = randomUnitType;
             unit.GetComponent<Unit>().unitLevel = initialLevel;
             unit.GetComponent<Unit>().SetGridPosition(i);
+            
+           
             grid[i] = unit;
         }
     }
@@ -368,6 +393,9 @@ foreach (var reward in rewards)
                         newUnit.GetComponent<Unit>().unitType = unit.GetComponent<Unit>().unitType; // Set the correct unit type
                         newUnit.GetComponent<Unit>().SetGridPosition(unit.GetComponent<Unit>().gridIndex);
                         newUnit.GetComponent<Unit>().unitLevel = newLevel; // Set the new level
+                        newUnit.GetComponent<Unit>().attackPower=filteredEvolutions[unit.GetComponent<Unit>().unitType].damage;
+                        newUnit.GetComponent<Unit>().attackSpeed=filteredEvolutions[unit.GetComponent<Unit>().unitType].attackSpeed;
+                        
 
                         // Destroy the second unit
                         Destroy(unit);
@@ -434,15 +462,56 @@ foreach (var reward in rewards)
         }
 
         
-    //public void IncreaseUnitAttackPowerByPercentage(string unitName, float percentage)
-    //{
-    //    foreach (UnitEvolutionData unitData in unitEvolutionData)
-    //    {
-    //        if (unitData.unitName == unitName)
-    //        {
-    //            unitData.baseAttackPower += unitData.baseAttackPower * (percentage / 100f);
-    //            break;
-    //        }
-    //    }
-    //} 
-}
+    public void IncreaseUnitAttackPowerByPercentage(string unitName, float percentage)
+    {
+       foreach (UnitEvolutionData unitData in filteredEvolutions)
+       {
+           if (unitData.unitName == unitName)
+           {
+               unitData.damage += unitData.damage * (percentage / 100f);
+               break;
+           }
+       }
+
+        OnUpdateDamage?.Invoke();
+    } 
+
+    public void IncreaseUnitAttackSpeedByPercentage(string unitName, float percentage)
+    {
+         foreach (UnitEvolutionData unitData in filteredEvolutions)
+       {
+           if (unitData.unitName == unitName)
+           {
+               unitData.attackSpeed += unitData.attackSpeed * (percentage / 100f);
+               break;
+           }
+       }
+
+        OnUpdateSpeed?.Invoke();
+    }
+
+    public void  IncreaseAllUnitAttackSpeed(float percentage)
+    {
+          foreach (UnitEvolutionData unitData in filteredEvolutions)
+       {
+               unitData.attackSpeed += unitData.attackSpeed * (percentage / 100f);
+              
+           }
+        OnUpdateSpeed?.Invoke();
+           
+    }
+
+    public void  IncreaseAllUnitAttackDamage(float percentage)
+    {
+          foreach (UnitEvolutionData unitData in filteredEvolutions)
+       {
+               unitData.damage += unitData.damage * (percentage / 100f);
+              
+           }
+        OnUpdateDamage?.Invoke();
+           
+    }
+    
+    
+ }
+

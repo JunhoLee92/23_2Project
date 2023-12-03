@@ -18,11 +18,15 @@ public class TeresAttack : MonoBehaviour
     private float prestigeBonus = 0; 
 
     private float emberStackProb=0.05f;
-     bool isSpecialA=false;
-    bool isSpecialB=false;
 
-    private static bool globalSpecialAApplied = false;
-    private static bool globalSpecialBApplied = false;
+    private float ChargedAttackChance;
+    
+    public static bool isSpecialA=false;
+
+    public static bool isSpecialB=false;
+
+    bool isBoolA=false;
+    bool isBoolB=false;
 
     // Start is called before the first frame update
     void Start()
@@ -30,6 +34,18 @@ public class TeresAttack : MonoBehaviour
         attackInterval = 1f / attackSpeed;
 
         unitScript = GetComponent<Unit>();
+
+        
+  if (unitScript != null)
+        {
+            unitScript.OnAttackDamageChanged += UpdateDamage;
+            unitScript.OnAttackSpeedChanged += UpdateSpeed;
+            attackDamage = unitScript.AttackPower; // Initialize with current attack damage
+            attackSpeed =unitScript.AttackSpeed;
+            Debug.Log("Subscribed to OnAttackDamageChanged");
+        }
+
+        attackDamage=unitScript.attackPower;
 
         currentAttackDamage = attackDamage;
 
@@ -39,9 +55,16 @@ public class TeresAttack : MonoBehaviour
             Debug.Log("ChargedAttackBonus" + prestigeBonus);
         }
 
-        if(globalSpecialBApplied)
+        if(isSpecialA && unitScript.unitLevel>=3)
         {
-            emberStackProb+=0.05f;
+            SpecialA();
+            isBoolA=true;
+        }
+
+        if(isSpecialA && unitScript.unitLevel==5)
+        {
+            SpecialB();
+            isBoolB=true;
         }
     }
 
@@ -52,7 +75,7 @@ public class TeresAttack : MonoBehaviour
     {   
         // Find the closest monster within attack range
         GameObject target = FindClosestMonster();
-
+        attackInterval = 1f / attackSpeed;
         if (target && Time.time >= nextAttackTime)
         {
             Shoot(target);
@@ -89,16 +112,23 @@ public class TeresAttack : MonoBehaviour
         GameObject projectileToUse = projectilePrefab; 
         Unit unitScript = GetComponent<Unit>();
 
-      if(isSpecialB)
-        {
-         SpecialB();
-         isSpecialB=false;
-         Debug.Log("Special Applied");
-        }
+      if(!isBoolA&&isSpecialA&&unitScript.unitLevel>=3)
+      {
+        Debug.Log("SpecialA");
+        SpecialA();
+        isBoolA=true;
+      }
+
+       if(!isBoolB&&isSpecialB&&unitScript.unitLevel==5)
+      {
+        Debug.Log("SpecialB");
+        SpecialB();
+        isBoolA=true;
+      }
 
        Debug.Log("emberStack"+emberStackProb);
 
-        if (unitScript.unitLevel >= 3 && currentEmberStacks >= 1 && Random.Range(0f, 1f) <= 0.3f+prestigeBonus)
+        if (unitScript.unitLevel >= 3 && currentEmberStacks >= 1 && isBoolA && Random.Range(0f, 1f) <= ChargedAttackChance+prestigeBonus)
         {
             
             projectileToUse = chargedProjectilePrefab;
@@ -113,8 +143,7 @@ public class TeresAttack : MonoBehaviour
         projectileScript.damage = currentAttackDamage;
 
         
-        if (unitScript.unitLevel >= 1 && unitScript.unitLevel != 5)
-        {
+        
             if (Random.Range(0f, 1f) <= emberStackProb)
             {
                 if (currentEmberStacks <= maxEmbersStacks)
@@ -126,21 +155,9 @@ public class TeresAttack : MonoBehaviour
             }
 
             currentAttackDamage = (attackDamage + 0.1f * (currentEmberStacks * attackDamage));
-        }
+       
 
-        if (unitScript.unitLevel == 5)
-        {   if(Random.Range(0f,1f)<=emberStackProb+0.05f)
-            {
-                if (currentEmberStacks <= maxEmbersStacks)
-                {
-                currentEmberStacks++;
-              
-                }
-            }
-
-            currentAttackDamage = (attackDamage + 0.1f * (currentEmberStacks * attackDamage));
-        }
-    }
+           }
 
    void ChargedAttack() 
     {
@@ -151,18 +168,43 @@ public class TeresAttack : MonoBehaviour
 
         
     }
+
+    private void UpdateDamage(float newDamage)
+    {
+        attackDamage = newDamage;
+        // Additional logic to handle damage change
+        Debug.Log("UPdateDamageKali"+attackDamage);
+    }
+
+    private void UpdateSpeed(float newSpeed)
+    {
+        Debug.Log($"Before increase: AttackSpeed = {attackSpeed}, AttackDamage = {attackDamage}");
+    // Logic to increase AttackSpeed
+        attackSpeed=newSpeed;
+         Debug.Log("UPdateSpeedKali"+attackSpeed);
+
+           Debug.Log($"After increase: AttackSpeed = {attackSpeed}, AttackDamage = {attackDamage}");
+
+    }
+
+  void OnDestroy()
+    {
+        if (unitScript != null)
+        {
+            unitScript.OnAttackDamageChanged -= UpdateDamage;
+            unitScript.OnAttackSpeedChanged -= UpdateSpeed;
+            
+        }
+    }
 public void SpecialA()
 {
-    //Check
+   ChargedAttackChance=0.3f;
 }
 public void SpecialB()
 {
-    if(!globalSpecialBApplied)
-    {
+   
         emberStackProb+=0.05f;
-        Debug.Log("emberstackprob"+ emberStackProb);
-        globalSpecialBApplied=true;
-    }
+   
     
 
 }

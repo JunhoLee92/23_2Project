@@ -13,18 +13,21 @@ public class LilyAttack : MonoBehaviour
 
 
     public GameObject laserPrefab;
-    public float AttackDamage = 17f;
+    public float attackDamage = 17f;
     private float poisonDamagePercentage = 0.05f;
     private GameObject target;
     private Coroutine laserAttackCoroutine;
     private Unit unitScript;
+
+    public float attackSpeed;
     private bool isPrestige = false;
 
-     private static bool globalSpecialAApplied = false;
-    private static bool globalSpecialBApplied = false;
+     public static bool isSpecialA=false;
 
-      bool isSpecialA=false;
-     bool isSpecialB=false;
+   public static bool isSpecialB=false;
+
+    bool isBoolA=false;
+    bool isBoolB=false;
 
      private int MaxPoisonStacks=3;
 
@@ -37,37 +40,52 @@ public class LilyAttack : MonoBehaviour
 
         }
         unitScript = GetComponent<Unit>();
+
+          if (unitScript != null)
+        {
+            unitScript.OnAttackDamageChanged += UpdateDamage;
+            unitScript.OnAttackSpeedChanged += UpdateSpeed;
+            attackDamage = unitScript.AttackPower; // Initialize with current attack damage
+            attackSpeed =unitScript.AttackSpeed;
+            Debug.Log("Subscribed to OnAttackDamageChanged");
+        }
+    
+
+        attackDamage=unitScript.attackPower;
         // Start the laser attack loop
         laserAttackCoroutine = StartCoroutine(LaserAttackLoop());
 
-         if (unitScript.unitLevel == 1)
-                {
-                    poisonDamagePercentage = 0.05f;
+        //  if (unitScript.unitLevel == 1)
+        //         {
+        //             poisonDamagePercentage = 0.05f;
                       
-                }
-                else if (unitScript.unitLevel == 3)
-                {
-                    poisonDamagePercentage = 0.1f;
+        //         }
+        //         else if (unitScript.unitLevel == 3)
+        //         {
+        //             poisonDamagePercentage = 0.1f;
                     
-                }
-                else if (unitScript.unitLevel == 5)
-                {
-                    poisonDamagePercentage = 0.20f;
-                    MaxPoisonStacks+=2;
+        //         }
+        //         else if (unitScript.unitLevel == 5)
+        //         {
+        //             poisonDamagePercentage = 0.20f;
+        //             MaxPoisonStacks+=2;
                     
-                }
+        //         }
 
-                if(globalSpecialAApplied)
-                {
-                    poisonDamagePercentage+=0.05f;
-                }
+        
+        
+        if(isSpecialA && unitScript.unitLevel>=3)
+        {
+            SpecialA();
+            isBoolA=true;
+        }
 
-                if(globalSpecialBApplied)
-                {
-                    poisonDamagePercentage+=0.1f;
-                    MaxPoisonStacks+=2;
-
-                }
+        if(isSpecialA && unitScript.unitLevel==5)
+        {
+            SpecialB();
+            isBoolB=true;
+        }
+                
     }
 
     void Update()
@@ -85,6 +103,12 @@ public class LilyAttack : MonoBehaviour
         {
             StopCoroutine(laserAttackCoroutine);
         }
+           if (unitScript != null)
+        {
+            unitScript.OnAttackDamageChanged -= UpdateDamage;
+            unitScript.OnAttackSpeedChanged -= UpdateSpeed;
+            
+        }
     }
 
     IEnumerator LaserAttackLoop()
@@ -96,7 +120,7 @@ public class LilyAttack : MonoBehaviour
             if (target != null)
             {
                 ShootLaser(target);
-                yield return new WaitForSeconds(1 / 1.7f); // 1.7 times per second
+                yield return new WaitForSeconds(1 / attackSpeed); // 1.7 times per second
             }
             else
             {
@@ -134,16 +158,21 @@ public class LilyAttack : MonoBehaviour
         {
             yield break;  // Exit the coroutine if the target is destroyed
         }
-        if(isSpecialA)
-        {
-            SpecialA();
-            
-        }
+      
+        if(!isBoolA&&isSpecialA&&unitScript.unitLevel>=3)
+      {
+        Debug.Log("SpecialA");
+        SpecialA();
+        isBoolA=true;
+      }
 
-        if(isSpecialB)
-        {
-            SpecialB();
-        }
+       if(!isBoolB&&isSpecialB&&unitScript.unitLevel==5)
+      {
+        Debug.Log("SpecialB");
+        SpecialB();
+        isBoolA=true;
+      }
+
         Debug.Log("독스택"+poisonDamagePercentage);
         IDamageable damageableEntity = target.GetComponent<IDamageable>();
         if (damageableEntity != null)
@@ -154,8 +183,8 @@ public class LilyAttack : MonoBehaviour
 
             damageableEntity.MaxPoisonStacks = MaxPoisonStacks;
 
-            damageableEntity.TakeDamage(AttackDamage);
-            damageableEntity.PoisonStack(poisonDamagePercentage * AttackDamage);
+            damageableEntity.TakeDamage(attackDamage);
+            damageableEntity.PoisonStack(poisonDamagePercentage * attackDamage);
         }
     }
 
@@ -172,8 +201,8 @@ public class LilyAttack : MonoBehaviour
         if (damageableEntity != null)
         {
            
-            damageableEntity.TakeDamage(AttackDamage);
-            damageableEntity.EnhancedPoisonStack(poisonDamagePercentage,AttackDamage);
+            damageableEntity.TakeDamage(attackDamage);
+            damageableEntity.EnhancedPoisonStack(poisonDamagePercentage,attackDamage);
         }
     }
     GameObject FindClosestMonster()
@@ -194,24 +223,38 @@ public class LilyAttack : MonoBehaviour
         return closest;
     }
 
-    public void SpecialA()
-    {   if(!globalSpecialAApplied)
-        {
-            poisonDamagePercentage+=0.05f;
-            globalSpecialAApplied=true;
-        }
+    private void UpdateDamage(float newDamage)
+    {
+        attackDamage = newDamage;
+        // Additional logic to handle damage change
+        Debug.Log("UPdateDamageKali"+attackDamage);
+    }
 
+    private void UpdateSpeed(float newSpeed)
+    {
+        Debug.Log($"Before increase: AttackSpeed = {attackSpeed}, AttackDamage = {attackDamage}");
+    // Logic to increase AttackSpeed
+        attackSpeed=newSpeed;
+         Debug.Log("UPdateSpeedKali"+attackSpeed);
+
+           Debug.Log($"After increase: AttackSpeed = {attackSpeed}, AttackDamage = {attackDamage}");
+
+    }
+
+  
+
+    public void SpecialA()
+    {  
+            poisonDamagePercentage+=0.05f;
+         
     }
 
     public void SpecialB()
     {
-        if(!globalSpecialBApplied)
-        {
+        
             poisonDamagePercentage+=0.1f;
             MaxPoisonStacks+=2;
-            globalSpecialBApplied=true;
-
-        }
+        
     }
 }
 

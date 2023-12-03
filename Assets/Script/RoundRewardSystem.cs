@@ -18,6 +18,7 @@ public class RewardCardTemplateList
 }
 public class RoundRewardSystem : MonoBehaviour
 {
+    public static float globalSpeedModifier = 1.0f;
       public static RoundRewardSystem Instance { get; private set; }
     public enum CardGrade { Common, Rare, SR, SSR, Special }
     public List<RewardCard> availableCards;  // All available reward cards
@@ -63,8 +64,14 @@ void Update()
     if(Input.GetKeyDown(KeyCode.A))
     {
         // TestSpecial();
-        Debug.Log("Kali ON");
+       
+        IncreaseAllAttackSpeed(10);
     } 
+
+    if(Input.GetKeyDown(KeyCode.B))
+    {
+        IncreaseAllAttackDamage(10);
+    }
 }
 
 
@@ -74,12 +81,12 @@ void Update()
 
         foreach (var unitName in unitNames)
         {
-            allCards.Add(CreateCard(unitName, "공격력", 2, CardGrade.Common, () => AttackDamageEffect(unitName)));
-            allCards.Add(CreateCard(unitName, "공격력", 5, CardGrade.Rare, () => AttackDamageEffect(unitName)));
-            allCards.Add(CreateCard(unitName, "공격력", 11, CardGrade.SR, () => AttackDamageEffect(unitName)));
-            allCards.Add(CreateCard(unitName, "공격속도", 5, CardGrade.Common, () => AttackSpeedEffect(unitName)));
-            allCards.Add(CreateCard(unitName, "공격속도", 10, CardGrade.Rare, () => AttackSpeedEffect(unitName)));
-            allCards.Add(CreateCard(unitName, "공격속도", 30, CardGrade.SR, () => AttackSpeedEffect(unitName)));
+            allCards.Add(CreateCard(unitName, "공격력", 2, CardGrade.Common, () => AttackDamageEffect(unitName,2)));
+            allCards.Add(CreateCard(unitName, "공격력", 5, CardGrade.Rare, () => AttackDamageEffect(unitName,5)));
+            allCards.Add(CreateCard(unitName, "공격력", 11, CardGrade.SR, () => AttackDamageEffect(unitName,10)));
+            allCards.Add(CreateCard(unitName, "공격속도", 5, CardGrade.Common, () => AttackSpeedEffect(unitName,5)));
+            allCards.Add(CreateCard(unitName, "공격속도", 10, CardGrade.Rare, () => AttackSpeedEffect(unitName,10)));
+            allCards.Add(CreateCard(unitName, "공격속도", 30, CardGrade.SR, () => AttackSpeedEffect(unitName,30)));
             
             // Add additional cards for other effects or grades as needed
         }
@@ -91,13 +98,14 @@ void Update()
         allCards.Add(CreateCard("Lily", "도트데미지 추가증가", 5, CardGrade.Special, () => LilySpecialB(),"LV5 릴리의 독 디버프 데미지 +10% 증가 및 최대 중첩수 +2 증가") );
         allCards.Add(CreateCard("Terres", "불씨강화", 30, CardGrade.Special, () => TerresSpecialB(),"LV3 이상 테레스의 불씨 1중첩 이상일 때 30% 확률로 불씨 1중첩을 소모하여 강공격을 한다. 강공격은 현재 테레스 공격력의 130% 데미지"));
         allCards.Add(CreateCard("Terres", "중첩강화", 5, CardGrade.Special, () => TerresSpecialB(),"LV5 테레스의 불씨 중첩 획득 확률 +5% 증가"));
-        allCards.Add(CreateCard("Bella", "처형강화", 5, CardGrade.Special, () => YukiSpecialB(),"LV3 이상 벨라가 공격 시 적의 체력과 무관하게 5% 확률로 처형"));
-        allCards.Add(CreateCard("Bella", "처형강화2", 45, CardGrade.Special, () => YukiSpecialB(),"LV5 이상 벨라의 즉시 처형 기준 체력 +15% 증가"));
+        allCards.Add(CreateCard("Bella", "처형강화", 5, CardGrade.Special, () => BellaSpecialA(),"LV3 이상 벨라가 공격 시 적의 체력과 무관하게 5% 확률로 처형"));
+        allCards.Add(CreateCard("Bella", "처형강화2", 45, CardGrade.Special, () => BellaSpecialB(),"LV5 이상 벨라의 즉시 처형 기준 체력 +15% 증가"));
 
-        allCards.Add(CreateCard("몬스터", "속도감소", 5, CardGrade.Common, DecreaseEnemySpeed1, "적의 이동속도가 5% 감소합니다."));
-        allCards.Add(CreateCard("몬스터", "속도감소", 10, CardGrade.SR, DecreaseEnemySpeed1, "적의 이동속도가 10% 감소합니다."));
-        allCards.Add(CreateCard("몬스터", "속도감소", 15, CardGrade.SSR, DecreaseEnemySpeed1, "적의 이동속도가 15% 감소합니다."));
-        allCards.Add(CreateCard("모든유닛", "공격속도", 10, CardGrade.SSR, IncreaseAttackDamage1, "유닛 전체의 공격 속도가 10% 증가합니다."));
+        allCards.Add(CreateCard("몬스터", "속도감소", 5, CardGrade.Common,()=> DecreaseEnemySpeed1(0.05f), "적의 이동속도가 5% 감소합니다."));
+        allCards.Add(CreateCard("몬스터", "속도감소", 10, CardGrade.SR, ()=>DecreaseEnemySpeed1(0.1f), "적의 이동속도가 10% 감소합니다."));
+        allCards.Add(CreateCard("몬스터", "속도감소", 15, CardGrade.SSR,()=> DecreaseEnemySpeed1(0.15f), "적의 이동속도가 15% 감소합니다."));
+        allCards.Add(CreateCard("모든유닛", "공격속도", 10, CardGrade.SSR,()=> IncreaseAllAttackDamage(10), "유닛 전체의 공격 속도가 10% 증가합니다."));
+        allCards.Add(CreateCard("모든유닛", "공격속도", 10, CardGrade.SSR,()=> IncreaseAllAttackSpeed(5), "유닛 전체의 공격 속도가 5% 증가합니다."));
          
 
     }
@@ -213,35 +221,38 @@ public void KaliSpecialA()
 public void  KaliSpecialB()
 {
       
-        UnitAttack.isSpecialA=true;
+        UnitAttack.isSpecialB=true;
         Debug.Log("스킬발동");
 }
 
 public void YukiSpecialA()
 {
       
-        UnitAttack.isSpecialA=true;
-        Debug.Log("스킬발동");
+       YukiAttack.isSpecialA=true;
+        Debug.Log("유키스킬발동");
 }
 
 public void YukiSpecialB()
 {
       
-        UnitAttack.isSpecialA=true;
-        Debug.Log("스킬발동");
+        YukiAttack.isSpecialB=true;
+        Debug.Log("유키스킬발동2");
 }
 
 public void LilySpecialA()
 {
-Debug.Log("스킬발동");
+    LilyAttack.isSpecialA=true;
+Debug.Log("LilySkillActive");
 }
 public void LilySpecialB()
 {
-    Debug.Log("스킬발동");
+    LilyAttack.isSpecialB=true;
+    Debug.Log("LilySkillActive2");
 }
 
 public void AirSpecialA()
 {
+    
     Debug.Log("스킬발동");
 }
 public void AirSpecialB()
@@ -251,38 +262,55 @@ public void AirSpecialB()
 
 public void TerresSpecialA()
 {
-    Debug.Log("스킬발동");
+    TeresAttack.isSpecialA=true;
+    Debug.Log("테레스스킬발동");
 }
 public void TerresSpecialB()
 {
-    Debug.Log("스킬발동");
+    TeresAttack.isSpecialB=true;
+    Debug.Log("테레스스킬발동2");
 }
 
 public void BellaSpecialA()
 {
-    Debug.Log("스킬발동");
+    BellaAttack.isSpecialA=true;
+    Debug.Log("벨라스킬발동");
 }
 
 public void BellaSpecialB()
 {
-    Debug.Log("스킬발동");
+    BellaAttack.isSpecialB=true;
+    Debug.Log("벨라스킬발동2");
 }
-public void DecreaseEnemySpeed1()
+public void DecreaseEnemySpeed1(float percentage)
 {
+    globalSpeedModifier -= percentage;
+    Debug.Log("Skill activation");
     Debug.Log("스킬발동");
 }
 
-public void IncreaseAttackDamage1()
+public void IncreaseAllAttackDamage(float percentage)
 {
+    GameManager.Instance.IncreaseAllUnitAttackDamage(percentage);
 Debug.Log("스킬발동");
 }
-public void AttackSpeedEffect(string unitName)
+
+public void IncreaseAllAttackSpeed(float percentage)
 {
+    GameManager.Instance.IncreaseAllUnitAttackSpeed(percentage);
 Debug.Log("스킬발동");
 }
-public void AttackDamageEffect(string untName)
+public void AttackSpeedEffect(string unitName, float percentage)
 {
-Debug.Log("스킬발동");
+    
+    GameManager.Instance.IncreaseUnitAttackSpeedByPercentage(unitName,percentage);
+    Debug.Log("공속스킬발동");
+}
+public void AttackDamageEffect(string unitName, float percentage)
+{
+    GameManager.Instance.IncreaseUnitAttackPowerByPercentage(unitName,percentage);
+    Debug.Log("스킬발동");
+
 }
 
 

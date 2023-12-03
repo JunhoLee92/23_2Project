@@ -2875,6 +2875,8 @@ MonoBehaviour:
     isPrestige: 0
     thumbnailSprite: {fileID: 21300000, guid: 13325ebd45c490746bb68e96d85e881f, type: 3}
     standingSprite: {fileID: 21300000, guid: 30f606e92698cee46894e7116ef6f422, type: 3}
+    damage: 21
+    attackSpeed: 2.2
   - unitName: Yuki
     maxLevel: 5
     unitPrefabs:
@@ -2888,6 +2890,8 @@ MonoBehaviour:
     isPrestige: 0
     thumbnailSprite: {fileID: 21300000, guid: 3e9f46aa17fa28646b3c40228d91b0eb, type: 3}
     standingSprite: {fileID: 21300000, guid: c5b4ec12c9d1fae43ace445e1452c730, type: 3}
+    damage: 12
+    attackSpeed: 1.4
   - unitName: Lily
     maxLevel: 5
     unitPrefabs:
@@ -2901,6 +2905,8 @@ MonoBehaviour:
     isPrestige: 0
     thumbnailSprite: {fileID: 21300000, guid: 65cc644ac4a74e84c9b653788c079671, type: 3}
     standingSprite: {fileID: 21300000, guid: 62ce01ddca719d34ea9648c586a7cc94, type: 3}
+    damage: 17
+    attackSpeed: 1.8
   - unitName: Aire
     maxLevel: 5
     unitPrefabs:
@@ -2914,6 +2920,8 @@ MonoBehaviour:
     isPrestige: 0
     thumbnailSprite: {fileID: -2413806693520163455, guid: b02f5237f182fa64eb1374462085ec43, type: 3}
     standingSprite: {fileID: 21300000, guid: d6a44ab95b0def041a7929981a2c23a1, type: 3}
+    damage: 7
+    attackSpeed: 0
   - unitName: Terres
     maxLevel: 5
     unitPrefabs:
@@ -2927,6 +2935,8 @@ MonoBehaviour:
     isPrestige: 0
     thumbnailSprite: {fileID: 7482667652216324306, guid: f7e9ec1a43f8e7a4fae379a6f4a2b773, type: 3}
     standingSprite: {fileID: 21300000, guid: 76beef9fdae7b48468ddf07d0400a374, type: 3}
+    damage: 19
+    attackSpeed: 2
   - unitName: Bella
     maxLevel: 5
     unitPrefabs:
@@ -2940,6 +2950,8 @@ MonoBehaviour:
     isPrestige: 0
     thumbnailSprite: {fileID: 7482667652216324306, guid: ff72e658e5d05714296030e6ee4cc000, type: 3}
     standingSprite: {fileID: 21300000, guid: 9125c204f566db048a92ebcb64d9d14a, type: 3}
+    damage: 7
+    attackSpeed: 1
   selectedUnitNames: []
 --- !u!4 &1868309238
 Transform:
