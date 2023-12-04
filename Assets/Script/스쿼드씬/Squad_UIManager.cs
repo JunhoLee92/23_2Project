@@ -87,6 +87,7 @@ public class Squad_UIManager : MonoBehaviour
                     {
                         unitThumbnails[i].sprite = unitData.thumbnailSprite;
                         unitThumbnails[i].color = new Color(unitThumbnails[i].color.r, unitThumbnails[i].color.g, unitThumbnails[i].color.b, 1);
+                        
                     }
                 }
                 else
