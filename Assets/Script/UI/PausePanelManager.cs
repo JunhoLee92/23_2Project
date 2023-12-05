@@ -3,12 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using System;
 
 public class PausePanelManager : MonoBehaviour
 {
     public Button restart;
     public Button home;
     public Button play;
+
+    public Image[] unitThumbnails;
+   
+
     // Start is called before the first frame update
     void Start()
     {
@@ -21,12 +26,39 @@ public class PausePanelManager : MonoBehaviour
             play.onClick.AddListener(() => ButtonClicked(play));
         }
 
+        SquadUpdate();
+
     }
 
     // Update is called once per frame
     void Update()
     {
         
+    }
+
+    private void SquadUpdate()
+    {
+       for (int i = 0; i < unitThumbnails.Length; i++)
+        {
+            if (i < Squad_Data.Instance.selectedUnitNames.Count)
+            {
+                string unitName = Squad_Data.Instance.selectedUnitNames[i];
+                
+                
+                    var unitData = Array.Find(Squad_Data.Instance.unitEvolutionData, u => u.unitName == unitName);
+                    if (unitData != null)
+                    {
+                        unitThumbnails[i].sprite = unitData.thumbnailSprite;
+                        unitThumbnails[i].color = new Color(unitThumbnails[i].color.r, unitThumbnails[i].color.g, unitThumbnails[i].color.b, 1);
+                        
+                    }
+                
+               
+            }
+        }
+
+
+       
     }
     private void ButtonClicked(Button button)
     {
