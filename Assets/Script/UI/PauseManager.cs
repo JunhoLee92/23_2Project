@@ -16,14 +16,23 @@ public class PauseManager : MonoBehaviour
             panel.SetActive(false);
             Time.timeScale = 1;
 
+            if(GameManager.Instance!=null)
+            {
+
             GameManager.Instance.isGamePaused = false;
+            
+            }
         }
         else
         {
             panel.SetActive(true);
             Time.timeScale = 0;
 
-            GameManager.Instance.isGamePaused = true;
+          if(GameManager.Instance!=null)
+            {
+
+            GameManager.Instance.isGamePaused = false;
+            }
         }
     }
 }

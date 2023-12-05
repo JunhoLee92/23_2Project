@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using System.Linq;
+using System.Runtime.CompilerServices;
 
 
 public class GameManager : MonoBehaviour
@@ -12,7 +13,7 @@ public class GameManager : MonoBehaviour
     public UnitEvolutionData[] unitEvolutionData; // Define this array in the inspector
     public UnitEvolutionData[] filteredEvolutions; //FilteredEvolutonData
     public Transform[] spawnPositions;
-    private GameObject[] grid;
+    public GameObject[] grid;
     private GameObject selectedUnit;
     private bool isFirstClick = true;
     public int movesPerRound;
@@ -37,6 +38,9 @@ public class GameManager : MonoBehaviour
     public RoundRewardSystem roundRewardSystem;
     public Victory victoryManager;
     public bool isGamePaused;
+
+    public bool isDefeated;
+
     [System.Serializable]
     public class RoundConfig
     {
@@ -96,7 +100,7 @@ public class GameManager : MonoBehaviour
             return;
         }
         _instance = this;
-        //DontDestroyOnLoad(this.gameObject);
+        // DontDestroyOnLoad(this.gameObject);
 
         if (Squad_Data.Instance != null)
         {
@@ -113,7 +117,7 @@ public class GameManager : MonoBehaviour
         bossSpawner = FindObjectOfType<BossSpawner>();
         bossController = FindObjectOfType<BossController>();
         grid = new GameObject[spawnPositions.Length];
-        
+        Debug.Log("Scene Load");
 
         //unit info filtering
         int count = 0;
@@ -169,6 +173,20 @@ public class GameManager : MonoBehaviour
         }
 
 
+    }
+
+    void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.V))
+        {
+            SceneManager.LoadScene("InGame");
+        }
+
+        if(Input.GetKeyDown(KeyCode.C))
+        {
+            Shuffle();
+            Debug.Log("Shuffle");
+        }
     }
 
 
@@ -273,7 +291,7 @@ public class GameManager : MonoBehaviour
 
     void CheckForRoundCompletion()
     {
-        if(currentMonsters<=0)
+        if(currentMonsters<=0 && isDefeated==false)
         { 
             RoundRewardsPanel();
             NextRound();
@@ -301,17 +319,17 @@ public class GameManager : MonoBehaviour
        
         roundRewardsPanel.SetActive(true);
        Debug.Log("Generated: " + rewards.Count);
-foreach (var reward in rewards)
-{
-    if (reward == null)
+    foreach (var reward in rewards)
     {
-        Debug.LogError("reward null");
+         if (reward == null)
+        {
+            Debug.LogError("reward null");
+        }
+            else
+        {
+            Debug.Log("reward: " + reward.Name);
+        }
     }
-    else
-    {
-        Debug.Log("reward: " + reward.Name);
-    }
-}
         rewardsPanelScript.ShowRewards(rewards);
         Time.timeScale = 0;
         isGamePaused = true;
@@ -340,6 +358,38 @@ foreach (var reward in rewards)
            
             grid[i] = unit;
         }
+    }
+
+    public void Shuffle()
+    {
+        for (int i=0; i<spawnPositions.Length; i++)
+        {
+
+             List<GameObject> toDestroy = new List<GameObject>();
+
+            if(grid[i].GetComponent<Unit>().unitLevel==0 )
+            {    
+                if(grid[i]!=null)
+                {
+
+                Destroy(grid[i]);
+                }
+
+            int randomUnitType = Random.Range(0, filteredEvolutions.Length);
+            int initialLevel = 0; // Start with level 0 units
+            GameObject unitPrefab = filteredEvolutions[randomUnitType].unitPrefabs[initialLevel];
+            GameObject unit = Instantiate(unitPrefab, spawnPositions[i].position, Quaternion.identity);
+            unit.GetComponent<Unit>().unitType = randomUnitType;
+            unit.GetComponent<Unit>().unitLevel = initialLevel;
+            unit.GetComponent<Unit>().SetGridPosition(i);
+            
+           
+            grid[i] = unit;
+            }
+
+        }
+
+      
     }
 
 
@@ -392,6 +442,7 @@ foreach (var reward in rewards)
                         GameObject newUnit = Instantiate(newUnitPrefab, unit.transform.position, Quaternion.identity);
                         newUnit.GetComponent<Unit>().unitType = unit.GetComponent<Unit>().unitType; // Set the correct unit type
                         newUnit.GetComponent<Unit>().SetGridPosition(unit.GetComponent<Unit>().gridIndex);
+                        grid[unit.GetComponent<Unit>().gridIndex]=newUnit; //new one
                         newUnit.GetComponent<Unit>().unitLevel = newLevel; // Set the new level
                         newUnit.GetComponent<Unit>().attackPower=filteredEvolutions[unit.GetComponent<Unit>().unitType].damage;
                         newUnit.GetComponent<Unit>().attackSpeed=filteredEvolutions[unit.GetComponent<Unit>().unitType].attackSpeed;
@@ -407,6 +458,7 @@ foreach (var reward in rewards)
                     GameObject newRandomUnit = Instantiate(randomUnitPrefab, selectedUnit.transform.position, Quaternion.identity);
                     newRandomUnit.GetComponent<Unit>().unitType = randomUnitType; // Set the correct unit type
                     newRandomUnit.GetComponent<Unit>().SetGridPosition(selectedUnit.GetComponent<Unit>().gridIndex);
+                     grid[selectedUnit.GetComponent<Unit>().gridIndex]=newRandomUnit;
 
                     // Destroy the first unit
                     Destroy(selectedUnit);
@@ -441,7 +493,18 @@ foreach (var reward in rewards)
 
 
         void SwapUnits(GameObject unit1, GameObject unit2)
-        {
+        {  
+            int index1 = unit1.GetComponent<Unit>().gridIndex;
+            int index2 = unit2.GetComponent<Unit>().gridIndex;
+
+   
+            GameObject tempUnit = grid[index1];
+            grid[index1] = grid[index2];
+            grid[index2] = tempUnit;
+
+            unit1.GetComponent<Unit>().SetGridPosition(index2);
+            unit2.GetComponent<Unit>().SetGridPosition(index1);
+            
             Vector3 tempPosition = unit1.transform.position;
             unit1.transform.position = unit2.transform.position;
             unit2.transform.position = tempPosition;
@@ -454,6 +517,8 @@ foreach (var reward in rewards)
     public void Defeat()
         {
            victoryManager.DefeatOn();
+           isDefeated=true;
+           
         }
 
     public void Victory()
