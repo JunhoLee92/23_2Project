@@ -12,6 +12,8 @@ public class PausePanelManager : MonoBehaviour
     public Button play;
 
     public Image[] unitThumbnails;
+
+     
    
 
     // Start is called before the first frame update
@@ -64,13 +66,15 @@ public class PausePanelManager : MonoBehaviour
     {
         if (button == restart)
         {
+            Scene currentScene = SceneManager.GetActiveScene();
+
             Time.timeScale = 1; if(GameManager.Instance!=null)
             {
 
             GameManager.Instance.isGamePaused = false;
             
             }
-            SceneManager.LoadScene("Ingame");
+              SceneManager.LoadScene(currentScene.name);
         }
 
         else if (button == home)

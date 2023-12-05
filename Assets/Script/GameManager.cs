@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using System.Linq;
+using System.Runtime.CompilerServices;
 
 
 public class GameManager : MonoBehaviour
@@ -37,6 +38,8 @@ public class GameManager : MonoBehaviour
     public RoundRewardSystem roundRewardSystem;
     public Victory victoryManager;
     public bool isGamePaused;
+
+    public bool isDefeated;
 
     [System.Serializable]
     public class RoundConfig
@@ -288,7 +291,7 @@ public class GameManager : MonoBehaviour
 
     void CheckForRoundCompletion()
     {
-        if(currentMonsters<=0)
+        if(currentMonsters<=0 && isDefeated==false)
         { 
             RoundRewardsPanel();
             NextRound();
@@ -514,6 +517,8 @@ public class GameManager : MonoBehaviour
     public void Defeat()
         {
            victoryManager.DefeatOn();
+           isDefeated=true;
+           
         }
 
     public void Victory()
