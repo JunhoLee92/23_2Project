@@ -18,6 +18,13 @@ public Sprite srCardImage;
 public Sprite ssrCardImage;
 public Sprite specialCardImage;
 
+    public Image Image1;
+    public Image Image2;
+    public Image Image3;
+
+    public Sprite A;
+    public Sprite B;  //...
+
     private List<RewardCard> currentRewards;
     void Start()
     {
@@ -64,6 +71,7 @@ public Sprite specialCardImage;
         case RoundRewardSystem.CardGrade.Special:
             buttonImage.sprite = specialCardImage;
             break;
+
     }
 
         if (button == null || buttonText == null || reward == null)

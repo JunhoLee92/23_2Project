@@ -46,10 +46,10 @@ public class RoundRewardSystem : MonoBehaviour
             Instance = this;
             // DontDestroyOnLoad(gameObject);
         }
-        else if (Instance != this)
-        {
-            Destroy(gameObject);
-        }
+        ////else if (Instance != this)
+        ////{
+        ////    Destroy(gameObject);
+        ////}
 
         
     }
