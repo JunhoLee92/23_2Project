@@ -81,37 +81,37 @@ void Update()
 
         foreach (var unitName in unitNames)
         {
-            allCards.Add(CreateCard(unitName, "공격력", 2, CardGrade.Common, () => AttackDamageEffect(unitName,2)));
-            allCards.Add(CreateCard(unitName, "공격력", 5, CardGrade.Rare, () => AttackDamageEffect(unitName,5)));
-            allCards.Add(CreateCard(unitName, "공격력", 11, CardGrade.SR, () => AttackDamageEffect(unitName,10)));
-            allCards.Add(CreateCard(unitName, "공격속도", 5, CardGrade.Common, () => AttackSpeedEffect(unitName,5)));
-            allCards.Add(CreateCard(unitName, "공격속도", 10, CardGrade.Rare, () => AttackSpeedEffect(unitName,10)));
-            allCards.Add(CreateCard(unitName, "공격속도", 30, CardGrade.SR, () => AttackSpeedEffect(unitName,30)));
+            allCards.Add(CreateCard(unitName, "공격력", 2, CardGrade.Common,() => AttackDamageEffect(unitName,2),2));
+            allCards.Add(CreateCard(unitName, "공격력", 5, CardGrade.Rare, () => AttackDamageEffect(unitName,5),2));
+            allCards.Add(CreateCard(unitName, "공격력", 11, CardGrade.SR, () => AttackDamageEffect(unitName,10),2));
+            allCards.Add(CreateCard(unitName, "공격속도", 5, CardGrade.Common, () => AttackSpeedEffect(unitName,5),1));
+            allCards.Add(CreateCard(unitName, "공격속도", 10, CardGrade.Rare, () => AttackSpeedEffect(unitName,10),1));
+            allCards.Add(CreateCard(unitName, "공격속도", 30, CardGrade.SR, () => AttackSpeedEffect(unitName,30),1));
             
             // Add additional cards for other effects or grades as needed
         }
-        allCards.Add(CreateCard("Kali", "공격범위", 20, CardGrade.Special, () => KaliSpecialA()));
-        allCards.Add(CreateCard("Kali", "공격범위", 30, CardGrade.Special, () => KaliSpecialB()));
-        allCards.Add(CreateCard("Yuki", "냉동확률", 15, CardGrade.Special, () => YukiSpecialA()));
-        allCards.Add(CreateCard("Yuki", "둔화지속", 0.2f, CardGrade.Special, () => YukiSpecialB()));
-        allCards.Add(CreateCard("Lily", "도트데미지", 5, CardGrade.Special, () => LilySpecialA(),"LV3이상 릴리의 도트 데미지 +5% 증가"));
-        allCards.Add(CreateCard("Lily", "도트데미지 추가증가", 5, CardGrade.Special, () => LilySpecialB(),"LV5 릴리의 독 디버프 데미지 +10% 증가 및 최대 중첩수 +2 증가") );
-        allCards.Add(CreateCard("Terres", "불씨강화", 30, CardGrade.Special, () => TerresSpecialB(),"LV3 이상 테레스의 불씨 1중첩 이상일 때 30% 확률로 불씨 1중첩을 소모하여 강공격을 한다. 강공격은 현재 테레스 공격력의 130% 데미지"));
-        allCards.Add(CreateCard("Terres", "중첩강화", 5, CardGrade.Special, () => TerresSpecialB(),"LV5 테레스의 불씨 중첩 획득 확률 +5% 증가"));
-        allCards.Add(CreateCard("Bella", "처형강화", 5, CardGrade.Special, () => BellaSpecialA(),"LV3 이상 벨라가 공격 시 적의 체력과 무관하게 5% 확률로 처형"));
-        allCards.Add(CreateCard("Bella", "처형강화2", 45, CardGrade.Special, () => BellaSpecialB(),"LV5 이상 벨라의 즉시 처형 기준 체력 +15% 증가"));
+        allCards.Add(CreateCard("Kali", "공격범위", 20, CardGrade.Special, () => KaliSpecialA(),6));
+        allCards.Add(CreateCard("Kali", "공격범위", 30, CardGrade.Special, () => KaliSpecialB(),7));
+        allCards.Add(CreateCard("Yuki", "냉동확률", 15, CardGrade.Special, () => YukiSpecialA(),8));
+        allCards.Add(CreateCard("Yuki", "둔화지속", 0.2f, CardGrade.Special, () => YukiSpecialB(),9));
+        allCards.Add(CreateCard("Lily", "도트데미지", 5, CardGrade.Special, () => LilySpecialA(),10,"LV3이상 릴리의 도트 데미지 +5% 증가"));
+        allCards.Add(CreateCard("Lily", "도트데미지 추가증가", 5, CardGrade.Special, () => LilySpecialB(),11,"LV5 릴리의 독 디버프 데미지 +10% 증가 및 최대 중첩수 +2 증가") );
+        allCards.Add(CreateCard("Terres", "불씨강화", 30, CardGrade.Special, () => TerresSpecialB(),12,"LV3 이상 테레스의 불씨 1중첩 이상일 때 30% 확률로 불씨 1중첩을 소모하여 강공격을 한다. 강공격은 현재 테레스 공격력의 130% 데미지"));
+        allCards.Add(CreateCard("Terres", "중첩강화", 5, CardGrade.Special, () => TerresSpecialB(),13,"LV5 테레스의 불씨 중첩 획득 확률 +5% 증가"));
+        allCards.Add(CreateCard("Bella", "처형강화", 5, CardGrade.Special, () => BellaSpecialA(),14,"LV3 이상 벨라가 공격 시 적의 체력과 무관하게 5% 확률로 처형"));
+        allCards.Add(CreateCard("Bella", "처형강화2", 45, CardGrade.Special, () => BellaSpecialB(),15,"LV5 이상 벨라의 즉시 처형 기준 체력 +15% 증가"));
 
-        allCards.Add(CreateCard("몬스터", "속도감소", 5, CardGrade.Common,()=> DecreaseEnemySpeed1(0.05f), "적의 이동속도가 5% 감소합니다."));
-        allCards.Add(CreateCard("몬스터", "속도감소", 10, CardGrade.SR, ()=>DecreaseEnemySpeed1(0.1f), "적의 이동속도가 10% 감소합니다."));
-        allCards.Add(CreateCard("몬스터", "속도감소", 15, CardGrade.SSR,()=> DecreaseEnemySpeed1(0.15f), "적의 이동속도가 15% 감소합니다."));
-        allCards.Add(CreateCard("모든유닛", "공격속도", 10, CardGrade.SSR,()=> IncreaseAllAttackDamage(10), "유닛 전체의 공격 속도가 10% 증가합니다."));
-        allCards.Add(CreateCard("모든유닛", "공격속도", 10, CardGrade.SSR,()=> IncreaseAllAttackSpeed(5), "유닛 전체의 공격 속도가 5% 증가합니다."));
+        allCards.Add(CreateCard("몬스터", "속도감소", 5, CardGrade.Common,()=> DecreaseEnemySpeed1(0.05f),5, "적의 이동속도가 5% 감소합니다."));
+        allCards.Add(CreateCard("몬스터", "속도감소", 10, CardGrade.SR, ()=>DecreaseEnemySpeed1(0.1f),5, "적의 이동속도가 10% 감소합니다."));
+        allCards.Add(CreateCard("몬스터", "속도감소", 15, CardGrade.SSR,()=> DecreaseEnemySpeed1(0.15f),5, "적의 이동속도가 15% 감소합니다."));
+        allCards.Add(CreateCard("모든유닛", "공격력", 10, CardGrade.SSR,()=> IncreaseAllAttackDamage(10),4, "유닛 전체의 공격 데미지가 10% 증가합니다."));
+        allCards.Add(CreateCard("모든유닛", "공격속도", 10, CardGrade.SSR,()=> IncreaseAllAttackSpeed(5),3, "유닛 전체의 공격 속도가 5% 증가합니다."));
          
 
     }
 
    
-    private RewardCard CreateCard(string unitName, string effectType, float effectValue, CardGrade grade, Action effectAction, string customDescription = null)
+    private RewardCard CreateCard(string unitName, string effectType, float effectValue, CardGrade grade, Action effectAction,int imageNumber, string customDescription = null)
 {
     string description = customDescription;
     if (string.IsNullOrEmpty(customDescription))
@@ -128,9 +128,11 @@ void Update()
     {
         Grade = grade,
         Name = $"{grade} {effectType} Card",
+        imageID = imageNumber,  //Number For skill image
         EffectDescription = description,
         RelatedUnit = unitName,
-        Effect = effectAction
+        Effect = effectAction,
+      
     };
 }
 
@@ -323,8 +325,12 @@ public class RewardCard
     public RoundRewardSystem.CardGrade Grade;
     public string Name;
     public string RelatedUnit; 
+
+     public int imageID; //Number for skill image
     public string EffectDescription;
     public System.Action Effect;
+
+   
 
     public void ApplyEffect()
     {
