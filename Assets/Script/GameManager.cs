@@ -41,6 +41,13 @@ public class GameManager : MonoBehaviour
 
     public bool isDefeated;
 
+    /// <summary>
+    /// For aire Skill
+    /// </summary>
+    private List<int>[] rightDiagonalGroups = new List<int>[] { new List<int> { 0, 1, 2, 3 }, new List<int> { 17, 18, 19, 20, 4 }, new List<int> { 16, 29, 30, 31, 21, 5 }, new List<int> { 15, 28, 35, 32, 22, 6 }, new List<int> { 14, 27, 3, 33, 23, 17 }, new List<int> { 13, 26, 25, 24, 8 }, new List<int> { 12, 11, 10, 9 } };
+    private List<int>[] leftDiagonalGroups = new List<int>[] { new List<int> { 0, 17, 16, 15 }, new List<int> { 1, 18, 29, 28, 14 }, new List<int> { 2, 19, 30, 35, 27, 13 }, new List<int> { 3, 20, 31, 34, 26, 12 }, new List<int> { 4, 21, 32, 33, 25, 11 }, new List<int> { 5, 22, 23, 24, 10 }, new List<int> { 6, 7, 8, 9 } };
+    private List<int>[] verticalGroups = new List<int>[] { new List<int> { 15, 14, 13, 12 }, new List<int> { 16, 28, 27, 26, 11 }, new List<int> { 17, 29, 35, 34, 25, 10 }, new List<int> { 0, 18, 30, 33, 24, 9 }, new List<int> { 1, 19, 31, 32, 23, 8 }, new List<int> { 2, 20, 21, 22, 7 }, new List<int> { 3, 4, 5, 6 } };
+
     [System.Serializable]
     public class RoundConfig
     {
@@ -158,18 +165,18 @@ public class GameManager : MonoBehaviour
 
         SetupRound();
 
-          if (unitEvolutionData[0].isPrestige==true)
+        if (unitEvolutionData[0].isPrestige == true)
         {
             Debug.Log("KaliPrestige");
-           foreach (UnitEvolutionData unitData in filteredEvolutions)
-       {
-           if (unitData.unitName =="Kali")
-           {
-               unitData.damage = unitData.damage *1.5f;
-               break;
-           }
-       }
-           
+            foreach (UnitEvolutionData unitData in filteredEvolutions)
+            {
+                if (unitData.unitName == "Kali")
+                {
+                    unitData.damage = unitData.damage * 1.5f;
+                    break;
+                }
+            }
+
         }
 
 
@@ -177,12 +184,12 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.V))
+        if (Input.GetKeyDown(KeyCode.V))
         {
             SceneManager.LoadScene("InGame");
         }
 
-        if(Input.GetKeyDown(KeyCode.C))
+        if (Input.GetKeyDown(KeyCode.C))
         {
             Shuffle();
             Debug.Log("Shuffle");
@@ -247,39 +254,39 @@ public class GameManager : MonoBehaviour
         {
             monsterSpawner.spawnStarted = false;
 
-          
 
 
-                //currentRound++;  // next round
 
-                if (currentRound >= chapters[currentChapter].rounds.Length)  // Check if all rounds in the current chapter are completed
+            //currentRound++;  // next round
+
+            if (currentRound >= chapters[currentChapter].rounds.Length)  // Check if all rounds in the current chapter are completed
+            {
+                PlayerPrefs.SetInt("Chapter0Completed", 1);
+                SceneManager.LoadScene("HomeScene");
+
+                Debug.Log("win");
+                Victory();
+
+                if (currentChapter < chapters.Length - 1)  // Ensure we're not exceeding the total number of chapters
                 {
-                    PlayerPrefs.SetInt("Chapter0Completed", 1);
-                    SceneManager.LoadScene("HomeScene");
-
-                    Debug.Log("win");
-                    Victory();
-
-                    if (currentChapter < chapters.Length - 1)  // Ensure we're not exceeding the total number of chapters
-                    {
-                        currentChapter++;  // Move to the next chapter
-                        currentRound = 0;  // Reset the round to the first round of the new chapter
-                    }
-                    else
-                    {
-                        // Handle the end of the last chapter, if necessary
-                    }
+                    currentChapter++;  // Move to the next chapter
+                    currentRound = 0;  // Reset the round to the first round of the new chapter
                 }
+                else
+                {
+                    // Handle the end of the last chapter, if necessary
+                }
+            }
 
-                //UpdateRoundsText();
-                //SetupRound();
-            
+            //UpdateRoundsText();
+            //SetupRound();
+
         }
     }
 
     public void OnMonsterDestroyed()
     {
-       currentMonsters--;
+        currentMonsters--;
 
         if (activeMonsters <= 0)
         {
@@ -291,8 +298,8 @@ public class GameManager : MonoBehaviour
 
     void CheckForRoundCompletion()
     {
-        if(currentMonsters<=0 && isDefeated==false)
-        { 
+        if (currentMonsters <= 0 && isDefeated == false)
+        {
             RoundRewardsPanel();
             NextRound();
         }
@@ -304,32 +311,33 @@ public class GameManager : MonoBehaviour
         SetupRound();
     }
 
-   
+
 
     public List<string> GetActiveUnitNames()
-{
-    return filteredEvolutions.Select(evolution => evolution.unitName).ToList();
-}
+    {
+        return filteredEvolutions.Select(evolution => evolution.unitName).ToList();
+    }
 
 
     public void RoundRewardsPanel()
-    
-    {   List<RewardCard> rewards = roundRewardSystem.GenerateRoundRewards(currentRound, GetActiveUnitNames());
-        RewardsPanel rewardsPanelScript = roundRewardsPanel.GetComponent<RewardsPanel>();
-       
-        roundRewardsPanel.SetActive(true);
-       Debug.Log("Generated: " + rewards.Count);
-    foreach (var reward in rewards)
+
     {
-         if (reward == null)
+        List<RewardCard> rewards = roundRewardSystem.GenerateRoundRewards(currentRound, GetActiveUnitNames());
+        RewardsPanel rewardsPanelScript = roundRewardsPanel.GetComponent<RewardsPanel>();
+
+        roundRewardsPanel.SetActive(true);
+        Debug.Log("Generated: " + rewards.Count);
+        foreach (var reward in rewards)
         {
-            Debug.LogError("reward null");
-        }
+            if (reward == null)
+            {
+                Debug.LogError("reward null");
+            }
             else
-        {
-            Debug.Log("reward: " + reward.Name);
+            {
+                Debug.Log("reward: " + reward.Name);
+            }
         }
-    }
         rewardsPanelScript.ShowRewards(rewards);
         Time.timeScale = 0;
         isGamePaused = true;
@@ -341,7 +349,7 @@ public class GameManager : MonoBehaviour
 
     void UpdateRoundsText()
     {
-        RoundText.text = (currentRound+1).ToString();
+        RoundText.text = (currentRound + 1).ToString();
     }
     void InitGrid()
     {
@@ -354,49 +362,49 @@ public class GameManager : MonoBehaviour
             unit.GetComponent<Unit>().unitType = randomUnitType;
             unit.GetComponent<Unit>().unitLevel = initialLevel;
             unit.GetComponent<Unit>().SetGridPosition(i);
-            
-           
+
+
             grid[i] = unit;
         }
     }
 
     public void Shuffle()
     {
-        for (int i=0; i<spawnPositions.Length; i++)
+        for (int i = 0; i < spawnPositions.Length; i++)
         {
 
-             List<GameObject> toDestroy = new List<GameObject>();
+            List<GameObject> toDestroy = new List<GameObject>();
 
-            if(grid[i].GetComponent<Unit>().unitLevel==0 )
-            {    
-                if(grid[i]!=null)
+            if (grid[i].GetComponent<Unit>().unitLevel == 0)
+            {
+                if (grid[i] != null)
                 {
 
-                Destroy(grid[i]);
+                    Destroy(grid[i]);
                 }
 
-            int randomUnitType = Random.Range(0, filteredEvolutions.Length);
-            int initialLevel = 0; // Start with level 0 units
-            GameObject unitPrefab = filteredEvolutions[randomUnitType].unitPrefabs[initialLevel];
-            GameObject unit = Instantiate(unitPrefab, spawnPositions[i].position, Quaternion.identity);
-            unit.GetComponent<Unit>().unitType = randomUnitType;
-            unit.GetComponent<Unit>().unitLevel = initialLevel;
-            unit.GetComponent<Unit>().SetGridPosition(i);
-            
-           
-            grid[i] = unit;
+                int randomUnitType = Random.Range(0, filteredEvolutions.Length);
+                int initialLevel = 0; // Start with level 0 units
+                GameObject unitPrefab = filteredEvolutions[randomUnitType].unitPrefabs[initialLevel];
+                GameObject unit = Instantiate(unitPrefab, spawnPositions[i].position, Quaternion.identity);
+                unit.GetComponent<Unit>().unitType = randomUnitType;
+                unit.GetComponent<Unit>().unitLevel = initialLevel;
+                unit.GetComponent<Unit>().SetGridPosition(i);
+
+
+                grid[i] = unit;
             }
 
         }
 
-      
+
     }
 
 
     public void OnUnitClicked(GameObject unit)
     {
-       
-        if(isGamePaused==true)
+
+        if (isGamePaused == true)
         {
             return;
         }
@@ -417,8 +425,8 @@ public class GameManager : MonoBehaviour
             {
                 selectedUnit = null;
                 isFirstClick = true;
-                
-                
+
+
                 return;
             }
 
@@ -442,12 +450,12 @@ public class GameManager : MonoBehaviour
                         GameObject newUnit = Instantiate(newUnitPrefab, unit.transform.position, Quaternion.identity);
                         newUnit.GetComponent<Unit>().unitType = unit.GetComponent<Unit>().unitType; // Set the correct unit type
                         newUnit.GetComponent<Unit>().SetGridPosition(unit.GetComponent<Unit>().gridIndex);
-                        grid[unit.GetComponent<Unit>().gridIndex]=newUnit; //new one
+                        grid[unit.GetComponent<Unit>().gridIndex] = newUnit; //new one
                         newUnit.GetComponent<Unit>().unitLevel = newLevel; // Set the new level
-                        newUnit.GetComponent<Unit>().attackPower=filteredEvolutions[unit.GetComponent<Unit>().unitType].damage;
-                        newUnit.GetComponent<Unit>().attackSpeed=filteredEvolutions[unit.GetComponent<Unit>().unitType].attackSpeed;
-                        
-
+                        newUnit.GetComponent<Unit>().attackPower = filteredEvolutions[unit.GetComponent<Unit>().unitType].damage;
+                        newUnit.GetComponent<Unit>().attackSpeed = filteredEvolutions[unit.GetComponent<Unit>().unitType].attackSpeed;
+                        DeactivateAllLaserSkills();
+                        CheckAndActivateAireSkill();
                         // Destroy the second unit
                         Destroy(unit);
                     }
@@ -458,15 +466,19 @@ public class GameManager : MonoBehaviour
                     GameObject newRandomUnit = Instantiate(randomUnitPrefab, selectedUnit.transform.position, Quaternion.identity);
                     newRandomUnit.GetComponent<Unit>().unitType = randomUnitType; // Set the correct unit type
                     newRandomUnit.GetComponent<Unit>().SetGridPosition(selectedUnit.GetComponent<Unit>().gridIndex);
-                     grid[selectedUnit.GetComponent<Unit>().gridIndex]=newRandomUnit;
+                    grid[selectedUnit.GetComponent<Unit>().gridIndex] = newRandomUnit;
+                    CheckAndActivateAireSkill();
 
                     // Destroy the first unit
+                    DeactivateAllLaserSkills();
                     Destroy(selectedUnit);
                 }
                 else
                 {
                     // Swap positions of the two units
                     SwapUnits(selectedUnit, unit);
+                    DeactivateAllLaserSkills();
+                    CheckAndActivateAireSkill();
                 }
 
                 currentMoves++;
@@ -481,7 +493,7 @@ public class GameManager : MonoBehaviour
                     {
                         monsterSpawner.spawnStarted = true;
                     }
-                    currentMoves = 0; 
+                    currentMoves = 0;
 
                 }
             }
@@ -493,90 +505,183 @@ public class GameManager : MonoBehaviour
 
 
         void SwapUnits(GameObject unit1, GameObject unit2)
-        {  
+        {
             int index1 = unit1.GetComponent<Unit>().gridIndex;
             int index2 = unit2.GetComponent<Unit>().gridIndex;
 
-   
+
             GameObject tempUnit = grid[index1];
             grid[index1] = grid[index2];
             grid[index2] = tempUnit;
 
             unit1.GetComponent<Unit>().SetGridPosition(index2);
             unit2.GetComponent<Unit>().SetGridPosition(index1);
-            
+
             Vector3 tempPosition = unit1.transform.position;
             unit1.transform.position = unit2.transform.position;
             unit2.transform.position = tempPosition;
         }
 
 
-      
+
     }
 
     public void Defeat()
-        {
-           victoryManager.DefeatOn();
-           isDefeated=true;
-           
-        }
+    {
+        victoryManager.DefeatOn();
+        isDefeated = true;
+
+    }
 
     public void Victory()
-        {
-            victoryManager.VictoryOn();
-        }
+    {
+        victoryManager.VictoryOn();
+    }
 
-        
+
     public void IncreaseUnitAttackPowerByPercentage(string unitName, float percentage)
     {
-       foreach (UnitEvolutionData unitData in filteredEvolutions)
-       {
-           if (unitData.unitName == unitName)
-           {
-               unitData.damage += unitData.damage * (percentage / 100f);
-               break;
-           }
-       }
+        foreach (UnitEvolutionData unitData in filteredEvolutions)
+        {
+            if (unitData.unitName == unitName)
+            {
+                unitData.damage += unitData.damage * (percentage / 100f);
+                break;
+            }
+        }
 
         OnUpdateDamage?.Invoke();
-    } 
+    }
 
     public void IncreaseUnitAttackSpeedByPercentage(string unitName, float percentage)
     {
-         foreach (UnitEvolutionData unitData in filteredEvolutions)
-       {
-           if (unitData.unitName == unitName)
-           {
-               unitData.attackSpeed += unitData.attackSpeed * (percentage / 100f);
-               break;
-           }
-       }
+        foreach (UnitEvolutionData unitData in filteredEvolutions)
+        {
+            if (unitData.unitName == unitName)
+            {
+                unitData.attackSpeed += unitData.attackSpeed * (percentage / 100f);
+                break;
+            }
+        }
 
         OnUpdateSpeed?.Invoke();
     }
 
-    public void  IncreaseAllUnitAttackSpeed(float percentage)
+    public void IncreaseAllUnitAttackSpeed(float percentage)
     {
-          foreach (UnitEvolutionData unitData in filteredEvolutions)
-       {
-               unitData.attackSpeed += unitData.attackSpeed * (percentage / 100f);
-              
-           }
+        foreach (UnitEvolutionData unitData in filteredEvolutions)
+        {
+            unitData.attackSpeed += unitData.attackSpeed * (percentage / 100f);
+
+        }
         OnUpdateSpeed?.Invoke();
-           
+
     }
 
-    public void  IncreaseAllUnitAttackDamage(float percentage)
+    public void IncreaseAllUnitAttackDamage(float percentage)
     {
-          foreach (UnitEvolutionData unitData in filteredEvolutions)
-       {
-               unitData.damage += unitData.damage * (percentage / 100f);
-              
-           }
+        foreach (UnitEvolutionData unitData in filteredEvolutions)
+        {
+            unitData.damage += unitData.damage * (percentage / 100f);
+
+        }
         OnUpdateDamage?.Invoke();
-           
+
     }
-    
-    
- }
+
+    private void CheckAndActivateAireSkill()
+    {
+        ActivateSkillForGroup(rightDiagonalGroups);
+        ActivateSkillForGroup(leftDiagonalGroups);
+        ActivateSkillForGroup(verticalGroups);
+        Debug.Log("AireCheck");
+    }
+
+    private void ActivateSkillForGroup(List<int>[] groups)
+    {
+        foreach (var group in groups)
+        {
+            List<int> contiguousAires = new List<int>();
+            foreach (int index in group)
+            {
+                Unit unit = grid[index].GetComponent<Unit>();
+                if (unit != null && unit.isAire == true && unit.unitLevel >= 1)
+                {
+                    contiguousAires.Add(index);
+                    Debug.Log("1bun");
+                }
+                else
+                {
+                    if (contiguousAires.Count >= 2)
+                    {
+                        StrengthenUnitsBetweenAires(contiguousAires, group);
+                        Debug.Log("4bun");
+                        contiguousAires.Clear();
+                    }
+
+                    Debug.Log("2bun");
+                }
+            }
+
+            // Check at the end of the group
+            if (contiguousAires.Count >= 2)
+            {
+                StrengthenUnitsBetweenAires(contiguousAires, group);
+                Debug.Log("3Bun");
+            }
+        }
+    }
+
+
+
+    private void StrengthenUnitsBetweenAires(List<int> aireIndices, List<int> group)
+    {
+        for (int i = 1; i < aireIndices.Count; i++)
+        {
+            int startIndex = aireIndices[i - 1];
+            int endIndex = aireIndices[i];
+
+            // Get the actual index positions in the group
+            int startIndexInGroup = group.IndexOf(startIndex);
+            int endIndexInGroup = group.IndexOf(endIndex);
+
+            if (startIndexInGroup >= 0 && endIndexInGroup >= 0)
+            {
+                // Iterate over the indices in the group
+                for (int j = startIndexInGroup + 1; j < endIndexInGroup; j++)
+                {
+                    int actualIndex = group[j];
+                    Unit unit = grid[actualIndex].GetComponent<Unit>();
+                    if (unit != null)
+                    {
+                        unit.ActivateLaserSkill();
+                        Debug.Log("ActiveSkill at " + actualIndex);
+                    }
+                }
+            }
+            else
+            {
+                Debug.Log("Aire positions not found in group correctly.");
+            }
+        }
+    }
+
+    private void DeactivateAllLaserSkills()
+    {
+        foreach (GameObject unitObject in grid)
+        {
+            if (unitObject != null)
+            {
+                Unit unit = unitObject.GetComponent<Unit>();
+                if (unit != null)
+                {
+                    unit.DeactivateLaserSkill();
+                }
+            }
+        }
+    }
+
+
+
+}
 

@@ -146,4 +146,6 @@ MonoBehaviour:
   unitType: 3
   gridIndex: 0
   unitLevel: 4
+  attackSpeed: 0
+  isAire: 1
   attackPower: 10
