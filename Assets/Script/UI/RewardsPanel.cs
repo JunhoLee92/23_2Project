@@ -132,19 +132,19 @@ public Sprite specialCardImage;
         break;
 
         case 8:
-        image.sprite=lilySpecial1Image;
+        image.sprite= yukiSpecial1Image;
         break;
 
         case 9:
-        image.sprite=lilySpecial2Image;
+        image.sprite= yukiSpecial2Image; 
         break;
 
         case 10:
-       image.sprite=yukiSpecial1Image;
+       image.sprite = lilySpecial1Image;
         break;
 
         case 11:
-        image.sprite=yukiSpecial2Image;
+        image.sprite= lilySpecial2Image;
         break;
 
         case 12:
