@@ -18,7 +18,7 @@ public class LilyAttack : MonoBehaviour
     private GameObject target;
     private Coroutine laserAttackCoroutine;
     private Unit unitScript;
-
+    public float attackRange = 10f;
     public float attackSpeed;
     private bool isPrestige = false;
 
@@ -209,12 +209,12 @@ public class LilyAttack : MonoBehaviour
     {
         GameObject[] monsters = GameObject.FindGameObjectsWithTag("Monster");
         GameObject closest = null;
-        float distance = Mathf.Infinity;
+        float distance = attackRange;
 
         foreach (GameObject monster in monsters)
         {
             float curDistance = Vector2.Distance(transform.position, monster.transform.position);
-            if (curDistance < distance)
+            if (curDistance < distance && curDistance<=attackRange)
             {
                 closest = monster;
                 distance = curDistance;

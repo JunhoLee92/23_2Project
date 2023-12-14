@@ -11,7 +11,7 @@ public class BellaAttack : MonoBehaviour
 
     float ExecuteHpRate = 0.3f;
     float UnconditionalExecutionRate;
-
+    public float attackRange = 5f;
     private float attackInterval;
     private float nextAttackTime = 0f;
     private BellaPrestige bellapretige;
@@ -113,12 +113,12 @@ public class BellaAttack : MonoBehaviour
         // This will find the closest monster based on distance within the attack range. 
         GameObject[] monsters = GameObject.FindGameObjectsWithTag("Monster");
         GameObject closest = null;
-        float distance = Mathf.Infinity;
+        float distance = attackRange;
 
         foreach (GameObject monster in monsters)
         {
             float curDistance = Vector2.Distance(transform.position, monster.transform.position);
-            if (curDistance < distance /*&& curDistance <= attackRange*/)
+            if (curDistance < distance && curDistance <= attackRange)
             {
                 closest = monster;
                 distance = curDistance;

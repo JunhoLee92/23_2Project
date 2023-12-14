@@ -7,7 +7,7 @@ public class YukiAttack : MonoBehaviour
     public float attackDamage = 12f;
     public float attackSpeed = 1.4f;
     public GameObject projectilePrefab;  // Reference to the projectile sprite prefab
-    /*public float attackRange = 50f; */      // Range within which Yuki starts attacking
+    public float attackRange = 5f;    // Range within which Yuki starts attacking
     private float attackInterval;
     private float nextAttackTime = 0f;
     private Unit unitScript;
@@ -113,12 +113,12 @@ public class YukiAttack : MonoBehaviour
         // This will find the closest monster based on distance within the attack range. 
         GameObject[] monsters = GameObject.FindGameObjectsWithTag("Monster");
         GameObject closest = null;
-        float distance = Mathf.Infinity;
+        float distance = attackRange;
 
         foreach (GameObject monster in monsters)
         {
             float curDistance = Vector2.Distance(transform.position, monster.transform.position);
-            if (curDistance < distance /*&& curDistance <= attackRange*/)
+            if (curDistance < distance && curDistance <= attackRange)
             {
                 closest = monster;
                 distance = curDistance;

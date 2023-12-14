@@ -9,13 +9,14 @@ public class TeresAttack : MonoBehaviour
     public float attackSpeed = 2.0f;
     public GameObject projectilePrefab;  // Reference to the projectile sprite prefab
     public GameObject chargedProjectilePrefab;
-    /*public float attackRange = 50f; */   
+    
     private float attackInterval;
     private float nextAttackTime = 0f;
     private Unit unitScript;
     private int maxEmbersStacks = 5;  
     private int currentEmberStacks=0;
-    private float prestigeBonus = 0; 
+    private float prestigeBonus = 0;
+    public float attackRange = 5f;
 
     private float emberStackProb=0.05f;
 
@@ -76,13 +77,17 @@ public class TeresAttack : MonoBehaviour
         // Find the closest monster within attack range
         GameObject target = FindClosestMonster();
         attackInterval = 1f / attackSpeed;
-        if (target && Time.time >= nextAttackTime)
+        if (Time.time > nextAttackTime)
         {
-            Shoot(target);
-            nextAttackTime = Time.time + attackInterval;
+            // 대상이 공격 범위 내에 있는지 확인 (추가됨)
+            if (Vector3.Distance(transform.position, target.transform.position) <= attackRange)
+            {
+                Shoot(target);
+                nextAttackTime = Time.time + attackInterval;
+            }
         }
 
-        if(Input.GetKeyDown(KeyCode.Q))
+        if (Input.GetKeyDown(KeyCode.Q))
         {
             isSpecialB=true;
         }
@@ -93,12 +98,12 @@ public class TeresAttack : MonoBehaviour
         // This will find the closest monster based on distance within the attack range. 
         GameObject[] monsters = GameObject.FindGameObjectsWithTag("Monster");
         GameObject closest = null;
-        float distance = Mathf.Infinity;
+        float distance = attackRange;
 
         foreach (GameObject monster in monsters)
         {
             float curDistance = Vector2.Distance(transform.position, monster.transform.position);
-            if (curDistance < distance /*&& curDistance <= attackRange*/)
+            if (curDistance < distance && curDistance <= attackRange)
             {
                 closest = monster;
                 distance = curDistance;
@@ -106,7 +111,6 @@ public class TeresAttack : MonoBehaviour
         }
         return closest;
     }
-
     void Shoot(GameObject target)
     {
         GameObject projectileToUse = projectilePrefab; 

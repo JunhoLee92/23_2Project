@@ -27,13 +27,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 775165694861550591}
+  serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -2.7922418, y: 1.1986803, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &7244603251715609203
 SpriteRenderer:
@@ -103,6 +103,7 @@ MonoBehaviour:
   attackSpeed: 2
   projectilePrefab: {fileID: 912780627415980861, guid: 0bed53b70fe2ce44994054d752b18554, type: 3}
   chargedProjectilePrefab: {fileID: 912780627415980861, guid: 05bd5726c65b8024a9c292b47d3d6941, type: 3}
+  attackRange: 50
 --- !u!114 &8313051682095613415
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -118,6 +119,9 @@ MonoBehaviour:
   unitType: 4
   gridIndex: 0
   unitLevel: 0
+  attackSpeed: 0
+  isAire: 0
+  PowerUp: 0
   attackPower: 10
 --- !u!61 &8617445314499753194
 BoxCollider2D:
@@ -129,6 +133,25 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0

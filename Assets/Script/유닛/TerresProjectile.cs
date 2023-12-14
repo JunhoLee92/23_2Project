@@ -16,10 +16,9 @@ public class TerresProjectile : MonoBehaviour
             return;
         }
        
-        //몬스터를 바라보도록 설정 
         Vector3 direction = (target.transform.position - transform.position).normalized;
 
-        // Z축 회전 적용
+        
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg + 180;
         transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
 
