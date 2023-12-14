@@ -10,8 +10,8 @@ public class PausePanelManager : MonoBehaviour
     public Button restart;
     public Button home;
     public Button play;
-
     public Image[] unitThumbnails;
+    public GameObject backgroundPanel;
 
      
    
@@ -98,6 +98,7 @@ public class PausePanelManager : MonoBehaviour
             
             }
             this.gameObject.SetActive(false);
+            backgroundPanel.SetActive(false);
           
         }
     }
