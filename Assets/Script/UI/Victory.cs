@@ -4,14 +4,13 @@ using UnityEngine;
 
 public class Victory : MonoBehaviour
 {
-    // Start is called before the first frame update
-    
     public GameObject victory;
     public GameObject defaeat;
+    public GameObject backgroundOverlay;
+    public Canvas uiCanvas;
 
-public Canvas uiCanvas; // Assign your Canvas in the Inspector
 
-public void DisableUIExceptVictory()
+    public void DisableUIExceptVictory()
 {
     foreach (Transform child in uiCanvas.transform)
     {
@@ -25,7 +24,7 @@ public void VictoryOn()
 {
     DisableUIExceptVictory();
     victory.SetActive(true);
-
+    backgroundOverlay.SetActive(true);
     
 
 }
@@ -34,6 +33,7 @@ public void DefeatOn()
 {
     DisableUIExceptVictory();
     defaeat.SetActive(true);
+    backgroundOverlay.SetActive(true);
     
 }
 
