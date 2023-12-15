@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 3136471766882979643}
   - component: {fileID: 4017517667563075429}
   - component: {fileID: 8145538326258018622}
+  - component: {fileID: -8006894269128087109}
   m_Layer: 5
   m_Name: Prestige
   m_TagString: Untagged
@@ -146,3 +147,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   prestigeinfo: {fileID: 0}
+--- !u!114 &-8006894269128087109
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7219452455099217800}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4dc70d34dba7b8c4f97b1f4552826bba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  prestigeText: {fileID: 0}
