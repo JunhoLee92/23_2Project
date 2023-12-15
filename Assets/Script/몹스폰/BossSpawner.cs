@@ -8,13 +8,15 @@ public class BossSpawner : MonoBehaviour
     public Transform eastPosition;
     public Transform northPosition;
 
-    public GameObject bossPrefab;  // 보스 프리팹을 연결할 변수
+    public GameObject bossPrefab;  
 
-    // 보스를 스폰하는 메서드
+    //Method For boss Spawn
     public void SpawnBoss()
     {
         Vector3 spawnPosition = new Vector3(-8.0f,0f,0f);
        
         Instantiate(bossPrefab, spawnPosition, Quaternion.identity);
     }
+
+    
 }

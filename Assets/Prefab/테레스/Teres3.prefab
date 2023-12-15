@@ -103,7 +103,7 @@ MonoBehaviour:
   attackSpeed: 2
   projectilePrefab: {fileID: 912780627415980861, guid: 0bed53b70fe2ce44994054d752b18554, type: 3}
   chargedProjectilePrefab: {fileID: 912780627415980861, guid: 05bd5726c65b8024a9c292b47d3d6941, type: 3}
-  attackRange: 50
+  attackRange: 15
 --- !u!114 &2903812948983123232
 MonoBehaviour:
   m_ObjectHideFlags: 0

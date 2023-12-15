@@ -6176,6 +6176,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: PausePanel
       objectReference: {fileID: 0}
+    - target: {fileID: 2174095000268687564, guid: aa71b64aeeee3064d9b3c4417872f737, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2174095000268687567, guid: aa71b64aeeee3064d9b3c4417872f737, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -6827,8 +6831,20 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1493640219900170506, guid: c331dfb0c169487498aaec9a26c5d6cd, type: 3}
+      propertyPath: chapters.Array.data[0].rounds.Array.data[0].isBossRound
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1493640219900170506, guid: c331dfb0c169487498aaec9a26c5d6cd, type: 3}
+      propertyPath: chapters.Array.data[1].rounds.Array.data[0].isBossRound
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1493640219900170506, guid: c331dfb0c169487498aaec9a26c5d6cd, type: 3}
       propertyPath: chapters.Array.data[0].rounds.Array.data[0].movesPerRound
-      value: 5
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1493640219900170506, guid: c331dfb0c169487498aaec9a26c5d6cd, type: 3}
+      propertyPath: chapters.Array.data[1].rounds.Array.data[0].movesPerRound
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 1493640219900170506, guid: c331dfb0c169487498aaec9a26c5d6cd, type: 3}
       propertyPath: chapters.Array.data[0].rounds.Array.data[0].spawnInfos.Array.data[0].Hp

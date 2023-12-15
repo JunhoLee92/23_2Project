@@ -147,6 +147,7 @@ MonoBehaviour:
   attackDamage: 7
   attackSpeed: 1
   projectilePrefab: {fileID: 3399643664107278903, guid: bc1d47e7c5f3b6344bd89feea7572e23, type: 3}
+  attackRange: 15
 --- !u!114 &-7091046745358990203
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -163,4 +164,6 @@ MonoBehaviour:
   gridIndex: 0
   unitLevel: 3
   attackSpeed: 0
+  isAire: 0
+  PowerUp: 0
   attackPower: 10
