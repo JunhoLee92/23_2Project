@@ -150,6 +150,7 @@ MonoBehaviour:
   attackSpeed: 0
   isAire: 0
   PowerUp: 0
+  aireEffect: {fileID: 529208772664306363, guid: 46cd643c3a598da46a51c6dffae144a4, type: 3}
   attackPower: 10
 --- !u!114 &-17962629593259861
 MonoBehaviour:

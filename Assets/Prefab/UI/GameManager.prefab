@@ -60,6 +60,8 @@ MonoBehaviour:
     isPrestige: 0
     thumbnailSprite: {fileID: 0}
     standingSprite: {fileID: 0}
+    damage: 0
+    attackSpeed: 0
   - unitName: Yuki
     maxLevel: 5
     unitPrefabs:
@@ -73,6 +75,8 @@ MonoBehaviour:
     isPrestige: 0
     thumbnailSprite: {fileID: 0}
     standingSprite: {fileID: 0}
+    damage: 0
+    attackSpeed: 0
   - unitName: Lily
     maxLevel: 5
     unitPrefabs:
@@ -86,6 +90,8 @@ MonoBehaviour:
     isPrestige: 0
     thumbnailSprite: {fileID: 0}
     standingSprite: {fileID: 0}
+    damage: 0
+    attackSpeed: 0
   - unitName: Air
     maxLevel: 5
     unitPrefabs:
@@ -99,6 +105,8 @@ MonoBehaviour:
     isPrestige: 0
     thumbnailSprite: {fileID: 0}
     standingSprite: {fileID: 0}
+    damage: 0
+    attackSpeed: 0
   - unitName: Terres
     maxLevel: 5
     unitPrefabs:
@@ -112,6 +120,8 @@ MonoBehaviour:
     isPrestige: 0
     thumbnailSprite: {fileID: 0}
     standingSprite: {fileID: 0}
+    damage: 0
+    attackSpeed: 0
   - unitName: Bella
     maxLevel: 5
     unitPrefabs:
@@ -125,6 +135,8 @@ MonoBehaviour:
     isPrestige: 0
     thumbnailSprite: {fileID: 0}
     standingSprite: {fileID: 0}
+    damage: 0
+    attackSpeed: 0
   filteredEvolutions: []
   spawnPositions:
   - {fileID: 0}
@@ -163,14 +175,17 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  grid: []
   movesPerRound: 5
   movesText: {fileID: 0}
   RoundText: {fileID: 0}
   isMonsterSpawning: 0
   currentMonsters: 0
   roundRewardsPanel: {fileID: 0}
-  victory: {fileID: 0}
+  roundRewardSystem: {fileID: 0}
+  victoryManager: {fileID: 0}
   isGamePaused: 0
+  isDefeated: 0
   chapters:
   - rounds:
     - movesPerRound: 5
@@ -181,7 +196,7 @@ MonoBehaviour:
       spawnInfos:
       - monsterType: 0
         count: 10
-        Hp: 70
+        Hp: 30
         speed: 1
     - movesPerRound: 6
       monstersPerSpawn: 1
@@ -191,7 +206,7 @@ MonoBehaviour:
       spawnInfos:
       - monsterType: 0
         count: 15
-        Hp: 80
+        Hp: 30
         speed: 1
     - movesPerRound: 7
       monstersPerSpawn: 1
@@ -201,7 +216,7 @@ MonoBehaviour:
       spawnInfos:
       - monsterType: 1
         count: 10
-        Hp: 100
+        Hp: 35
         speed: 2.5
     - movesPerRound: 8
       monstersPerSpawn: 1
@@ -211,7 +226,7 @@ MonoBehaviour:
       spawnInfos:
       - monsterType: 0
         count: 15
-        Hp: 80
+        Hp: 30
         speed: 1
     - movesPerRound: 9
       monstersPerSpawn: 1
@@ -221,7 +236,7 @@ MonoBehaviour:
       spawnInfos:
       - monsterType: 1
         count: 10
-        Hp: 100
+        Hp: 35
         speed: 1
     - movesPerRound: 10
       monstersPerSpawn: 1
@@ -231,11 +246,11 @@ MonoBehaviour:
       spawnInfos:
       - monsterType: 0
         count: 15
-        Hp: 80
+        Hp: 30
         speed: 1
       - monsterType: 1
         count: 10
-        Hp: 100
+        Hp: 35
         speed: 2.5
     - movesPerRound: 11
       monstersPerSpawn: 1
@@ -249,11 +264,11 @@ MonoBehaviour:
         speed: 3
       - monsterType: 0
         count: 20
-        Hp: 80
+        Hp: 30
         speed: 1
       - monsterType: 1
         count: 10
-        Hp: 100
+        Hp: 35
         speed: 2.5
     - movesPerRound: 12
       monstersPerSpawn: 1
@@ -263,11 +278,11 @@ MonoBehaviour:
       spawnInfos:
       - monsterType: 0
         count: 25
-        Hp: 80
+        Hp: 30
         speed: 2.5
       - monsterType: 1
         count: 15
-        Hp: 100
+        Hp: 35
         speed: 5
     - movesPerRound: 13
       monstersPerSpawn: 1
@@ -277,11 +292,11 @@ MonoBehaviour:
       spawnInfos:
       - monsterType: 0
         count: 30
-        Hp: 80
+        Hp: 30
         speed: 2.5
       - monsterType: 1
         count: 20
-        Hp: 100
+        Hp: 35
         speed: 5
     - movesPerRound: 13
       monstersPerSpawn: 1
@@ -370,10 +385,12 @@ MonoBehaviour:
   - Grade: 0
     Name: 
     RelatedUnit: 
+    imageID: 0
     EffectDescription: 
   - Grade: 0
     Name: 
     RelatedUnit: 
+    imageID: 0
     EffectDescription: 
 --- !u!114 &3056419311009655789
 MonoBehaviour:

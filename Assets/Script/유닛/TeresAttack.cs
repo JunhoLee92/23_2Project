@@ -79,8 +79,7 @@ public class TeresAttack : MonoBehaviour
         attackInterval = 1f / attackSpeed;
         if (Time.time > nextAttackTime)
         {
-            // 대상이 공격 범위 내에 있는지 확인 (추가됨)
-            if (Vector3.Distance(transform.position, target.transform.position) <= attackRange)
+            if (target && Time.time >= nextAttackTime)
             {
                 Shoot(target);
                 nextAttackTime = Time.time + attackInterval;
