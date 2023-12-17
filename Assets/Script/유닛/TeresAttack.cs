@@ -9,14 +9,15 @@ public class TeresAttack : MonoBehaviour
     public float attackSpeed = 2.0f;
     public GameObject projectilePrefab;  // Reference to the projectile sprite prefab
     public GameObject chargedProjectilePrefab;
-    
+    private float attackRange = 7f;   
     private float attackInterval;
     private float nextAttackTime = 0f;
     private Unit unitScript;
     private int maxEmbersStacks = 5;  
     private int currentEmberStacks=0;
-    private float prestigeBonus = 0;
-    public float attackRange = 5f;
+    private float prestigeBonus = 0; 
+
+    
 
     private float emberStackProb=0.05f;
 
@@ -77,20 +78,19 @@ public class TeresAttack : MonoBehaviour
         // Find the closest monster within attack range
         GameObject target = FindClosestMonster();
         attackInterval = 1f / attackSpeed;
-        if (Time.time > nextAttackTime)
+        if (target && Time.time >= nextAttackTime)
         {
-            if (target && Time.time >= nextAttackTime)
-            {
-                Shoot(target);
-                nextAttackTime = Time.time + attackInterval;
-            }
+            Shoot(target);
+            nextAttackTime = Time.time + attackInterval;
         }
 
-        if (Input.GetKeyDown(KeyCode.Q))
+        if(Input.GetKeyDown(KeyCode.Q))
         {
             isSpecialB=true;
         }
     }
+
+   
 
     GameObject FindClosestMonster()
     {
@@ -110,6 +110,7 @@ public class TeresAttack : MonoBehaviour
         }
         return closest;
     }
+
     void Shoot(GameObject target)
     {
         GameObject projectileToUse = projectilePrefab; 

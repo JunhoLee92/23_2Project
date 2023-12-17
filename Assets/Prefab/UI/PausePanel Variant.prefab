@@ -668,6 +668,42 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 964194515048519842, guid: 0acc509a6d9e55442872a777349b29e3, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3282450940085348946, guid: 0acc509a6d9e55442872a777349b29e3, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3282450940085348946, guid: 0acc509a6d9e55442872a777349b29e3, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3993154326373996580, guid: 0acc509a6d9e55442872a777349b29e3, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3993154326373996580, guid: 0acc509a6d9e55442872a777349b29e3, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4443137953842322845, guid: 0acc509a6d9e55442872a777349b29e3, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4443137953842322845, guid: 0acc509a6d9e55442872a777349b29e3, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4960426397313786502, guid: 0acc509a6d9e55442872a777349b29e3, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6827675821749104932, guid: 0acc509a6d9e55442872a777349b29e3, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7011189811794939273, guid: 0acc509a6d9e55442872a777349b29e3, type: 3}
       propertyPath: m_AnchoredPosition.x
       value: 827
@@ -824,12 +860,21 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -260
       objectReference: {fileID: 0}
+    - target: {fileID: 7494630456715742613, guid: 0acc509a6d9e55442872a777349b29e3, type: 3}
+      propertyPath: exit
+      value: 
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 7011189811794939317, guid: 0acc509a6d9e55442872a777349b29e3, type: 3}
     m_RemovedGameObjects:
     - {fileID: 7011189811794939272, guid: 0acc509a6d9e55442872a777349b29e3, type: 3}
     - {fileID: 7011189813034512626, guid: 0acc509a6d9e55442872a777349b29e3, type: 3}
     - {fileID: 7011189813186182970, guid: 0acc509a6d9e55442872a777349b29e3, type: 3}
+    - {fileID: 2279133423218334537, guid: 0acc509a6d9e55442872a777349b29e3, type: 3}
+    - {fileID: 3967484172502285991, guid: 0acc509a6d9e55442872a777349b29e3, type: 3}
+    - {fileID: 3021692067670408437, guid: 0acc509a6d9e55442872a777349b29e3, type: 3}
+    - {fileID: 5382168755825778989, guid: 0acc509a6d9e55442872a777349b29e3, type: 3}
+    - {fileID: 3197869608030298526, guid: 0acc509a6d9e55442872a777349b29e3, type: 3}
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 7011189811945712052, guid: 0acc509a6d9e55442872a777349b29e3, type: 3}
       insertIndex: -1

@@ -150,6 +150,7 @@ MonoBehaviour:
   attackSpeed: 0
   isAire: 0
   PowerUp: 0
+  aireEffect: {fileID: 9066269943565510331, guid: 652ee0415bba0ad4c8203669645293a8, type: 3}
   attackPower: 10
 --- !u!114 &1904894567322938773
 MonoBehaviour:
@@ -165,5 +166,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   laserPrefab: {fileID: 621768525366372826, guid: 21363a83b527eda4c87e785ccaa95aee, type: 3}
   attackDamage: 17
-  attackRange: 15
   attackSpeed: 0
