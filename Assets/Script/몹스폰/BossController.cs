@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class BossController : MonoBehaviour,IDamageable
 {
@@ -27,6 +28,8 @@ public class BossController : MonoBehaviour,IDamageable
     public GameObject bossAttack;
     public GameObject phase3Prefab;
     private Animator animator;
+
+    private Vector2 frontBossPosition;
    
     public GameObject victory;
     private void Start()
@@ -106,16 +109,30 @@ public class BossController : MonoBehaviour,IDamageable
     {
         bossSpawner = GetComponent<BossSpawner>();
         currentPhase++;
+
+        
         switch (currentPhase)
         {
             case 1: break;
 
             case 2:
+                  if (SceneManager.GetActiveScene().name.Contains("InGame"))
+                  {
                 Debug.Log("Phase2");
                 transform.position = new Vector3(8f, 0f, 0);
                 spriteRenderer.flipX = false; // Flip to face right
                 spriteRenderer.flipY = false;
-                transform.rotation = Quaternion.Euler(0, 0, 0); // Reset rotation
+                transform.rotation = Quaternion.Euler(0, 0, 0);
+                } // Reset rotation
+                else  if (SceneManager.GetActiveScene().name.Contains("Chapter1"))
+                {
+                    Debug.Log("Phase2");
+                transform.position = new Vector3(7f, 0f, 0);
+                spriteRenderer.flipX = true; // Flip to face right
+                spriteRenderer.flipY = false;
+                transform.rotation = Quaternion.Euler(0, 0, 0);
+
+                }
                 break;
 
             case 3:
@@ -159,15 +176,24 @@ public class BossController : MonoBehaviour,IDamageable
 
     public void BossAttack()
     {
-
+        if(bossAttack!=null)
+        {
         Instantiate(bossAttack, new Vector2(0f, 1.44f), Quaternion.identity);
+        }
 
     }
 
     private void TransitionToPhase3()
-    {
+    {    if (SceneManager.GetActiveScene().name.Contains("InGame"))
+        {
+            frontBossPosition=new Vector3(0f,4.0f,0f);
+        }
+         if (SceneManager.GetActiveScene().name.Contains("Chapter1"))
+         {
+               frontBossPosition=new Vector3(0f,3.18f,0f);
+         }
         // Instantiate the new prefab at the current position and rotation
-        GameObject newBoss = Instantiate(phase3Prefab, new Vector3(0f, 4.0f, 0), transform.rotation);
+        GameObject newBoss = Instantiate(phase3Prefab, frontBossPosition, transform.rotation);
 
         // Transfer state to the new boss
         BossController newBossController = newBoss.GetComponent<BossController>();

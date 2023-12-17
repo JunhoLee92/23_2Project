@@ -1954,7 +1954,7 @@ MonoBehaviour:
   westPosition: {fileID: 893178887}
   eastPosition: {fileID: 1247391951}
   northPosition: {fileID: 647578565}
-  bossPrefab: {fileID: 3967606797866239425, guid: 6c35be6e62ad32846b72f8fa2550f55b, type: 3}
+  bossPrefab: {fileID: 2914546613581311389, guid: 10121226424dedc4988db9f1fd3194f7, type: 3}
 --- !u!1 &588478069
 GameObject:
   m_ObjectHideFlags: 0
