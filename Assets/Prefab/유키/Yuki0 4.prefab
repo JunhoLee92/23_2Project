@@ -150,6 +150,7 @@ MonoBehaviour:
   attackSpeed: 0
   isAire: 0
   PowerUp: 0
+  aireEffect: {fileID: 9066269943565510331, guid: 652ee0415bba0ad4c8203669645293a8, type: 3}
   attackPower: 10
 --- !u!114 &8662283149979807951
 MonoBehaviour:
@@ -166,4 +167,3 @@ MonoBehaviour:
   attackDamage: 12
   attackSpeed: 1.4
   projectilePrefab: {fileID: 8667335480841600669, guid: 428b1cc9c9f82844281798ea42cf4e96, type: 3}
-  attackRange: 15

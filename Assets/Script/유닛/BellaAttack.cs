@@ -11,7 +11,7 @@ public class BellaAttack : MonoBehaviour
 
     float ExecuteHpRate = 0.3f;
     float UnconditionalExecutionRate;
-    public float attackRange = 5f;
+    private float attackRange = 10f;
     private float attackInterval;
     private float nextAttackTime = 0f;
     private BellaPrestige bellapretige;

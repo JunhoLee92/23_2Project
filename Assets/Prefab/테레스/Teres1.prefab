@@ -103,7 +103,6 @@ MonoBehaviour:
   attackSpeed: 2
   projectilePrefab: {fileID: 912780627415980861, guid: 0bed53b70fe2ce44994054d752b18554, type: 3}
   chargedProjectilePrefab: {fileID: 912780627415980861, guid: 05bd5726c65b8024a9c292b47d3d6941, type: 3}
-  attackRange: 15
 --- !u!114 &8313051682095613415
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -122,6 +121,7 @@ MonoBehaviour:
   attackSpeed: 0
   isAire: 0
   PowerUp: 0
+  aireEffect: {fileID: 9066269943565510331, guid: 652ee0415bba0ad4c8203669645293a8, type: 3}
   attackPower: 10
 --- !u!61 &8617445314499753194
 BoxCollider2D:

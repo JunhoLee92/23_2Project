@@ -147,6 +147,10 @@ MonoBehaviour:
   unitType: 0
   gridIndex: 0
   unitLevel: 1
+  attackSpeed: 0
+  isAire: 0
+  PowerUp: 0
+  aireEffect: {fileID: 9066269943565510331, guid: 652ee0415bba0ad4c8203669645293a8, type: 3}
   attackPower: 0
 --- !u!114 &-4615827921966723067
 MonoBehaviour:

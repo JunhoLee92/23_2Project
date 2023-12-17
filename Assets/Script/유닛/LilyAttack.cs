@@ -18,7 +18,7 @@ public class LilyAttack : MonoBehaviour
     private GameObject target;
     private Coroutine laserAttackCoroutine;
     private Unit unitScript;
-    public float attackRange = 10f;
+    private float attackRange = 7f;
     public float attackSpeed;
     private bool isPrestige = false;
 

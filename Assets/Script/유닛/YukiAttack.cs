@@ -7,7 +7,7 @@ public class YukiAttack : MonoBehaviour
     public float attackDamage = 12f;
     public float attackSpeed = 1.4f;
     public GameObject projectilePrefab;  // Reference to the projectile sprite prefab
-    public float attackRange = 5f;    // Range within which Yuki starts attacking
+    private float attackRange = 8f;    // Range within which Yuki starts attacking
     private float attackInterval;
     private float nextAttackTime = 0f;
     private Unit unitScript;
