@@ -91,17 +91,18 @@ public class YukiAttack : MonoBehaviour
             nextAttackTime = Time.time + attackInterval;
         }
 
-        if(Time.time>=nextBlizzardTime && GameManager.Instance.unitEvolutionData[1].isPrestige == true)
+        if (Time.time >= nextBlizzardTime && GameManager.Instance.unitEvolutionData[1].isPrestige == true)
         {
             blizzard();
             nextBlizzardTime = Time.time + blizzardCooltime;
         }
 
-        if(Input.GetKeyDown(KeyCode.Q)) //for special test
+        if (Input.GetKeyDown(KeyCode.Q)) //for special test
         {
-            isSpecialA=true;
+            isSpecialA = true;
             // SpecialA();
         }
+
 
     }
     GameObject[] FindAllMonsters()

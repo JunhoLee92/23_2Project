@@ -4115,7 +4115,7 @@ MonoBehaviour:
     isChecked: 0
     isPrestige: 0
     thumbnailSprite: {fileID: 21300000, guid: c22903cdabb87e94283e38e3cc5eeec2, type: 3}
-    standingSprite: {fileID: 21300000, guid: d6a44ab95b0def041a7929981a2c23a1, type: 3}
+    standingSprite: {fileID: 21300000, guid: d3aee97a8b796034a8dbcbdaadb85e7d, type: 3}
     damage: 7
     attackSpeed: 0
   - unitName: Terres
@@ -4145,7 +4145,7 @@ MonoBehaviour:
     isChecked: 0
     isPrestige: 0
     thumbnailSprite: {fileID: 21300000, guid: 2c03db79cae96234c954bac6e0b2fe74, type: 3}
-    standingSprite: {fileID: 21300000, guid: 9125c204f566db048a92ebcb64d9d14a, type: 3}
+    standingSprite: {fileID: 21300000, guid: 0dd5fb25fab21db42b8219b70650baec, type: 3}
     damage: 7
     attackSpeed: 1
   selectedUnitNames: []

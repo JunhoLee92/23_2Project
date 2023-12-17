@@ -467,10 +467,12 @@ public class GameManager : MonoBehaviour
                     newRandomUnit.GetComponent<Unit>().unitType = randomUnitType; // Set the correct unit type
                     newRandomUnit.GetComponent<Unit>().SetGridPosition(selectedUnit.GetComponent<Unit>().gridIndex);
                     grid[selectedUnit.GetComponent<Unit>().gridIndex] = newRandomUnit;
+                    DeactivateAllLaserSkills();
                     CheckAndActivateAireSkill();
 
+
                     // Destroy the first unit
-                    DeactivateAllLaserSkills();
+
                     Destroy(selectedUnit);
                 }
                 else
@@ -608,18 +610,18 @@ public class GameManager : MonoBehaviour
                 if (unit != null && unit.isAire == true && unit.unitLevel >= 1)
                 {
                     contiguousAires.Add(index);
-                    Debug.Log("1bun");
+                   
                 }
                 else
                 {
                     if (contiguousAires.Count >= 2)
                     {
                         StrengthenUnitsBetweenAires(contiguousAires, group);
-                        Debug.Log("4bun");
+                        
                         contiguousAires.Clear();
                     }
 
-                    Debug.Log("2bun");
+                   
                 }
             }
 
@@ -627,7 +629,7 @@ public class GameManager : MonoBehaviour
             if (contiguousAires.Count >= 2)
             {
                 StrengthenUnitsBetweenAires(contiguousAires, group);
-                Debug.Log("3Bun");
+               
             }
         }
     }

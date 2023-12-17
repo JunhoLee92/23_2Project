@@ -22,6 +22,14 @@ public class Unit : MonoBehaviour
     public bool PowerUp = false;
 
     private bool isLaserSkillActive = false;
+
+    private float tempAttackPower;
+
+    public GameObject aireEffect;
+
+    private GameObject instantiateAireEffect;
+
+    private bool effectspawned = false;
     public float AttackSpeed
     {
         get => attackSpeed;
@@ -87,6 +95,17 @@ public class Unit : MonoBehaviour
 
     void Update()
     {
+        if (PowerUp == true && effectspawned == false)
+        {
+            ActiveAireEffect();
+            effectspawned = true;
+        }
+
+        else if (PowerUp == false && effectspawned == true)
+        {
+            Destroy(instantiateAireEffect);
+            effectspawned = false;
+        }
     }
 
     void OnMouseDown()
@@ -115,20 +134,30 @@ public class Unit : MonoBehaviour
     }
 
 
-    public void IncreaseAttackPowerByPercentage(float percentage)
+    public void AireDamageUp()
     {
-        attackPower += attackPower * (percentage / 100f);
+        float AireDamage = GameManager.Instance.unitEvolutionData[3].damage;
+        Debug.Log("AireD" + AireDamage);
+        tempAttackPower = AttackPower;
+        AttackPower =AttackPower + AireDamage;
+        Debug.Log(attackPower);
+    }
+
+    public void AireDamageDown()
+    {
+        AttackPower = tempAttackPower;
     }
 
     public void ActivateLaserSkill()
     {
         if (!isLaserSkillActive)
         {
-            // Activate skill logic
-            IncreaseAttackPowerByPercentage(10); // Example
+
+            AireDamageUp();
             isLaserSkillActive = true;
 
             PowerUp = true;
+
             Debug.Log("ActiveLaserSkill");
         }
 
@@ -139,11 +168,22 @@ public class Unit : MonoBehaviour
     {
         if (isLaserSkillActive)
         {
-            // Deactivate skill logic
+            AireDamageDown();
+           
             PowerUp = false;
-            Debug.Log("Deactive");
+           
             isLaserSkillActive = false;
 
         }
     }
+
+    public void ActiveAireEffect()
+    {
+       
+            instantiateAireEffect = Instantiate(aireEffect, transform.position, Quaternion.identity);
+           
+      
+    }
+
+
 }

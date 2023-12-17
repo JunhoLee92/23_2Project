@@ -4,23 +4,22 @@ using UnityEngine;
 
 public class BaseHealth : MonoBehaviour
 {
-    public int maxHealth = 100;  // ������ �ִ� HP
-    private int currentHealth;  // ������ ���� HP
+    public int maxHealth = 100;  
+    private int currentHealth;  
     public GameObject defeat;
     void Start()
     {
-        currentHealth = maxHealth;  // ���� �� ���� HP�� �ִ� HP�� ����
+        currentHealth = maxHealth;  
     }
 
-    // ���Ͱ� ������ ������ �� ȣ���ϴ� �Լ�
     public void TakeDamage(int damage)
     {
-        currentHealth -= damage;  // ��������ŭ HP ����
+        currentHealth -= damage; 
         Debug.Log("���� ���� ü��" + currentHealth);
-        // ���� HP�� 0 �̸��̸� ���� ���� ���� ����
+       
         if (currentHealth <= 0)
         {
-            // TODO: ���� ���� ���� (��: �� ��ȯ, �޽��� ǥ�� ��)
+           
             Debug.Log("Base destroyed!");
            GameManager.Instance.Defeat();
         }
