@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 2839747612780295709}
   - component: {fileID: 8886751932755956598}
   - component: {fileID: 3200112857248987786}
+  - component: {fileID: 8059683177677286301}
   m_Layer: 9
   m_Name: Ch1-boss_side-sheet_0
   m_TagString: Monster
@@ -128,3 +129,48 @@ MonoBehaviour:
   bossAttack: {fileID: 0}
   phase3Prefab: {fileID: 8662936625661638244, guid: f78b55f4f24e2064eabfe9f992e6619b, type: 3}
   victory: {fileID: 0}
+--- !u!61 &8059683177677286301
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2914546613581311389}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 6.7000003, y: 11.003688}
+    newSize: {x: 6.7000003, y: 11.003688}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 6.7000003, y: 11.003688}
+  m_EdgeRadius: 0
