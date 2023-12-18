@@ -90,10 +90,10 @@ void Update()
             
             // Add additional cards for other effects or grades as needed
         }
-        allCards.Add(CreateCard("Kali", "공격범위", 20, CardGrade.Special, () => KaliSpecialA(),6));
-        allCards.Add(CreateCard("Kali", "공격범위", 30, CardGrade.Special, () => KaliSpecialB(),7));
-        allCards.Add(CreateCard("Yuki", "냉동확률", 15, CardGrade.Special, () => YukiSpecialA(),8));
-        allCards.Add(CreateCard("Yuki", "둔화지속", 0.2f, CardGrade.Special, () => YukiSpecialB(),9));
+        allCards.Add(CreateCard("Kali", "공격범위", 20, CardGrade.Special, () => KaliSpecialA(),6, "LV3이상 칼리의 공격 범위 20% 증가"));
+        allCards.Add(CreateCard("Kali", "공격범위", 30, CardGrade.Special, () => KaliSpecialB(),7, "LV5 칼리의 공격 범위 30% 증가"));
+        allCards.Add(CreateCard("Yuki", "냉동확률", 15, CardGrade.Special, () => YukiSpecialA(),8, "LV3 이상 유키의 공격 시 냉동 확률 +15% 증가"));
+        allCards.Add(CreateCard("Yuki", "둔화지속", 0.2f, CardGrade.Special, () => YukiSpecialB(),9,"LV5 유키가 적 냉동 시 둔화 지속시간 +0.2초 증가"));
         allCards.Add(CreateCard("Lily", "도트데미지", 5, CardGrade.Special, () => LilySpecialA(),10,"LV3이상 릴리의 도트 데미지 +5% 증가"));
         allCards.Add(CreateCard("Lily", "도트데미지 추가증가", 5, CardGrade.Special, () => LilySpecialB(),11,"LV5 릴리의 독 디버프 데미지 +10% 증가 및 최대 중첩수 +2 증가") );
         allCards.Add(CreateCard("Terres", "불씨강화", 30, CardGrade.Special, () => TerresSpecialB(),12,"LV3 이상 테레스의 불씨 1중첩 이상일 때 30% 확률로 불씨 1중첩을 소모하여 강공격을 한다. 강공격은 현재 테레스 공격력의 130% 데미지"));
