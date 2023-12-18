@@ -6841,7 +6841,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1493640219900170506, guid: c331dfb0c169487498aaec9a26c5d6cd, type: 3}
       propertyPath: chapters.Array.data[0].rounds.Array.data[0].movesPerRound
-      value: 10
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 1493640219900170506, guid: c331dfb0c169487498aaec9a26c5d6cd, type: 3}
       propertyPath: chapters.Array.data[1].rounds.Array.data[0].movesPerRound
