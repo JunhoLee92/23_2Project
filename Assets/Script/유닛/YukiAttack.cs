@@ -209,8 +209,12 @@ private void UpdateDamage(float newDamage)
         
         foreach (GameObject monster in allMonsters)
         {
+            
             MonsterController monsterScript = monster.GetComponent<MonsterController>();
+            if(monsterScript!=null)
+            {
             monsterScript.Slow(1.0f, 1.0f);
+            }
         }
 
         Debug.Log("Blizzard");

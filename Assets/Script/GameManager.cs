@@ -194,6 +194,16 @@ public class GameManager : MonoBehaviour
             Shuffle();
             Debug.Log("Shuffle");
         }
+
+        if (Input.GetKeyDown(KeyCode.N)) //Cheat key : jump to round9 
+        {
+            currentRound=9;
+            chapters[currentChapter].rounds[currentRound].movesPerRound=20;
+            SetupRound();
+            UpdateRoundsText();
+            // CheatInitGrid();
+
+        }
     }
 
 
@@ -357,6 +367,28 @@ public class GameManager : MonoBehaviour
         {
             int randomUnitType = Random.Range(0, filteredEvolutions.Length);
             int initialLevel = 0; // Start with level 0 units
+            GameObject unitPrefab = filteredEvolutions[randomUnitType].unitPrefabs[initialLevel];
+            GameObject unit = Instantiate(unitPrefab, spawnPositions[i].position, Quaternion.identity);
+            unit.GetComponent<Unit>().unitType = randomUnitType;
+            unit.GetComponent<Unit>().unitLevel = initialLevel;
+            unit.GetComponent<Unit>().SetGridPosition(i);
+
+
+            grid[i] = unit;
+        }
+    }
+
+    void CheatInitGrid()
+    {   
+         for (int i = 0; i < spawnPositions.Length; i++)
+        {
+            Destroy(grid[i]);
+        }
+
+        for (int i = 0; i < spawnPositions.Length; i++)
+        {
+            int randomUnitType = Random.Range(0, filteredEvolutions.Length);
+            int initialLevel = 4; // Start with level 0 units
             GameObject unitPrefab = filteredEvolutions[randomUnitType].unitPrefabs[initialLevel];
             GameObject unit = Instantiate(unitPrefab, spawnPositions[i].position, Quaternion.identity);
             unit.GetComponent<Unit>().unitType = randomUnitType;

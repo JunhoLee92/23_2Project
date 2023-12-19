@@ -120,9 +120,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 37b5dfa99adf95d4ab8d6f762b7da825, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AttackPower: 30
+  AttackPower: 35
   maxHealth: 5500
-  attackPreparationTime: 30
+  attackPreparationTime: 5
   Phase2Hp: 5500
   Phase3Hp: 8000
   maxPoisonStacks: 3

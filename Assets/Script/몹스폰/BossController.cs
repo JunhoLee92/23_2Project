@@ -18,7 +18,6 @@ public class BossController : MonoBehaviour,IDamageable
     public float Phase2Hp;
     public float Phase3Hp;
     private int currentPhase = 1;
-    private float phaseHealthLimit;  
     private float attackTimer;
     SpriteRenderer spriteRenderer;
     BossSpawner bossSpawner;
@@ -39,7 +38,7 @@ public class BossController : MonoBehaviour,IDamageable
         {
             currentHealth = maxHealth;
         }
-        phaseHealthLimit = maxHealth/3;
+      
         attackTimer = attackPreparationTime;
         spriteRenderer = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
@@ -58,7 +57,28 @@ public class BossController : MonoBehaviour,IDamageable
         {
             BaseHealth baseHealth = FindObjectOfType<BaseHealth>();
             baseHealth.TakeDamage(AttackPower);
-            NextPhase();
+            
+            if (currentPhase == 1 )
+            {
+
+                Debug.Log("이게나와야돼"+currentHealth);
+
+                currentHealth = Phase2Hp;
+
+                NextPhase();
+                
+                
+            }
+            else if (currentPhase == 2)
+            {
+                NextPhase();
+                currentHealth = Phase3Hp;
+            }
+            else if (currentPhase==3) 
+            {
+                NextPhase();
+            }
+
             attackTimer = attackPreparationTime;
         }
 
@@ -81,13 +101,21 @@ public class BossController : MonoBehaviour,IDamageable
             return;
         currentHealth -= damage;
         Debug.Log(currentHealth);
+        Debug.Log("현재페이즈"+currentPhase);
 
         if (currentHealth<=0 || attackTimer <= 0)
         {
+     
             if (currentPhase == 1 )
             {
-                NextPhase();
+
+                Debug.Log("이게나와야돼"+currentHealth);
+
                 currentHealth = Phase2Hp;
+
+                NextPhase();
+                
+                
             }
             else if (currentPhase == 2)
             {

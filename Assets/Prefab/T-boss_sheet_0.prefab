@@ -166,10 +166,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   AttackPower: 30
-  maxHealth: 5000
-  attackPreparationTime: 30
-  Phase2Hp: 5000
-  Phase3Hp: 7500
+  maxHealth: 1000
+  attackPreparationTime: 10
+  Phase2Hp: 1000
+  Phase3Hp: 2000
   maxPoisonStacks: 3
   bossAttack: {fileID: 1329120818477685219, guid: 9d08e52f13e77a2489e2737430875493, type: 3}
   phase3Prefab: {fileID: 3939946868438575527, guid: 2a9a0fa509a21f3438d8df13df739912, type: 3}
