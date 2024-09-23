@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -22,27 +22,27 @@ public class PrestigeTextCanger : MonoBehaviour
     {
        if( GameManager.Instance.unitEvolutionData[0].isPrestige == true)
         {
-            prestigeText.text = "Ä®¸®ÀÇ °ø°İ¼Óµµ 50% Áõ°¡";
+            prestigeText.text = "ì¹¼ë¦¬ì˜ ê³µê²©ì†ë„ 50% ì¦ê°€";
         }
         else if (GameManager.Instance.unitEvolutionData[1].isPrestige == true)
         {
-            prestigeText.text = "±¤¿ª ÆĞ½Ãºê: ¿şÀÌºê Áß 10ÃÊ¸¶´Ù <´«º¸¶ó> È¿°ú·Î Àû ÀüÃ¼ 100%È®·ü·Î 1ÃÊ°£ °á¹Ú";
+            prestigeText.text = "ê´‘ì—­ íŒ¨ì‹œë¸Œ: ì›¨ì´ë¸Œ ì¤‘ 10ì´ˆë§ˆë‹¤ <ëˆˆë³´ë¼> íš¨ê³¼ë¡œ ì  ì „ì²´ 100%í™•ë¥ ë¡œ 1ì´ˆê°„ ê²°ë°•";
         }
         else if (GameManager.Instance.unitEvolutionData[2].isPrestige == true)
         {
-            prestigeText.text = "´Üµ¶ ÆĞ½Ãºê: Àû¿¡°Ô ¸íÁß ÈÄ 1ÃÊ¸¶´Ù µµÆ® µ¥¹ÌÁö 1%¾¿ Áõ°¡(ÃÖ´ë 10%)";
+            prestigeText.text = "ë‹¨ë… íŒ¨ì‹œë¸Œ: ì ì—ê²Œ ëª…ì¤‘ í›„ 1ì´ˆë§ˆë‹¤ ë„íŠ¸ ë°ë¯¸ì§€ 1%ì”© ì¦ê°€(ìµœëŒ€ 10%)";
         }
        else if (GameManager.Instance.unitEvolutionData[3].isPrestige == true)
         {
-            prestigeText.text = "´Üµ¶ ÆĞ½Ãºê: 0´Ü°è ¾ÆÀÌ¸£ À¯´Öµµ <Ãàº¹> ½ºÅ³ÀÇ È¿°ú¸¦ ¹ßÈÖ";
+            prestigeText.text = "ë‹¨ë… íŒ¨ì‹œë¸Œ: 0ë‹¨ê³„ ì•„ì´ë¥´ ìœ ë‹›ë„ <ì¶•ë³µ> ìŠ¤í‚¬ì˜ íš¨ê³¼ë¥¼ ë°œíœ˜";
         }
        else if (GameManager.Instance.unitEvolutionData[4].isPrestige == true)
         {
-            prestigeText.text = "´Üµ¶ ÆĞ½Ãºê: °­°ø°İ È®·üÀÌ 50%·Î Áõ°¡ÇÑ´Ù. (20%Áõ°¡)";
+            prestigeText.text = "ë‹¨ë… íŒ¨ì‹œë¸Œ: ê°•ê³µê²© í™•ë¥ ì´ 50%ë¡œ ì¦ê°€í•œë‹¤. (20%ì¦ê°€)";
         }
       else if (GameManager.Instance.unitEvolutionData[5].isPrestige == true)
         {
-            prestigeText.text = "´Üµ¶ ÆĞ½Ãºê: °¡Àå ´Ü°è°¡ ³ôÀº º§¶ó À¯´Ö 1±âÀÇ °ø°İ·Â 10% Áõ°¡";
+            prestigeText.text = "ë‹¨ë… íŒ¨ì‹œë¸Œ: ê°€ì¥ ë‹¨ê³„ê°€ ë†’ì€ ë²¨ë¼ ìœ ë‹› 1ê¸°ì˜ ê³µê²©ë ¥ 10% ì¦ê°€";
         };
 
     }

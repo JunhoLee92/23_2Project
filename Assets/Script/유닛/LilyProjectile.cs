@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -6,14 +6,14 @@ using UnityEngine;
 public class LilyProjectile : MonoBehaviour
 {
     
-    //public float poisonDamagePercentage = 0.05f; // µµÆ® µ¥¹ÌÁöÀÇ ¹éºĞÀ²
-    //public float damageInterval = 0.2f; // µ¥¹ÌÁö °£°İ
-    //private bool isDealingDamage = false; // µ¥¹ÌÁö Àû¿ë ÁßÀÎÁö È®ÀÎÇÏ´Â ÇÃ·¡±×
+    //public float poisonDamagePercentage = 0.05f; // ë„íŠ¸ ë°ë¯¸ì§€ì˜ ë°±ë¶„ìœ¨
+    //public float damageInterval = 0.2f; // ë°ë¯¸ì§€ ê°„ê²©
+    //private bool isDealingDamage = false; // ë°ë¯¸ì§€ ì ìš© ì¤‘ì¸ì§€ í™•ì¸í•˜ëŠ” í”Œë˜ê·¸
     //public float damage = 17f;
     //public float laserDuration = 0.5f;
     //public GameObject target;
     //private Vector3 directionToTarget;
-    //private bool laserCreated = false;  // ·¹ÀÌÀú°¡ ÀÌ¹Ì »ı¼ºµÇ¾ú´ÂÁö È®ÀÎÇÏ´Â º¯¼ö
+    //private bool laserCreated = false;  // ë ˆì´ì €ê°€ ì´ë¯¸ ìƒì„±ë˜ì—ˆëŠ”ì§€ í™•ì¸í•˜ëŠ” ë³€ìˆ˜
     //public Transform originatingUnitTransform;
     //internal LilyAttack lilyAttack;
 
@@ -34,7 +34,7 @@ public class LilyProjectile : MonoBehaviour
     //        Destroy(this.gameObject);
 
     //    }
-    //    else   // ·¹ÀÌÀú°¡ ¾ÆÁ÷ »ı¼ºµÇÁö ¾Ê¾ÒÀ¸¸é
+    //    else   // ë ˆì´ì €ê°€ ì•„ì§ ìƒì„±ë˜ì§€ ì•Šì•˜ìœ¼ë©´
     //    {
     //        CreateLaser();
     //    }
@@ -43,10 +43,10 @@ public class LilyProjectile : MonoBehaviour
     //        directionToTarget = (target.transform.position - originatingUnitTransform.position).normalized;
     //        float distanceToTarget = Vector3.Distance(originatingUnitTransform.position, target.transform.position);
 
-    //        // ·¹ÀÌÀú ½ºÄÉÀÏ µ¿Àû Á¶Àı
+    //        // ë ˆì´ì € ìŠ¤ì¼€ì¼ ë™ì  ì¡°ì ˆ
     //        transform.localScale = new Vector3(0.25f, distanceToTarget / 5, 0.25f);
 
-    //        // ·¹ÀÌÀúÀÇ ½ÃÀÛ À§Ä¡ µ¿Àû Á¶Àı
+    //        // ë ˆì´ì €ì˜ ì‹œì‘ ìœ„ì¹˜ ë™ì  ì¡°ì ˆ
     //        transform.position = originatingUnitTransform.position;
     //    }
 
@@ -63,14 +63,14 @@ public class LilyProjectile : MonoBehaviour
     //    directionToTarget = (target.transform.position - transform.position);
     //    float distanceToTarget = Vector3.Distance(transform.position, target.transform.position);
 
-    //    //·¹ÀÌÀú ½ºÄÉÀÏ Á¶Àı
+    //    //ë ˆì´ì € ìŠ¤ì¼€ì¼ ì¡°ì ˆ
     //    transform.localScale = new Vector3(0.25f, distanceToTarget/4.5f, 0.25f);
 
-    //    //·¹ÀÌÀúÀÇ ½ÃÀÛ À§Ä¡¸¦ º¯°æÇÏÁö ¾Êµµ·Ï ¿ÀÇÁ¼Â Á¶Á¤
+    //    //ë ˆì´ì €ì˜ ì‹œì‘ ìœ„ì¹˜ë¥¼ ë³€ê²½í•˜ì§€ ì•Šë„ë¡ ì˜¤í”„ì…‹ ì¡°ì •
     //    //transform.position = transform.position + directionToTarget * (distanceToTarget / 2);
     //    transform.position = this.transform.parent.position;
 
-    //    // ·¹ÀÌÀú È¸Àü ¼³Á¤
+    //    // ë ˆì´ì € íšŒì „ ì„¤ì •
     //    transform.rotation = Quaternion.FromToRotation(Vector3.up, directionToTarget);
 
         
@@ -91,7 +91,7 @@ public class LilyProjectile : MonoBehaviour
     //    //MonsterController monster = other.GetComponent<MonsterController>();
     //    //if (monster != null && !isDealingDamage)
     //    //{
-    //    //    StartCoroutine(DealDotDamage(monster));  // µµÆ® µ¥¹ÌÁö ·ÎÁ÷ ½ÃÀÛ
+    //    //    StartCoroutine(DealDotDamage(monster));  // ë„íŠ¸ ë°ë¯¸ì§€ ë¡œì§ ì‹œì‘
     //    //}
     //    if (other.tag != "Monster") return;
 
@@ -102,7 +102,7 @@ public class LilyProjectile : MonoBehaviour
     //    if (damageableEntity != null && !isDealingDamage)
     //    {
     //        Debug.Log("LilyProjectile collided with: " + other.gameObject.name);
-    //        StartCoroutine(DealDotDamage(damageableEntity));  // DOT µ¥¹ÌÁö Ã³¸® ½ÃÀÛ
+    //        StartCoroutine(DealDotDamage(damageableEntity));  // DOT ë°ë¯¸ì§€ ì²˜ë¦¬ ì‹œì‘
     //    }
     //}
 
@@ -120,7 +120,7 @@ public class LilyProjectile : MonoBehaviour
        
 
     //    isDealingDamage = true;
-    //    while (damageableEntity != null) // ´ë»óÀÌ Á¸ÀçÇÏ°í Ã¼·ÂÀÌ 0 ÀÌ»óÀÎ °æ¿ì
+    //    while (damageableEntity != null) // ëŒ€ìƒì´ ì¡´ì¬í•˜ê³  ì²´ë ¥ì´ 0 ì´ìƒì¸ ê²½ìš°
     //    {
     //        yield return new WaitForSeconds(damageInterval);
     //        float dotDamage = damage * poisonDamagePercentage;

@@ -45,7 +45,7 @@ public class UIManager : MonoBehaviour
 
     public void UpdateUI()
     {
-        usernameText.text = "ÀÌÁØÈ£";
+        usernameText.text = "ì´ì¤€í˜¸";
         levelText.text = "99";
         expBar.value = (experience/100.0f);
         userImage.sprite = profileUserImage.sprite;
@@ -57,12 +57,12 @@ public class UIManager : MonoBehaviour
         if (popupPanel.activeSelf)
         {
             popupPanel.SetActive(false);
-            Time.timeScale = 1; // °ÔÀÓ Àç°³
+            Time.timeScale = 1; // ê²Œì„ ì¬ê°œ
         }
         else
         {
             popupPanel.SetActive(true);
-            Time.timeScale = 0; // °ÔÀÓ ÀÏ½Ã Á¤Áö
+            Time.timeScale = 0; // ê²Œì„ ì¼ì‹œ ì •ì§€
         }
     }
 
