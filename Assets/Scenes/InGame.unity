@@ -5695,7 +5695,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1493640219900170506, guid: c331dfb0c169487498aaec9a26c5d6cd, type: 3}
       propertyPath: unitEvolutionData.Array.data[0].isChecked
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1493640219900170506, guid: c331dfb0c169487498aaec9a26c5d6cd, type: 3}
       propertyPath: unitEvolutionData.Array.data[1].isChecked
@@ -5703,15 +5703,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1493640219900170506, guid: c331dfb0c169487498aaec9a26c5d6cd, type: 3}
       propertyPath: unitEvolutionData.Array.data[2].isChecked
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1493640219900170506, guid: c331dfb0c169487498aaec9a26c5d6cd, type: 3}
-      propertyPath: unitEvolutionData.Array.data[3].isChecked
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1493640219900170506, guid: c331dfb0c169487498aaec9a26c5d6cd, type: 3}
-      propertyPath: unitEvolutionData.Array.data[4].isChecked
+      propertyPath: unitEvolutionData.Array.data[3].isChecked
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1493640219900170506, guid: c331dfb0c169487498aaec9a26c5d6cd, type: 3}
+      propertyPath: unitEvolutionData.Array.data[4].isChecked
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1493640219900170506, guid: c331dfb0c169487498aaec9a26c5d6cd, type: 3}
       propertyPath: unitEvolutionData.Array.data[5].isChecked
